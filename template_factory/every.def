@@ -1,0 +1,66 @@
+define_status_block()
+
+add_digital("s_digital")
+add_digital("s_digitala", PV_ALIAS=["s_digitalab", "s_digitalac", "s_digitalac12345678901234567890"])
+
+add_analog("s_analogBYTE", "BYTE")
+add_analog("s_analogBYTEa", "BYTE", PV_ALIAS="s_analogBYTEab")
+add_analog("s_analogINT", "INT")
+add_analog("s_analogDINT", "DINT")
+add_analog("s_analogWORD", "WORD")
+add_analog("s_analogDWORD", "DWORD")
+add_analog("s_analogREAL", "REAL")
+
+add_enum("s_enumBYTE", "BYTE")
+add_enum("s_enumBYTEa", "BYTE", PV_ALIAS="s_enumBYTEab")
+add_enum("s_enumINT", "INT")
+add_enum("s_enumDINT", "DINT")
+add_enum("s_enumWORD", "WORD")
+add_enum("s_enumDWORD", "DWORD")
+add_enum("s_enumREAL", "REAL")
+
+add_bitmask("s_bitmaskBYTE", "BYTE")
+add_bitmask("s_bitmaskBYTEa", "BYTE", PV_ALIAS="s_bitmaskBYTEab")
+add_bitmask("s_bitmaskINT", "INT")
+add_bitmask("s_bitmaskDINT", "DINT")
+add_bitmask("s_bitmaskWORD", "WORD")
+add_bitmask("s_bitmaskDWORD", "DWORD")
+add_bitmask("s_bitmaskREAL", "REAL")
+
+add_time("s_time")
+
+add_minor_alarm("s_minor", "Minor alarm")
+add_major_alarm("s_major", "Major alarm")
+
+
+
+define_command_block()
+
+add_digital("c_digital")
+add_digital("c_digitala", PV_ALIAS="c_digitalab")
+
+add_analog("c_analogBYTE", "BYTE")
+add_analog("c_analogBYTEa", "BYTE", PV_ALIAS="c_analogBYTEab")
+add_analog("c_analogINT", "INT")
+add_analog("c_analogDINT", "DINT")
+add_analog("c_analogWORD", "WORD")
+#add_analog("c_analogDWORD", "DWORD")
+add_analog("c_analogREAL", "REAL")
+
+add_enum("c_enumBYTE", "BYTE")
+add_enum("c_enumBYTEa", "BYTE", PV_ALIAS="c_enumBYTEab")
+add_enum("c_enumINT", "INT")
+add_enum("c_enumDINT", "DINT")
+add_enum("c_enumWORD", "WORD")
+#add_enum("c_enumDWORD", "DWORD")
+add_enum("c_enumREAL", "REAL")
+
+add_bitmask("c_bitmaskBYTE", "BYTE")
+add_bitmask("c_bitmaskBYTEa", "BYTE", PV_ALIAS="c_bitmaskBYTEab")
+add_bitmask("c_bitmaskINT", "INT")
+add_bitmask("c_bitmaskDINT", "DINT")
+add_bitmask("c_bitmaskWORD", "WORD")
+#add_bitmask("c_bitmaskDWORD", "DWORD")
+add_bitmask("c_bitmaskREAL", "REAL")
+
+add_time("c_time")

@@ -1,0 +1,818 @@
+{
+    "_comment": "MBL-010CDL:Cryo-PLC-010",
+    "PROJ": {
+        "STATUS": "Ready",
+        "ALARMNAME": "CMDS",
+        "IOC": {
+            "ioc_type": "",
+            "epics_version": "",
+            "require_version": "",
+            "realtime": "",
+            "packages": [],
+            "address_list": [],
+            "essname": "MBL-010CDL:Cryo-PLC-010:SC-IOC-010"
+        },
+        "HW": {
+            "type": "Siemens",
+            "comm_protocol": "TCP/IP-Modbus",
+            "ipaddr": "mbl-010cdl:cryo-plc-010.tn.esss.lu.se",
+            "essname": "MBL-010CDL:Cryo-PLC-010",
+            "tia_portal_version": "v17",
+            "diagnostic": "False",
+            "PLCF#EPICSToPLCDataBlockStartOffset": "0",
+            "PLCF#PLCToEPICSDataBlockStartOffset": "0",
+            "PLCF#PLC-EPICS-COMMS: MBPort": "502",
+            "PLCF#PLC-EPICS-COMMS: MBConnectionID": "255",
+            "PLCF#PLC-EPICS-COMMS: S7ConnectionID": "256",
+            "PLCF#PLC-EPICS-COMMS: S7Port": "2000",
+            "PLCF#PLC-EPICS-COMMS:Endianness": "BigEndian",
+            "PLCF#PLC-EPICS-COMMS: InterfaceID": "0",
+            "PLCF#PLC-DIAG:Max-IO-Devices": "20",
+            "PLCF#PLC-DIAG:Max-Local-Modules": "60",
+            "PLCF#PLC-DIAG:Max-Modules-In-IO-Device": "60",
+            "PLCF#PLC-EPICS-COMMS: PLCPulse": "Pulse_200ms",
+            "PLCF#PLC-EPICS-COMMS: DiagConnectionID": "254",
+            "PLCF#PLC-EPICS-COMMS: DiagPort": "2001"
+        },
+        "CTRL": {
+            "TEMPLATEPLACE": "Local",
+            "DEVICE": [
+                {
+                    "essname": "MBL-010CDL:Cryo-PLC-010",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "PLC.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-900",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "C3S_AM.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-FSM-600",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "C3S_AUTO_CONF.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-FSM-400",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "C3S_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-FSM-500",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_DIAG.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-010",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-011",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-012",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-013",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-020",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-021",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-022",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-023",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-030",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-031",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-032",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-033",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-040",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-041",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-042",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-EH-043",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_EH.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-FS-012",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FIS.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-FS-022",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FIS.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-FS-032",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FIS.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-FS-042",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FIS.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-FS-011",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FS_Single.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-FS-021",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FS_Single.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-FS-031",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FS_Single.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-FS-041",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_FS_Single.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-HV-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_HV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-HV-090",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_HV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-700",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-701",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-702",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-703",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-704",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-705",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-706",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-707",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-708",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-709",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-710",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-711",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81403",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81404",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81405",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81406",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81461",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81462",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-PID-81463",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-010",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-011",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-012",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-013",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-020",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-021",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-022",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-023",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-030",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-031",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-032",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-033",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-040",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-041",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-042",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-PID-043",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CMDS_PID_ADV.json"
+                },
+                {
+                    "essname": "MBL-010Crm",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CRM_Global.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-114",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CRYO_MC.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-020",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "CRYO_WF.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-091",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "Cryo_DigitalInput.json"
+                },
+                {
+                    "essname": "MBL-010CDL:SC-FSM-300",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "Cryo_SCL_MODE_SEL_ELL.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81403",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81404",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81405",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81406",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81461",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81462",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-CV-81463",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-CV-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-CV-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_CV_PB_SIPART.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-010",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_DS.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-GS-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_DigitalInput.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Ctrl-Relay-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_DigitalInput.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-005",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_DigitalInput.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-006",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_DigitalInput.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-003",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_ELL_CRM_Motor_OK.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-004",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_Ell_CRM_Ready.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-003",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-010",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-012",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-013",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-014",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-015",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-016",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-017",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-018",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-019",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-020",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-023",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-024",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-025",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-027",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-029",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-030",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-033",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-034",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-035",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-037",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-039",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-043",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-044",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-045",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-047",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-049",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-050",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-064",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-068",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-069",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-091",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-092",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-093",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-TT-094",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LAKESHORE_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-LT-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-LT-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_LT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_NightMode.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-PT-81401",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-PT-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-PT-003",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-PT-004",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-PT-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-PT-011",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-001",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-004",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-005",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-007",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-008",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-014",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-020",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-YSV-026",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:Cryo-CV-091",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_SCV.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-TT-017",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-TT-027",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-TT-037",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TT.json"
+                },
+                {
+                    "essname": "MBL-010Crm:WtrC-TT-047",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TT.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-TT-81405",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TTCernox_K.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-TT-81406",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TTCernox_K.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-TT-81460",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TTCernox_K.json"
+                },
+                {
+                    "essname": "MBL-010CDL:Cryo-TT-81465",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_TTCernox_K.json"
+                },
+                {
+                    "essname": "MBL-010Crm:SC-FSM-002",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "TS2_Protection.json"
+                }
+            ]
+        }
+    }
+}
