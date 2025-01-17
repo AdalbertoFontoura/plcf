@@ -1,0 +1,422 @@
+{
+      "_comment": "",
+      "DEV": {
+            "Status": {
+                  "analog": [
+                        {
+                              "property": "ValveColor",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "BlockIcon valve color"
+                        },
+                        {
+                              "property": "SolenoidColor",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "BlockIcon solenoid color"
+                        },
+                        {
+                              "property": "OpenSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Safety open setpoint",
+                              "EGU": "mbar"
+                        },
+                        {
+                              "property": "CloseSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Setpoint Hysteresis",
+                              "EGU": "mbar"
+                        },
+                        {
+                              "property": "Faceplate_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Owner Lock ID"
+                        },
+                        {
+                              "property": "BlockIcon_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Guest Lock ID"
+                        },
+                        {
+                              "property": "FB_OpenSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "FB Safety open setpoint from HMI",
+                              "EGU": "mbar"
+                        },
+                        {
+                              "property": "FB_CloseSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "FB Safety close setpoint from HMI",
+                              "EGU": "mbar"
+                        }
+                  ],
+                  "digital": [
+                        {
+                              "property": "OpMode_Auto",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Auto",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "OpMode_Manual",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Manual",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "OpMode_Forced",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Forced",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Opened",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Valve Opened",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Closed",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Valve Closed",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Solenoid",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Solenoid energized",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Inhibit_Manual",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Manual Mode",
+                              "ONAM": "InhibitManual",
+                              "ZNAM": "AllowManual"
+                        },
+                        {
+                              "property": "Inhibit_Force",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Force Mode",
+                              "ONAM": "InhibitForce",
+                              "ZNAM": "AllowForce"
+                        },
+                        {
+                              "property": "Inhibit_Lock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Locking",
+                              "ONAM": "InhibitLocking",
+                              "ZNAM": "AllowLocking"
+                        },
+                        {
+                              "property": "GroupInterlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Group Interlock",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "StartInterlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Start Interlock",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "StopInterlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Stop Interlock",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableBlkOpen",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Block Open Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableBlkClose",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Block Close Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableAutoBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Auto Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableManualBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Manual Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableForcedBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Force Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "NormallyOpen",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PV is Normally opened"
+                        },
+                        {
+                              "property": "DevLocked",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Device Locked",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "LatchAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Latching of the alarms"
+                        },
+                        {
+                              "property": "GroupAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Group Alarm for OPI"
+                        }
+                  ],
+                  "time": [
+                        {
+                              "property": "OpeningTime",
+                              "plcvartype": null,
+                              "set_as_field": "None",
+                              "DESC": "Opening Time"
+                        },
+                        {
+                              "property": "ClosingTime",
+                              "plcvartype": null,
+                              "set_as_field": "None",
+                              "DESC": "Closing Time"
+                        }
+                  ],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": [
+                        {
+                              "property": "InterlockMsg",
+                              "plcvartype": null,
+                              "set_as_field": "None",
+                              "DESC": "Interlock Message"
+                        }
+                  ],
+                  "major_alarm": [
+                        {
+                              "property": "Opening_TimeOut",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Opening Time Out",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Closing_TimeOut",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Closing Time Out",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "IO_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "IO Error",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Input_Module_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Output_Module_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "SSTriggered",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "StaPnR",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Status power and ready",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Open",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Param_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Open or Close SP not configured",
+                              "ZNAM": "NominalState"
+                        }
+                  ],
+                  "minor_alarm": []
+            },
+            "Command": {
+                  "analog": [],
+                  "digital": [
+                        {
+                              "property": "Cmd_Auto",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Auto Mode"
+                        },
+                        {
+                              "property": "Cmd_Manual",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Manual Mode"
+                        },
+                        {
+                              "property": "Cmd_Force",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Mode"
+                        },
+                        {
+                              "property": "Cmd_ManuOpen",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Manual Open"
+                        },
+                        {
+                              "property": "Cmd_ManuClose",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Manual Close"
+                        },
+                        {
+                              "property": "Cmd_ForceOpen",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Open"
+                        },
+                        {
+                              "property": "Cmd_ForceClose",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Close"
+                        },
+                        {
+                              "property": "Cmd_AckAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Acknowledge Alarm"
+                        },
+                        {
+                              "property": "Cmd_ForceUnlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Unlock Device"
+                        },
+                        {
+                              "property": "Cmd_DevLock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Lock Device"
+                        },
+                        {
+                              "property": "Cmd_DevUnlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Unlock Device"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "Parameter": {
+                  "analog": [
+                        {
+                              "property": "P_Faceplate_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Device ID after Lock"
+                        },
+                        {
+                              "property": "P_BlockIcon_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Device ID after Blockicon Open"
+                        },
+                        {
+                              "property": "P_OpenSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Safety open setpoint from OPI",
+                              "EGU": "mbar"
+                        },
+                        {
+                              "property": "P_CloseSP",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Safety close setpoint from OPI",
+                              "EGU": "mbar"
+                        }
+                  ],
+                  "digital": [],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "PLCF": {}
+      }
+}

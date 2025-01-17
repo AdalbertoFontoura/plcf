@@ -1,0 +1,111 @@
+###################################### ICS HWI ###############################################
+#############################  ICS Instrument Library     ####################################
+##  PLC Sample Code in VersionDog: ICS_LIBRARY_MASTER_PLC                                   ## 
+##  CCDB device types: ICS_xxxxx                                                            ##  
+##  EPICS HMI (Block Icons/Faceplates)@ GitLab. Projekt: Cryo / CryogenicsLibrary / CryoLib ##
+##                                                                                          ##  
+##                                  SCV - Remote On/Off valve                                ##
+##                                                                                          ##  
+##                                                                                          ##  
+############################         Version: 1.1             ################################
+# Author:  Wojciech Binczyk
+# Date:    05-05-2023
+# Version: v1.1
+# Created based on ICS_PV version 1.5
+
+
+############################
+#  STATUS BLOCK
+############################ 
+define_status_block()
+
+#Operation modes
+add_digital("OpMode_Auto",             ARCHIVE=True,        PV_DESC="Operation Mode Auto",       PV_ONAM="True",           PV_ZNAM="False")
+add_digital("OpMode_Manual",           ARCHIVE=True,        PV_DESC="Operation Mode Manual",     PV_ONAM="True",           PV_ZNAM="False")
+add_digital("OpMode_Forced",           ARCHIVE=True,        PV_DESC="Operation Mode Forced",     PV_ONAM="True",           PV_ZNAM="False")
+
+#Valve physical states
+add_digital("Opened",                  ARCHIVE=True,        PV_DESC="Valve Opened",              PV_ONAM="True",           PV_ZNAM="False")
+add_digital("Closed",                  ARCHIVE=True,        PV_DESC="Valve Closed",              PV_ONAM="True",           PV_ZNAM="False")
+add_digital("Solenoid",                ARCHIVE=True,        PV_DESC="Solenoid energized",        PV_ONAM="True",           PV_ZNAM="False")
+add_analog("ValveColor",               "INT",                 PV_DESC="BlockIcon valve color")
+add_analog("SolenoidColor",            "INT",                 PV_DESC="BlockIcon solenoid color")
+add_analog("OpenSP",                   "REAL", PV_PREC="2",   ARCHIVE=" 1Hz",                      PV_DESC="Safety open setpoint", PV_EGU="mbar")
+add_analog("CloseSP",                  "REAL", PV_PREC="2",   ARCHIVE=" 1Hz",                      PV_DESC="Setpoint Hysteresis",  PV_EGU="mbar")
+
+#Inhibit signals (set by the PLC code, can't be changed by the OPI)
+add_digital("Inhibit_Manual",                                 PV_DESC="Inhibit Manual Mode",       PV_ONAM="InhibitManual",  PV_ZNAM="AllowManual")
+add_digital("Inhibit_Force",                                  PV_DESC="Inhibit Force Mode",        PV_ONAM="InhibitForce",   PV_ZNAM="AllowForce")
+add_digital("Inhibit_Lock",                                   PV_DESC="Inhibit Locking",           PV_ONAM="InhibitLocking", PV_ZNAM="AllowLocking")
+
+#Interlock signals
+add_digital("GroupInterlock",          PV_DESC="Group Interlock",           PV_ONAM="True",           PV_ZNAM="False")
+add_digital("StartInterlock",          ARCHIVE=True,        PV_DESC="Start Interlock",           PV_ONAM="True",           PV_ZNAM="False")
+add_digital("StopInterlock",           ARCHIVE=True,        PV_DESC="Stop Interlock",            PV_ONAM="True",           PV_ZNAM="False")
+
+#Block Icon controls
+add_digital("EnableBlkOpen",                                PV_DESC="Enable Block Open Button",  PV_ONAM="True",           PV_ZNAM="False")
+add_digital("EnableBlkClose",                               PV_DESC="Enable Block Close Button", PV_ONAM="True",           PV_ZNAM="False")
+
+#for OPI visualisation
+add_digital("EnableAutoBtn",                                PV_DESC="Enable Auto Button",        PV_ONAM="True",           PV_ZNAM="False")
+add_digital("EnableManualBtn",                              PV_DESC="Enable Manual Button",      PV_ONAM="True",           PV_ZNAM="False")
+add_digital("EnableForcedBtn",                              PV_DESC="Enable Force Button",       PV_ONAM="True",           PV_ZNAM="False")
+add_string("InterlockMsg",             39,                  PV_NAME="InterlockMsg",   PV_DESC="Interlock Message")
+add_digital("NormallyOpen",                                 PV_DESC="PV is Normally opened")
+
+#Locking mechanism
+add_digital("DevLocked",               PV_DESC="Device Locked",             PV_ONAM="True",           PV_ZNAM="False")
+add_analog("Faceplate_LockID",         "DINT",                              PV_DESC="Owner Lock ID")
+add_analog("BlockIcon_LockID",         "DINT",                              PV_DESC="Guest Lock ID")
+
+add_digital("LatchAlarm",                                                   PV_DESC="Latching of the alarms")
+add_digital("GroupAlarm",                                                   PV_DESC="Group Alarm for OPI")
+
+#Alarm signals
+add_major_alarm("Opening_TimeOut",     "Opening Time Out",                  ARCHIVE=True,             PV_DESC="Opening Time Out",       PV_ZNAM="NominalState")
+add_major_alarm("Closing_TimeOut",     "Closing Time Out",                  ARCHIVE=True,             PV_DESC="Closing Time Out",       PV_ZNAM="NominalState")
+add_major_alarm("IO_Error",            "IO Error",                          ARCHIVE=True,             PV_DESC="IO Error",               PV_ZNAM="NominalState")
+add_major_alarm("Input_Module_Error",  "HW Input Module Error",             PV_ZNAM="NominalState")
+add_major_alarm("Output_Module_Error", "HW Output Module Error",            PV_ZNAM="NominalState")
+add_major_alarm("SSTriggered","SSTriggered",                                PV_ZNAM="NominalState")
+add_major_alarm("StaPnR","Status power and ready",                          ARCHIVE=True,             PV_DESC="Status power and ready",   PV_ZNAM="NominalState")
+add_major_alarm("Open",                "State Error",                       PV_ZNAM="NominalState")
+add_major_alarm("Param_Error",         "OPI Parameter Error",               PV_DESC="Open or Close SP not configured",     PV_ZNAM="NominalState")
+
+#OPI timeouts
+add_time("OpeningTime",                PV_DESC="Opening Time")
+add_time("ClosingTime",                PV_DESC="Closing Time")
+
+#OPI Feedback
+add_analog("FB_OpenSP",                "REAL", PV_PREC="2",   ARCHIVE=" 1Hz",  PV_DESC="FB Safety open setpoint from HMI",   PV_EGU="mbar")
+add_analog("FB_CloseSP",               "REAL", PV_PREC="2",   ARCHIVE=" 1Hz", PV_DESC="FB Safety close setpoint from HMI",  PV_EGU="mbar")
+
+############################
+#  COMMAND BLOCK
+############################ 
+define_command_block()
+
+#OPI buttons
+add_digital("Cmd_Auto",                PV_DESC="CMD: Auto Mode")
+add_digital("Cmd_Manual",              PV_DESC="CMD: Manual Mode")
+add_digital("Cmd_Force",               PV_DESC="CMD: Force Mode")
+add_digital("Cmd_ManuOpen",            PV_DESC="CMD: Manual Open")
+add_digital("Cmd_ManuClose",           PV_DESC="CMD: Manual Close")
+add_digital("Cmd_ForceOpen",           PV_DESC="CMD: Force Open")
+add_digital("Cmd_ForceClose",          PV_DESC="CMD: Force Close")
+add_digital("Cmd_AckAlarm",            PV_DESC="CMD: Acknowledge Alarm")
+add_digital("Cmd_ForceUnlock",         PV_DESC="CMD: Force Unlock Device")
+add_digital("Cmd_DevLock",             PV_DESC="CMD: Lock Device")
+add_digital("Cmd_DevUnlock",           PV_DESC="CMD: Unlock Device")
+
+############################
+#  PARAMETER BLOCK
+############################ 
+define_parameter_block()
+
+#Locking mechanism
+add_analog("P_Faceplate_LockID",       "DINT",                                    PV_DESC="Device ID after Lock")
+add_analog("P_BlockIcon_LockID",       "DINT",                                    PV_DESC="Device ID after Blockicon Open")
+add_analog("P_OpenSP",                 "REAL",  PV_PREC="2", ARCHIVE=" 1Hz",      PV_DESC="Safety open setpoint from OPI",         PV_EGU="mbar")
+add_analog("P_CloseSP",                "REAL",  PV_PREC="2", ARCHIVE=" 1Hz",      PV_DESC="Safety close setpoint from OPI",                   PV_EGU="mbar")

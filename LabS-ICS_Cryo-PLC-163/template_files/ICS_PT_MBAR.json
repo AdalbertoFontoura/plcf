@@ -1,0 +1,333 @@
+{
+      "_comment": "",
+      "DEV": {
+            "Status": {
+                  "analog": [
+                        {
+                              "property": "TransmitterColor",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Transmitter color"
+                        },
+                        {
+                              "property": "ScaleLOW",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Scale LOW",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "ScaleHIGH",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Scale HIGH",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "MeasValue",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Pressure Value",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "Faceplate_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Owner Lock ID"
+                        },
+                        {
+                              "property": "BlockIcon_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Guest Lock ID"
+                        },
+                        {
+                              "property": "FB_ForceValue",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Feedback Force Pressure",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "FB_Limit_HIHI",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Feedback Limit HIHI",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "FB_Limit_HI",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Feedback Limit HI",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "FB_Limit_LO",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Feedback Limit LO",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "FB_Limit_LOLO",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Feedback Limit LOLO",
+                              "EGU": "mBar"
+                        }
+                  ],
+                  "digital": [
+                        {
+                              "property": "OpMode_FreeRun",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode FreeRun",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "OpMode_Forced",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Forced",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Inhibit_Manual",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Manual Mode",
+                              "ONAM": "InhibitManual",
+                              "ZNAM": "AllowManual"
+                        },
+                        {
+                              "property": "Inhibit_Force",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Force Mode",
+                              "ONAM": "InhibitForce",
+                              "ZNAM": "AllowForce"
+                        },
+                        {
+                              "property": "Inhibit_Lock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Inhibit Locking",
+                              "ONAM": "InhibitLocking",
+                              "ZNAM": "AllowLocking"
+                        },
+                        {
+                              "property": "EnableFreeRunBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Free Run Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableManualBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Manual Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "EnableForcedBtn",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Enable Force Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DevLocked",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Device Locked",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": [],
+                  "major_alarm": [
+                        {
+                              "property": "LatchAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "True"
+                        },
+                        {
+                              "property": "GroupAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Underrange",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Overrange",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "HIHI",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "LOLO",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "IO_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Module_Error",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        }
+                  ],
+                  "minor_alarm": [
+                        {
+                              "property": "HI",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "LO",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        }
+                  ]
+            },
+            "Command": {
+                  "analog": [],
+                  "digital": [
+                        {
+                              "property": "Cmd_FreeRun",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: FreeRun Mode"
+                        },
+                        {
+                              "property": "Cmd_Force",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Mode"
+                        },
+                        {
+                              "property": "Cmd_ForceVal",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Value"
+                        },
+                        {
+                              "property": "Cmd_AckAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Acknowledge Alarm"
+                        },
+                        {
+                              "property": "Cmd_ForceUnlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Force Unlock Device"
+                        },
+                        {
+                              "property": "Cmd_DevLock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Lock Device"
+                        },
+                        {
+                              "property": "Cmd_DevUnlock",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Unlock Device"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "Parameter": {
+                  "analog": [
+                        {
+                              "property": "P_Limit_HIHI",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Limit HIHI",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "P_Limit_HI",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Limit HI",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "P_Limit_LO",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Limit LO",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "P_Limit_LOLO",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Limit LOLO",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "P_ForceValue",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Force pressure",
+                              "EGU": "mBar"
+                        },
+                        {
+                              "property": "P_Faceplate_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Device ID after Lock"
+                        },
+                        {
+                              "property": "P_BlockIcon_LockID",
+                              "plcvartype": "DINT",
+                              "set_as_field": "None",
+                              "DESC": "Device ID after Blockicon Open"
+                        }
+                  ],
+                  "digital": [],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "PLCF": {}
+      }
+}

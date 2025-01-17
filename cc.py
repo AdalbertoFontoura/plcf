@@ -794,7 +794,7 @@ class CC(object):
 
             if include_self:
                 pool.insert(0, self)
-
+            print("pool:{}".format(pool))
             return pool
 
 

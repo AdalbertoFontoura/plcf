@@ -1,0 +1,118 @@
+###################################### ICS HWI ###############################################
+#############################  ICS Instrument Library     ####################################
+##  PLC Sample Code in VersionDog: ICS_LIBRARY_MASTER_PLC                                   ## 
+##  CCDB device types: ICS_xxxxx                                                            ##  
+##  EPICS HMI (Block Icons/Faceplates)@ GitLab. Projekt: Cryo / CryogenicsLibrary / CryoLib ##
+##                                                                                          ##  
+##                             PT - Pressure Transmitter in mbar                            ##
+##                                                                                          ##  
+##                                                                                          ##  
+############################         Version: 1.3             ################################
+# Author:  Miklos Boros
+# Date:    27-05-2019
+# Version: v1.3
+# Changes: 
+# 1. Variable Name Unification 
+############################         Version: 1.2             ################################
+# Author:  Miklos Boros
+# Date:    28-02-2019
+# Version: v1.2
+# Changes: 
+# 1. Major review, 
+# 2. Indent,  unit standardization
+############################         Version: 1.1             ################################
+# Author:  Miklos Boros, Marino Vojneski 
+# Date:    12-06-2018
+# Version: v1.1
+# Changes: 
+# 1. Modified Alarm Signal section to be compatible with new format.
+############################ Version: 1.0             ########################################
+# Author:  Miklos Boros 
+# Date:    25-01-2018
+# Version: v1.0
+
+
+
+############################
+#  STATUS BLOCK
+############################ 
+define_status_block()
+
+#Operation modes
+add_digital("OpMode_FreeRun",          PV_DESC="Operation Mode FreeRun", PV_ONAM="True",                    PV_ZNAM="False")
+add_digital("OpMode_Forced",           PV_DESC="Operation Mode Forced",  PV_ONAM="True",                    PV_ZNAM="False")
+
+#Inhibit signals (set by the PLC code, can't be changed by the OPI)
+add_digital("Inhibit_Manual",          PV_DESC="Inhibit Manual Mode",    PV_ONAM="InhibitManual",           PV_ZNAM="AllowManual")
+add_digital("Inhibit_Force",           PV_DESC="Inhibit Force Mode",     PV_ONAM="InhibitForce",            PV_ZNAM="AllowForce")
+add_digital("Inhibit_Lock",            PV_DESC="Inhibit Locking",        PV_ONAM="InhibitLocking",          PV_ZNAM="AllowLocking")
+add_analog("TransmitterColor",         "INT",                            PV_DESC="Transmitter color")
+
+#for OPI visualization
+add_digital("EnableFreeRunBtn",        PV_DESC="Enable Free Run Button", PV_ONAM="True",                    PV_ZNAM="False")
+add_digital("EnableManualBtn",         PV_DESC="Enable Manual Button",   PV_ONAM="True",                    PV_ZNAM="False")
+add_digital("EnableForcedBtn",         PV_DESC="Enable Force Button",    PV_ONAM="True",                    PV_ZNAM="False")
+add_analog("ScaleLOW",                 "REAL",                           PV_DESC="Scale LOW",               PV_EGU="mBar")
+add_analog("ScaleHIGH",                "REAL",                           PV_DESC="Scale HIGH",              PV_EGU="mBar")
+
+#Transmitter value
+add_analog("MeasValue",                "REAL",                           PV_DESC="Pressure Value",          PV_EGU="mBar")
+
+#Locking mechanism
+add_digital("DevLocked",               PV_DESC="Device Locked",          PV_ONAM="True",                    PV_ZNAM="False")
+add_analog("Faceplate_LockID",         "DINT",                           PV_DESC="Owner Lock ID")
+add_analog("BlockIcon_LockID",         "DINT",                           PV_DESC="Guest Lock ID")
+
+#Alarm signals
+add_major_alarm("LatchAlarm",          "Latching of alarms",             PV_ZNAM="True")
+add_major_alarm("GroupAlarm",          "GroupAlarm",                     PV_ZNAM="NominalState")
+add_major_alarm("Underrange",          "Pressure Underrange",            PV_ZNAM="NominalState")
+add_major_alarm("Overrange",           "Pressure Overrange",             PV_ZNAM="NominalState")
+add_major_alarm("HIHI",                "Pressure HIHI",                  PV_ZNAM="NominalState")
+add_minor_alarm("HI",                  "Pressure HI",                    PV_ZNAM="NominalState")
+add_minor_alarm("LO",                  "Pressure LO",                    PV_ZNAM="NominalState")
+add_major_alarm("LOLO",                "Pressure LOLO",                  PV_ZNAM="NominalState")
+add_major_alarm("IO_Error",            "IO_Error",                       PV_ZNAM="NominalState")
+add_major_alarm("Module_Error",        "Module_Error",                   PV_ZNAM="NominalState")
+
+#Feedback
+add_analog("FB_ForceValue",            "REAL",                           PV_DESC="Feedback Force Pressure", PV_EGU="mBar")
+add_analog("FB_Limit_HIHI",            "REAL",                           PV_DESC="Feedback Limit HIHI",     PV_EGU="mBar")
+add_analog("FB_Limit_HI",              "REAL",                           PV_DESC="Feedback Limit HI",       PV_EGU="mBar")
+add_analog("FB_Limit_LO",              "REAL",                           PV_DESC="Feedback Limit LO",       PV_EGU="mBar")
+add_analog("FB_Limit_LOLO",            "REAL",                           PV_DESC="Feedback Limit LOLO",     PV_EGU="mBar")
+
+
+############################
+#  COMMAND BLOCK
+############################ 
+define_command_block()
+
+#OPI buttons
+add_digital("Cmd_FreeRun",             PV_DESC="CMD: FreeRun Mode")
+add_digital("Cmd_Force",               PV_DESC="CMD: Force Mode")
+add_digital("Cmd_ForceVal",            PV_DESC="CMD: Force Value")
+
+add_digital("Cmd_AckAlarm",            PV_DESC="CMD: Acknowledge Alarm")
+
+add_digital("Cmd_ForceUnlock",         PV_DESC="CMD: Force Unlock Device")
+add_digital("Cmd_DevLock",             PV_DESC="CMD: Lock Device")
+add_digital("Cmd_DevUnlock",           PV_DESC="CMD: Unlock Device")
+
+############################
+#  PARAMETER BLOCK
+############################ 
+define_parameter_block()
+
+#Limits
+add_analog("P_Limit_HIHI",             "REAL",                           PV_DESC="Limit HIHI",              PV_EGU="mBar")
+add_analog("P_Limit_HI",               "REAL",                           PV_DESC="Limit HI",                PV_EGU="mBar")
+add_analog("P_Limit_LO",               "REAL",                           PV_DESC="Limit LO",                PV_EGU="mBar")
+add_analog("P_Limit_LOLO",             "REAL",                           PV_DESC="Limit LOLO",              PV_EGU="mBar")
+
+#Forcing
+add_analog("P_ForceValue",             "REAL",                           PV_DESC="Force pressure",          PV_EGU="mBar")
+
+#Locking mechanism
+add_analog("P_Faceplate_LockID",       "DINT",                           PV_DESC="Device ID after Lock")
+add_analog("P_BlockIcon_LockID",       "DINT",                           PV_DESC="Device ID after Blockicon Open")

@@ -1114,17 +1114,18 @@ PLC-EPICS-COMMS: GatewayDatablock: {}""".format(hash_base, gw_db)
         print("-----------------------------------------")
         for device in devices:
             cplcf = getPLCF(device)
-
+            print(cplcf)
             print(device.name())
 #            print("Device type: " + device.deviceType())
 
             self._hashobj.update(device.name())
-
+            print("depois do update")
             ifdef = getIfDef(device, cplcf)
+            print("depois do ifdef")
             if ifdef is not None:
                 ifdef.calculate_hash(self._hashobj)
                 self._ifdefs.append(ifdef)
-
+            
             print("=" * 40)
 
         cur_hash = (self._hashobj.getHash(), self._hashobj.getCRC32())
@@ -1614,7 +1615,7 @@ def processTemplateID(templateID, devices):
     assert isinstance(devices,    list)
 
     start_time = time.time()
-    print("aqui")
+    print("processa o template!!!!")
     rootDevice = devices[0]
     print(rootDevice)
     rcplcf     = getPLCF(rootDevice)
@@ -1780,9 +1781,11 @@ def processDevice(deviceName, plc, templateIDs):
         print("Obtaining controls tree for {}...".format(deviceName), end = '')
         sys.stdout.flush()
 
-    try:
-        print("aqui")
+    try:#should come from prject  .json file not ccdb anymore
+        print("aqui!")
         device = glob.ccdb.device(deviceName)
+        #device = {'id': '302596', 'nameId': 'af564417-4e68-41b3-8372-a0a36f487737', 'name': 'LabS-ICS:Cryo-PLC-163', 'slotType': 'SLOT', 'parents': [{'id': '30Id': None, 'name': 'CWU', 'label': None}], 'children': None, 'powers': None, 'poweredBy': None, 'controls': [{'id': '302636', 'nameId': 'd86a6cde-6a99-4f33-9ac8-6cd18727d090', 'name': 'LabV-090', 'label': None}, {'id': '312455', 'nameId': '978f8844-6b19-487f-a9b7-f54c4a761fa6', 'name': 'LabS-ICS:Cryo-PT-163', 'label': None}, {'id': '326015', 'nameId': 'fc2fec36-f666-4e5d-bfb3d', 'name': 'LabS-ICS:Cryo-LT-163', 'label': None}], 'controlledBy': [{'id': '302627', 'nameId': '5b40dbf3-43f1-4977-b642-11026e52eb2d', 'name': 'LabS-ICS:SC-IOC-163', 'label': None}], ': 'PLC to test some logic and functions to Cryogenic work group', 'artifacts': [{'id': None, 'name': 'EPI[CMS_GLOBAL]', 'description': 'PLC internal control PVs', 'uri': 'https://gitlab.eshwi/ics_library_definitions', 'kind': 'SLOT', 'type': 'URI'}], 'deviceType': 'PLC', 'properties': [{'name': 'PLCF#PLC-EPICS-COMMS: DiagConnectionID', 'value': '254', 'dataType': 'Integer',e, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: DiagPort', 'value': '2001', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'EPICSModule', 'value': 'null', 'dataType': '', 'unit': None, 'kind': 'SLOT'}, {'name': 'EPICSSnippet', 'value': 'null', 'dataType': 'Strings List', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS:Endianness', 'value':  'dataType': 'Endianness', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-DIAG:Max-Modules-In-IO-Device', 'value': '60', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'G:Max-IO-Devices', 'value': '20', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#EPICSToPLCDataBlockStartOffset', 'value': '0', 'dataType': 'Integer', 'unit': None, ''}, {'name': 'PLCF#PLCToEPICSDataBlockStartOffset', 'value': '0', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: MBConnectionID', 'value': '255', 'dateger', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: MBPort', 'value': '502', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: S7Connvalue': '256', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: S7Port', 'value': '2000', 'dataType': 'Integer', 'unit': None, 'kind': 'SLOT'}, {'name'EPICS-COMMS: PLCPulse', 'value': 'Pulse_200ms', 'dataType': 'PLCPulse', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-DIAG:Max-Local-Modules', 'value': '60', 'dataType': 'Integer', 'unkind': 'SLOT'}, {'name': 'PLC-EPICS-COMMS: GatewayDatablock', 'value': 'null', 'dataType': 'String', 'unit': None, 'kind': 'SLOT'}, {'name': 'Hostname', 'value': 'cryo-test-plc163.cslab.esdataType': 'CSEntryHost', 'unit': None, 'kind': 'SLOT'}, {'name': 'PLCF#PLC-EPICS-COMMS: InterfaceID', 'value': '72', 'dataType': 'String', 'unit': None, 'kind': 'SLOT'}]}>)
+        print("device.name:{}".format(device.name))
     except CC.NoSuchDeviceException:
         print("""
 ERROR:
@@ -1816,10 +1819,10 @@ Exiting.
 
     # create a stable list of controlled devices
     devices = device.buildControlsList(include_self = True, verbose = True)
-
+    print("devices:{}".format(devices))
     # create a factory of CCDB
     try:
-        output_files["CCDB-FACTORY"] = device.toFactory(deviceName, OUTPUT_DIR, git_tag = epi_version, script = "-".join([ deviceName, glob.timestamp ]))
+        output_files["CCDB-FACTORY"] = device.toFactory(deviceName, OUTPUT_DIR, git_tag = epi_version, script = "-".join([ deviceName, glob.timestamp ])) #?
     except CC.Exception:
         pass
 
@@ -1837,6 +1840,7 @@ Exiting.
 
     if plc:
         plc.get_ifdefs(devices)
+        print(plc)
         # Returns the template IDs that have nothing to do with the PLC
         templateIDs = plc.generate_files(devices, templateIDs)
 
@@ -2414,9 +2418,9 @@ Your Python version is {}
         ifdef_params.pop("COMMIT_ID", COMMIT_ID)
         # Remove plcfactory status when verifying
         ifdef_params.pop("PLCF_STATUS", 0)
-    #print(device)
-    #print(plc)
-    #print(templateIDs)
+    print(device)
+    print(plc)
+    print(templateIDs)
     root_device = processDevice(device, plc, list(templateIDs))
     
     # record the arguments used to run this instance

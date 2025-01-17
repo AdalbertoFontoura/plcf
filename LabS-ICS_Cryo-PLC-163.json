@@ -1,0 +1,63 @@
+{
+    "_comment": "LabS-ICS:Cryo-PLC-163",
+    "PROJ": {
+        "STATUS": "Ready",
+        "ALARMNAME": "CMDS",
+        "IOC": {
+            "ioc_type": "",
+            "epics_version": "",
+            "require_version": "",
+            "realtime": "",
+            "packages": [],
+            "address_list": [],
+            "essname": "LabS-ICS:Cryo-PLC-163:SC-IOC-010"
+        },
+        "HW": {
+            "type": "Siemens",
+            "comm_protocol": "TCP/IP-Modbus",
+            "ipaddr": "labs-ics:cryo-plc-163.tn.esss.lu.se",
+            "essname": "LabS-ICS:Cryo-PLC-163",
+            "tia_portal_version": "v17",
+            "diagnostic": "False",
+            "PLCF#EPICSToPLCDataBlockStartOffset": "0",
+            "PLCF#PLCToEPICSDataBlockStartOffset": "0",
+            "PLCF#PLC-EPICS-COMMS: MBPort": "502",
+            "PLCF#PLC-EPICS-COMMS: MBConnectionID": "255",
+            "PLCF#PLC-EPICS-COMMS: S7ConnectionID": "256",
+            "PLCF#PLC-EPICS-COMMS: S7Port": "2000",
+            "PLCF#PLC-EPICS-COMMS:Endianness": "BigEndian",
+            "PLCF#PLC-EPICS-COMMS: InterfaceID": "0",
+            "PLCF#PLC-DIAG:Max-IO-Devices": "20",
+            "PLCF#PLC-DIAG:Max-Local-Modules": "60",
+            "PLCF#PLC-DIAG:Max-Modules-In-IO-Device": "60",
+            "PLCF#PLC-EPICS-COMMS: PLCPulse": "Pulse_200ms",
+            "PLCF#PLC-EPICS-COMMS: DiagConnectionID": "254",
+            "PLCF#PLC-EPICS-COMMS: DiagPort": "2001"
+        },
+        "CTRL": {
+            "TEMPLATEPLACE": "Local",
+            "DEVICE": [
+                {
+                    "essname": "LabS-ICS:Cryo-PLC-163",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "PLC.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-LT-163",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-PT-163",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_PT_MBAR.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-CV-090",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/plcintegrator/templates",
+                    "template_name": "ICS_SCV.json"
+                }
+            ]
+        }
+    }
+}

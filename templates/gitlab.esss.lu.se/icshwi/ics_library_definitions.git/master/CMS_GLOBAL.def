@@ -1,0 +1,227 @@
+###################################### Cryo Systems ########################################
+##############################  Cryogenics Moderator System   ##############################
+##                         CrS-CMS:CRYO: DIAG - Diagnostics and Maintenance
+##
+############################         Version: 1.1             ################################
+# Author:  Attila Horvath
+# Date:    08-08-2022
+# Version: v1.1
+# Changes: 
+# 1. Archived PVs updated   
+############################ Version: 1.0             ######################################
+# Author:	Miklos Boros 
+# Date:		12-02-2018
+# Version:  v1.0
+
+
+
+############################
+#  STATUS BLOCK
+############################ 
+define_status_block()
+
+#Global Interlocks
+add_analog("GIntlockMax","INT",                         PV_DESC="Total number of Global Interlocks")
+add_analog("GIntlockAct","INT",                         PV_DESC="Number of active Global Interlocks")
+
+#State Dependent Interlocks
+add_analog("SIntlockMax","INT",                         PV_DESC="Total number of State Interlocks")
+add_analog("SIntlockAct","INT",                         PV_DESC="Number of active State Interlocks")
+
+#Forced Measurements
+add_analog("ForcedMax","INT",                           PV_DESC="Total number of measurements")
+add_analog("ForcedAct","INT",                           PV_DESC="Number of active forced values")
+
+#Current Gas
+add_string("CurrentGas", 39,                       PV_NAME="CurrentGas",               PV_DESC="CurrentGas")
+add_analog("CurrentGasUsed","INT",	ARCHIVE=True,	PV_DESC="1-N, 2-He, 3-H")
+add_digital("Ena_NitrogenGas",                     PV_DESC="CMD: Enable Gas Selector")
+add_digital("Ena_HeliumGas",                       PV_DESC="CMD: Enable Gas Selector")
+add_digital("Ena_HydrogenGas",                     PV_DESC="CMD: Enable Gas Selector")
+
+#PSS signals                      
+add_digital("PSS_LEL_Below10A",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")  
+add_digital("PSS_LEL_Below10B",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False") 
+add_digital("PSS_LEL_Below25A",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False") 
+add_digital("PSS_LEL_Below25B",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False") 
+add_digital("PSS_FillingPermA",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("PSS_FillingPermB",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")  
+add_digital("PSS_NoSpecStateA",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("PSS_NoSpecStateB",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("PSS_CV62001_Perm",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("PSS_CV82095_Perm",		ARCHIVE=True,           PV_DESC="PSS Signal",      PV_ONAM="True",                       PV_ZNAM="False")
+
+
+add_analog("ColdBoxPCBLevel",                "REAL",  ARCHIVE=True,            PV_DESC="ColdBox PCB liquid Level",          PV_EGU="m")
+
+add_analog("CV62029_Flow",                	"REAL",  ARCHIVE=True,            PV_DESC="Flow Rate through valve",           PV_EGU="g/s")
+add_analog("CV62033_Flow",                	"REAL",  ARCHIVE=True,            PV_DESC="Flow Rate through valve",           PV_EGU="g/s")
+add_analog("LH2Pump_Flow",                	"REAL",  ARCHIVE=True,            PV_DESC="Flow Rate through pumps",           PV_EGU="g/s")
+
+add_digital("ParametersFrozen",                       ARCHIVE=True,            PV_DESC="All parameters Zero",            PV_ONAM="Zero",               PV_ZNAM="OK")      
+
+add_analog("SpareREAL1","REAL" ,ARCHIVE=True,                      PV_DESC="Spare Real1")
+add_analog("SpareREAL2","REAL" ,ARCHIVE=True,                      PV_DESC="Spare Real2")
+add_analog("SpareREAL3","REAL" ,ARCHIVE=True,                      PV_DESC="Spare Real3")
+add_analog("SpareREAL4","REAL" ,ARCHIVE=True,                      PV_DESC="Spare Real4")
+add_analog("SpareREAL5","REAL" ,ARCHIVE=True,                      PV_DESC="Spare Real5")
+
+add_analog("SpareWORD1","WORD" ,                      PV_DESC="Spare WORD1")
+add_analog("SpareWORD2","WORD" ,                      PV_DESC="Spare WORD2")
+
+add_digital("SpareBOOL1",                             PV_DESC="SpareBOOL1")      
+add_digital("SpareBOOL2",                             PV_DESC="SpareBOOL2")      
+add_digital("SpareBOOL3",                             PV_DESC="SpareBOOL3")      
+add_digital("SpareBOOL4",                             PV_DESC="SpareBOOL4")      
+add_digital("SpareBOOL5",                             PV_DESC="SpareBOOL5")      
+add_digital("SpareBOOL6",                             PV_DESC="SpareBOOL6")      
+add_digital("SpareBOOL7",                             PV_DESC="SpareBOOL7")      
+add_digital("SpareBOOL8",                             PV_DESC="SpareBOOL8")      
+add_digital("SpareBOOL9",                             PV_DESC="SpareBOOL9")      
+add_digital("SpareBOOL10",                            PV_DESC="SpareBOOL10")      
+add_digital("SpareBOOL11",                            PV_DESC="SpareBOOL11")      
+add_digital("SpareBOOL12",                            PV_DESC="SpareBOOL12")      
+add_digital("SpareBOOL13",                            PV_DESC="SpareBOOL13")      
+add_digital("SpareBOOL14",                            PV_DESC="SpareBOOL14")      
+add_digital("SpareBOOL15",                            PV_DESC="SpareBOOL15")      
+add_digital("SpareBOOL16",                            PV_DESC="SpareBOOL16")      
+
+
+add_digital("FailureA1_Active",	ARCHIVE=True,                         PV_DESC="OP concentration",               PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA2_Active",	ARCHIVE=True,                         PV_DESC="ColdBox Vacuum Failure",         PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA31_Active",ARCHIVE=True,                         PV_DESC="ColdBox Low Pressure Failure",   PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA32_Active",ARCHIVE=True,                         PV_DESC="ColdBox High Pressure Failure",  PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA4_Active",	ARCHIVE=True,                         PV_DESC="H2 Leak  Failure",               PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA5_Active",	ARCHIVE=True,                         PV_DESC="TMCP Failure",                   PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA6_Active",	ARCHIVE=True,                         PV_DESC="HX-61100 dT Failure",            PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA71_Active",ARCHIVE=True,                         PV_DESC="One HPump Failure",              PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA72_Active",ARCHIVE=True,                         PV_DESC="Two HPump Failure",              PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("FailureA8_Active",	ARCHIVE=True,                         PV_DESC="Multiple Failure",               PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_analog("F8_Trigger1","INT",	ARCHIVE=True,                         PV_DESC="First FA that triggered F8")
+add_analog("F8_Trigger2","INT",	ARCHIVE=True,                         PV_DESC="Second FA that triggered F8")
+add_digital("FailureA9_Active",	ARCHIVE=True,                         PV_DESC="PCB Heater Temp",                PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("GlobalFAActive",	ARCHIVE=True,                         PV_DESC="At least one FA active",         PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+
+add_digital("WarningM1_Active", ARCHIVE=True,                         PV_DESC="OP concentration Warning",       PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM2_Active", ARCHIVE=True,                         PV_DESC="ColdBox Vacuum Warning",         PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM31_Active",ARCHIVE=True,                         PV_DESC="ColdBox Low Pressure Warning",   PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM32_Active",ARCHIVE=True,                         PV_DESC="ColdBox High Pressure Warning",  PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM4_Active", ARCHIVE=True,                         PV_DESC="H2 Leak Warning",                PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM5_Active", ARCHIVE=True,                         PV_DESC="TMCP Warning",                   PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM6_Active", ARCHIVE=True,                         PV_DESC="HX-61100 dT Warning",            PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM7_Active", ARCHIVE=True,                         PV_DESC="One HPump Warning",              PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("WarningM9_Active", ARCHIVE=True,                         PV_DESC="PCB Heater Warning",             PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+add_digital("GlobalWarnActive", ARCHIVE=True,                         PV_DESC="At least one Warning active",    PV_ONAM="Connected",        PV_ZNAM="Disconnected")      
+
+#PLC Local Modules DIAG
+add_digital("PLC_CPU",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_CM",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF11",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF12",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF13",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF14",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF15",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF21",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF22",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF31",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")  
+add_digital("PLC_KF32",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")  
+add_digital("PLC_KF33",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")  
+add_digital("PLC_KF34",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")  
+add_digital("PLC_KF35",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF36",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF37",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF38",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF41",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("PLC_KF42",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("PLC_KF43",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+
+#Lakeshore Diag
+add_digital("Lakeshore_KF1",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("Lakeshore_KF2",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("Lakeshore_KF3",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("Lakeshore_KF4",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("Lakeshore_KF5",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_digital("Lakeshore_KF6",	ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+
+#Pfeiffer Turbopumps
+add_digital("TP69100",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("TP89100",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+
+#LH2 Pumps
+add_digital("P62010",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("P62011",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+
+#TMCP PNPN
+add_digital("PNPN",				ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+
+#Internal Comms
+add_digital("Toms_comms",		ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected") 
+add_digital("FS_comms",			ARCHIVE=True,			PV_DESC="HardwareDiag",			PV_ONAM="Connected",			PV_ZNAM="Disconnected")
+add_analog("Toms_comms_HB",                	"INT",  ARCHIVE=True,            PV_DESC="Heartbeat signal")
+add_analog("FS_comms_HB",                	"INT",  ARCHIVE=True,            PV_DESC="Heartbeat signal")
+
+add_digital("BlkControlStatus",                         PV_DESC="Status of the Block Icon Control")
+
+#SIMULATION Digital Buttons
+add_digital("DO1",           PV_DESC="DigitalOutput1",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO2",           PV_DESC="DigitalOutput2",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO3",           PV_DESC="DigitalOutput3",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO4",           PV_DESC="DigitalOutput4",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO5",           PV_DESC="DigitalOutput5",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO6",           PV_DESC="DigitalOutput6",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO7",           PV_DESC="DigitalOutput7",      PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DO8",           PV_DESC="DigitalOutput8",      PV_ONAM="True",                       PV_ZNAM="False")
+add_analog("AO1",                "REAL",                    PV_DESC="AnalogOutput1")
+add_analog("AO2",                "REAL",                    PV_DESC="AnalogOutput2")
+add_analog("AO3",                "REAL",                    PV_DESC="AnalogOutput3")
+add_analog("AO4",                "REAL",                    PV_DESC="AnalogOutput4")
+add_analog("AO5",                "REAL",                    PV_DESC="AnalogOutput5")
+add_analog("AO6",                "REAL",                    PV_DESC="AnalogOutput6")
+add_analog("AO7",                "REAL",                    PV_DESC="AnalogOutput7")
+add_analog("AO8",                "REAL",                    PV_DESC="AnalogOutput8")
+
+
+
+
+
+
+
+############################
+#  COMMAND BLOCK
+############################ 
+define_command_block()
+
+add_digital("Cmd_AckAlarm",                          PV_DESC="CMD: Acknowledge Alarm")
+add_digital("Cmd_BlkControl_ON",                     PV_DESC="CMD: Allow control through Block Icons")
+add_digital("Cmd_BlkControl_OFF",                    PV_DESC="CMD: Disable control through Block Icons")
+
+add_digital("Cmd_ParamFreeze_OFF",                   PV_DESC="CMD: Unlock Parameter Freeze")
+
+add_digital("Cmd_NitrogenGas",                       PV_DESC="CMD: Gas Selector")
+add_digital("Cmd_HeliumGas",                         PV_DESC="CMD: Gas Selector")
+add_digital("Cmd_HydrogenGas",                       PV_DESC="CMD: Gas Selector")
+
+#SIMULATION Commands
+add_digital("DI1",           PV_DESC="DigitalInput1",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI2",           PV_DESC="DigitalInput2",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI3",           PV_DESC="DigitalInput3",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI4",           PV_DESC="DigitalInput4",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI5",           PV_DESC="DigitalInput5",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI6",           PV_DESC="DigitalInput6",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI7",           PV_DESC="DigitalInput7",       PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("DI8",           PV_DESC="DigitalInput8",       PV_ONAM="True",                       PV_ZNAM="False")
+
+
+############################
+#  PARAMETER BLOCK
+############################ 
+define_parameter_block()
+
+add_analog("AI1",                "REAL",                    PV_DESC="AnalogInput1")
+add_analog("AI2",                "REAL",                    PV_DESC="AnalogInput2")
+add_analog("AI3",                "REAL",                    PV_DESC="AnalogInput3")
+add_analog("AI4",                "REAL",                    PV_DESC="AnalogInput4")
+add_analog("AI5",                "REAL",                    PV_DESC="AnalogInput5")
+add_analog("AI6",                "REAL",                    PV_DESC="AnalogInput6")
+add_analog("AI7",                "REAL",                    PV_DESC="AnalogInput7")
+add_analog("AI8",                "REAL",                    PV_DESC="AnalogInput8")
