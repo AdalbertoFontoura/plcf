@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 from interface_factory import InterfaceFactorySiemens
+import zlib
 
 # Updated to load project configuration from a JSON file and handle local device definitions
 def load_project_config(json_file):
@@ -52,6 +53,28 @@ def print_project_devices(project_config):
         device_names.append(essname)
     print(template_names)
     return device_names, template_names
+
+def crc32_file(filepath):
+    """Calculate the CRC32 for a unique file."""
+    crc32 = 0
+    with open(filepath, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):  # Read in blocks of 4KB
+            crc32 = zlib.crc32(chunk, crc32)
+    return crc32
+
+def calculate_folder_crc32(folder_path):
+    """Calculete the CRC32 for all Device templates in the folder"""
+    combined_crc = 0
+    
+    # Read al files in folder
+    for filename in sorted(os.listdir(folder_path)):  # Make some order to keep the consistence 
+        if filename.endswith(".json"):  # filter to use only .json files
+            file_path = os.path.join(folder_path, filename)
+            file_crc = crc32_file(file_path)
+            combined_crc = zlib.crc32(file_crc.to_bytes(4, 'big'), combined_crc)  # Update CRC geral
+
+    # Return a number signed to be compatible
+    return combined_crc if combined_crc <= 0x7FFFFFFF else combined_crc - 0x100000000
 
 def generate_output_files(devices, template_dir, output_dir):
     """Generate configuration files based on templates from a directory."""
@@ -158,6 +181,9 @@ def main():
     # Load local device definitions
     load_device_definitions(args.devices, template_names, output_path)
 
+    #Create the hash number for all files
+    hash = calculate_folder_crc32(output_path)
+    print(f"CRC32 for all Device template Files: {hash}")
     # Process and generate output for IOC and PLC configurations
     #plc_template, ioc_template = process_local_devices(devices, ioc_output_dir, plc_output_dir, project_config, output_path) #consertar esta função para gerar os templates a serem usados na proxima função
 
