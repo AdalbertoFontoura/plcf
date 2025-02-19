@@ -1,0 +1,70 @@
+
+#- @field IPADDR
+#- @runtime YES
+#- PLC IP address
+
+#- @field RECVTIMEOUT
+#- @type INTEGER
+#- PLC->EPICS receive timeout (ms), should be longer than frequency of PLC SND block trigger (REQ input)
+
+#- @field DBDIR
+#- @runtime YES
+#- The directory where the db files are located
+
+#- @field MODVERSION
+#- @runtime YES
+#- The version of the PLC-IOC integration
+
+#- @field tbd_ctrl_plc_001_VERSION
+#- @runtime YES
+
+#- @field S7_PORT
+#- @runtime YES
+#- Can override S7 port with this
+
+#- @field MB_PORT
+#- @runtime YES
+#- Can override Modbus port with this
+
+#-
+#- Check if MODVERSION is set
+#-
+#- First set PLCIOCVERSION to a safe default; the module version if it is a module else the creation date
+epicsEnvSet("PLCIOCVERSION", "$(tbd_ctrl_plc_001_VERSION=None)")
+#- Now, the tricky part;
+#- 1. try to set PLCIOCVERSION from a macro named PLCIOCVERSION + MODVERSION (where MODVERSION defaults to the empty string if not set)
+#-    this will basically set PLCIOCVERSION to the value of PLCIOCVERSION if MODVERSION is not set or empty
+#- 2. if MODVERSION _is_ set to a non empty string then PLCIOCVERSION will be set to the value of MODVERSION because
+#-    the constructed macro name (from the macros PLCIOCVERSION + MODVERSION) will not exist and the value of MODVERSION will be used as a default
+epicsEnvSet("PLCIOCVERSION", "$(PLCIOCVERSION$(MODVERSION=)=$(MODVERSION))")
+
+#- S7 port           : 2000
+#- Input block size  : 250 bytes
+#- Output block size : 0 bytes
+#- Endianness        : BigEndian
+s7plcConfigure("LabS-ICS:Cryo-PLC-163", $(IPADDR=labs-ics:cryo-plc-163.tn.esss.lu.se), $(S7_PORT=2000), 250, 0, 1, $(RECVTIMEOUT=300), 0)
+
+#- Modbus port       : 502
+drvAsynIPPortConfigure("LabS-ICS:Cryo-PLC-163", $(IPADDR=labs-ics:cryo-plc-163.tn.esss.lu.se):$(MB_PORT=502), 0, 0, 1)
+
+#- Link type         : TCP/IP (0)
+#- The timeout is initialized to the (modbus) default if not specified
+modbusInterposeConfig("LabS-ICS:Cryo-PLC-163", 0, $(RECVTIMEOUT=0), 0)
+
+#- Slave address     : 0
+#- Function code     : 16 - Write Multiple Registers
+#- Addressing        : Absolute (-1)
+#- Data segment      : 20 words
+drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-163write", "LabS-ICS:Cryo-PLC-163", 0, 16, -1, 20, 0, 0, "S7-1500")
+
+#- Slave address     : 0
+#- Function code     : 3 - Read Multiple Registers
+#- Addressing        : Relative (0)
+#- Data segment      : 10 words
+#- Polling           : 1000 msec
+drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-163read", "LabS-ICS:Cryo-PLC-163", 0, 3, 0, 10, 0, 1000, "S7-1500")
+
+#- Load plc interface database
+dbLoadRecords("$(DBDIR=)tbd_ctrl_plc_001.db", "PLCNAME=LabS-ICS:Cryo-PLC-163, MODVERSION=None, S7_PORT=$(S7_PORT=2000), MODBUS_PORT=$(MB_PORT=502), PAYLOAD_SIZE=250")
+#- Remove PLCIOCVERSION to not pollute the environment
+epicsEnvUnset("PLCIOCVERSION")

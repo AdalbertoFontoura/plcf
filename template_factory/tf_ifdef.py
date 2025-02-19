@@ -9,6 +9,9 @@ __author__     = "Krisztian Loki"
 __copyright__  = "Copyright 2017, European Spallation Source, Lund"
 __license__    = "GPLv3"
 
+# Added a public method add_comment(line) to be used externally 
+# Changed self._source = ("",0)
+# Alfio Rizzo -  Fri Feb 14 12:06:26 PM CET 2025
 
 import copy
 from collections import OrderedDict
@@ -878,8 +881,8 @@ class IF_DEF(object):
             artifact = keyword_params.get("ARTIFACT")
         else:
             artifact = def_file
-            def_file = artifact.saved_as()
-
+            def_file = artifact.saved_as() # str path of the definition file
+        
         keyword_params["PLCF"] = keyword_params.get("PLCF", IF_DEF.create_dummy_plcf())
         cplcf = keyword_params["PLCF"]
 
@@ -917,7 +920,7 @@ class IF_DEF(object):
         self._active_BLOCK          = None
         self._overlap               = None
         self._active                = True
-        self._source                = ""
+        self._source                = ("",0)
         self._to_plc_words_length   = 0
         self._from_plc_words_length = 0
         self._optimize              = OPTIMIZE
@@ -1048,6 +1051,9 @@ class IF_DEF(object):
 
         var   = SOURCE(line, comment = True)
         return self._add(var)
+
+    def add_comment(self, line):
+        self._add_comment(line)
 
 
     def _add_source(self):
@@ -1542,7 +1548,7 @@ class IF_DEF(object):
     def define_status_block(self):
         if self._STATUS is not None:
             raise IfDefSyntaxError("Block redefinition is not possible!")
-
+        
         self._active_BLOCK = self._STATUS = STATUS_BLOCK(self._source, self._optimize)
         return self._add(self._STATUS)
 
@@ -1671,8 +1677,9 @@ class IF_DEF(object):
             keyword_params = self._handle_extra_params(keyword_params)
 
             bit_def = self._active_bit_def()
-
+            
             var = BIT(self._source, bit_def, name, keyword_params)
+    
             return self._add(var)
 
 
@@ -2351,7 +2358,6 @@ class PV(SOURCE):
         """
         if pv_name is None:
             return self._fqpvname
-
         name = "{slot}:{property}".format(slot = self.ess_name(), property = pv_name)
         valid, name = PV.__fqpn(self.ess_name(), pv_name)
         if valid:

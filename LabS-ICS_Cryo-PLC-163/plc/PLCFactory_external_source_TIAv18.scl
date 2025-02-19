@@ -1,0 +1,1664 @@
+FUNCTION_BLOCK "_UtilitiesFB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      CPUSytemMemoryBits { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Byte;   // Address of system memory byte
+      CPUClockMemoryBits { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Byte;   // Address of clock memory byte
+      StartupDelaySP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Time;   // Delay before startup delay bit turned on
+   END_VAR
+
+   VAR 
+      AlwaysOn { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit always TRUE
+      AlwaysTrue { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit always TRUE
+      AlwaysOff { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit always FALSE
+      AlwaysFalse { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit always FALSE
+      FirstScan { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE for only the first scan of the PLC
+      StartupDelayDn { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit initially FALSE, turning TRUE after preset delay
+      StartupDelayTmr { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      Square_100ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (100 ms frequency)
+      Square_100msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_100ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 100 ms for one PLC scan
+      Square_200ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (200 ms frequency)
+      Square_200msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_200ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 200 ms for one PLC scan
+      Square_400ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (400 ms frequency)
+      Square_400msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_400ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 400 ms for one PLC scan
+      Square_500ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (500 ms frequency)
+      Square_500msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_500ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 500 ms for one PLC scan
+      Square_800ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (800 ms frequency)
+      Square_800msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_800ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 800 ms for one PLC scan
+      Square_1s { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (1 s frequency)
+      Square_1sONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_1s { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 1 s for one PLC scan
+      Square_1600ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (1600 ms frequency)
+      Square_1600msONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_1600ms { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 1600 ms for one PLC scan
+      Square_2s { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit FALSE/TRUE based on square wave (2 s frequency)
+      Square_2sONS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+      Pulse_2s { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Bit TRUE every 2 s for one PLC scan
+      TestInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Indicates which caller FC is used
+      EPICS_Device_calls_precessed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // Indicates which caller FC is used
+      EPICSParametersStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Word;   // 0=Never Uploaded 1=Uploading... 2=Uploaded
+   END_VAR
+   VAR RETAIN
+      ParameterFreeze { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;   // If True, the Handlers doesn't take new parameters from EPICS
+   END_VAR
+
+BEGIN
+	//This block provides standard "Utilities" tags that can be used in the rest OF the PLC code such
+	//as:
+	//* Always On
+	//* Always Off
+	//* Startup Delay
+	//* Pulses (different frequences)
+	//* etc.
+
+	//When using This block in your program, name the instance DB "Utilities" AND THEN you will be able TO use tags like "Utilities.AlwaysOn" in the rest OF your program.
+
+	//This block relies On information provided BY the CPU. This needs TO be enabled in the CPU hardware configuration under System AND Clock Memory.
+	//Enable both functions AND pick memory bytes you'd like TO use (defauls are %MB1 AND %MB0 respectively).
+	//THEN connect the selected Byte TO the inputs OF This block.
+	//
+
+	//Bit TRUE for only the first scan of the PLC
+	#FirstScan := #CPUSytemMemoryBits.%X0;
+
+	//Bit always TRUE
+	#AlwaysOn := #CPUSytemMemoryBits.%X2;
+	#AlwaysTrue := #CPUSytemMemoryBits.%X2;
+
+	//Bit always FALSE
+	#AlwaysOff := #CPUSytemMemoryBits.%X3;
+	#AlwaysFalse := #CPUSytemMemoryBits.%X3;
+
+	//Bit initially FALSE, turning TRUE after preset delay
+	#StartupDelayTmr.TON(IN := #AlwaysTrue,
+	                     PT := #StartupDelaySP,
+	                     Q => #StartupDelayDn);
+
+	//Bit TRUE every 100 ms FOR one PLC scan
+	#Square_100ms := #CPUClockMemoryBits.%X0;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_100ms,
+	              "iq_Trigger Bit" := #Square_100msONS,
+	              "iq_Pulse Bit" := #Pulse_100ms);
+
+	//Bit TRUE every 200 ms FOR one PLC scan
+	#Square_200ms := #CPUClockMemoryBits.%X1;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_200ms,
+	              "iq_Trigger Bit" := #Square_200msONS,
+	              "iq_Pulse Bit" := #Pulse_200ms);
+
+	//Bit TRUE every 400 ms FOR one PLC scan
+	#Square_400ms := #CPUClockMemoryBits.%X2;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_400ms,
+	              "iq_Trigger Bit" := #Square_400msONS,
+	              "iq_Pulse Bit" := #Pulse_400ms);
+
+	//Bit TRUE every 500 ms FOR one PLC scan
+	#Square_500ms := #CPUClockMemoryBits.%X3;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_500ms,
+	              "iq_Trigger Bit" := #Square_500msONS,
+	              "iq_Pulse Bit" := #Pulse_500ms);
+
+	//Bit TRUE every 800 ms FOR one PLC scan
+	#Square_800ms := #CPUClockMemoryBits.%X4;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_800ms,
+	              "iq_Trigger Bit" := #Square_800msONS,
+	              "iq_Pulse Bit" := #Pulse_800ms);
+
+	//Bit TRUE every 1 s FOR one PLC scan
+	#Square_1s := #CPUClockMemoryBits.%X5;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_1s,
+	              "iq_Trigger Bit" := #Square_1sONS,
+	              "iq_Pulse Bit" := #Pulse_1s);
+
+	//Bit TRUE every 1600 ms FOR one PLC scan
+	#Square_1600ms := #CPUClockMemoryBits.%X6;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_1600ms,
+	              "iq_Trigger Bit" := #Square_1600msONS,
+	              "iq_Pulse Bit" := #Pulse_1600ms);
+
+	//Bit TRUE every 2s FOR one PLC scan
+	#Square_2s := #CPUClockMemoryBits.%X7;
+	"UTIL_P_TRIG"("i_Input Bit" := #Square_2s,
+	              "iq_Trigger Bit" := #Square_2sONS,
+	              "iq_Pulse Bit" := #Pulse_2s);
+
+END_FUNCTION_BLOCK
+DATA_BLOCK "Utilities"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+"_UtilitiesFB"
+
+BEGIN
+   ParameterFreeze := true;
+END_DATA_BLOCK
+FUNCTION_BLOCK "DEVTYPE_CMS_GLOBAL"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+   VAR_INPUT
+      "GIntlockMax" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: GIntlockMax
+      "GIntlockAct" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: GIntlockAct
+      "SIntlockMax" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: SIntlockMax
+      "SIntlockAct" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: SIntlockAct
+      "ForcedMax" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: ForcedMax
+      "ForcedAct" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: ForcedAct
+      "CurrentGasUsed" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: CurrentGasUsed
+      "ColdBoxPCBLevel" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: ColdBoxPCBLevel
+      "CV62029_Flow" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: CV62029_Flow
+      "CV62033_Flow" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: CV62033_Flow
+      "LH2Pump_Flow" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: LH2Pump_Flow
+      "SpareREAL1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: SpareREAL1
+      "SpareREAL2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: SpareREAL2
+      "SpareREAL3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: SpareREAL3
+      "SpareREAL4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: SpareREAL4
+      "SpareREAL5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: SpareREAL5
+      "SpareWORD1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : WORD;   //EPICS Status variable: SpareWORD1
+      "SpareWORD2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : WORD;   //EPICS Status variable: SpareWORD2
+      "F8_Trigger1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: F8_Trigger1
+      "F8_Trigger2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: F8_Trigger2
+      "Toms_comms_HB" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: Toms_comms_HB
+      "FS_comms_HB" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: FS_comms_HB
+      "AO1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO1
+      "AO2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO2
+      "AO3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO3
+      "AO4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO4
+      "AO5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO5
+      "AO6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO6
+      "AO7" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO7
+      "AO8" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: AO8
+      "Ena_NitrogenGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Ena_NitrogenGas
+      "Ena_HeliumGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Ena_HeliumGas
+      "Ena_HydrogenGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Ena_HydrogenGas
+      "PSS_LEL_Below10A" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_LEL_Below10A
+      "PSS_LEL_Below10B" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_LEL_Below10B
+      "PSS_LEL_Below25A" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_LEL_Below25A
+      "PSS_LEL_Below25B" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_LEL_Below25B
+      "PSS_FillingPermA" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_FillingPermA
+      "PSS_FillingPermB" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_FillingPermB
+      "PSS_NoSpecStateA" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_NoSpecStateA
+      "PSS_NoSpecStateB" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_NoSpecStateB
+      "PSS_CV62001_Perm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_CV62001_Perm
+      "PSS_CV82095_Perm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PSS_CV82095_Perm
+      "ParametersFrozen" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: ParametersFrozen
+      "SpareBOOL1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL1
+      "SpareBOOL2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL2
+      "SpareBOOL3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL3
+      "SpareBOOL4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL4
+      "SpareBOOL5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL5
+      "SpareBOOL6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL6
+      "SpareBOOL7" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL7
+      "SpareBOOL8" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL8
+      "SpareBOOL9" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL9
+      "SpareBOOL10" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL10
+      "SpareBOOL11" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL11
+      "SpareBOOL12" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL12
+      "SpareBOOL13" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL13
+      "SpareBOOL14" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL14
+      "SpareBOOL15" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL15
+      "SpareBOOL16" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: SpareBOOL16
+      "FailureA1_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA1_Active
+      "FailureA2_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA2_Active
+      "FailureA31_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA31_Active
+      "FailureA32_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA32_Active
+      "FailureA4_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA4_Active
+      "FailureA5_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA5_Active
+      "FailureA6_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA6_Active
+      "FailureA71_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA71_Active
+      "FailureA72_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA72_Active
+      "FailureA8_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA8_Active
+      "FailureA9_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FailureA9_Active
+      "GlobalFAActive" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: GlobalFAActive
+      "WarningM1_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM1_Active
+      "WarningM2_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM2_Active
+      "WarningM31_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM31_Active
+      "WarningM32_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM32_Active
+      "WarningM4_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM4_Active
+      "WarningM5_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM5_Active
+      "WarningM6_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM6_Active
+      "WarningM7_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM7_Active
+      "WarningM9_Active" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: WarningM9_Active
+      "GlobalWarnActive" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: GlobalWarnActive
+      "PLC_CPU" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_CPU
+      "PLC_CM" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_CM
+      "PLC_KF11" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF11
+      "PLC_KF12" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF12
+      "PLC_KF13" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF13
+      "PLC_KF14" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF14
+      "PLC_KF15" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF15
+      "PLC_KF21" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF21
+      "PLC_KF22" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF22
+      "PLC_KF31" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF31
+      "PLC_KF32" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF32
+      "PLC_KF33" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF33
+      "PLC_KF34" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF34
+      "PLC_KF35" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF35
+      "PLC_KF36" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF36
+      "PLC_KF37" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF37
+      "PLC_KF38" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF38
+      "PLC_KF41" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF41
+      "PLC_KF42" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF42
+      "PLC_KF43" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PLC_KF43
+      "Lakeshore_KF1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF1
+      "Lakeshore_KF2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF2
+      "Lakeshore_KF3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF3
+      "Lakeshore_KF4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF4
+      "Lakeshore_KF5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF5
+      "Lakeshore_KF6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Lakeshore_KF6
+      "TP69100" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: TP69100
+      "TP89100" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: TP89100
+      "P62010" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: P62010
+      "P62011" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: P62011
+      "PNPN" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: PNPN
+      "Toms_comms" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Toms_comms
+      "FS_comms" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: FS_comms
+      "BlkControlStatus" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: BlkControlStatus
+      "DO1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO1
+      "DO2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO2
+      "DO3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO3
+      "DO4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO4
+      "DO5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO5
+      "DO6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO6
+      "DO7" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO7
+      "DO8" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DO8
+   EPICSToPLCLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device command register array (in words)
+   EPICSToPLCDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in EPICS->PLC comms block where this device data resides (in words)
+   PLCToEPICSLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device status register array (in words)
+   PLCToEPICSDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in PLC->EPICS comms block where this device data resides (in words)
+   END_VAR
+   VAR_OUTPUT
+      "Cmd_AckAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_AckAlarm
+      "Cmd_BlkControl_ON" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_BlkControl_ON
+      "Cmd_BlkControl_OFF" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_BlkControl_OFF
+      "Cmd_ParamFreeze_OFF" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ParamFreeze_OFF
+      "Cmd_NitrogenGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_NitrogenGas
+      "Cmd_HeliumGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_HeliumGas
+      "Cmd_HydrogenGas" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_HydrogenGas
+      "DI1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI1
+      "DI2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI2
+      "DI3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI3
+      "DI4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI4
+      "DI5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI5
+      "DI6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI6
+      "DI7" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI7
+      "DI8" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: DI8
+      "AI1" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI1
+      "AI2" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI2
+      "AI3" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI3
+      "AI4" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI4
+      "AI5" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI5
+      "AI6" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI6
+      "AI7" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI7
+      "AI8" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: AI8
+      DEVICE_PARAM_OK { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+   END_VAR
+   VAR_IN_OUT
+   END_VAR
+   Var DB_SPECIFIC
+      MyWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Word;
+      MyBytesinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..1] of Byte;
+      MyBoolsinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..15] of Bool;
+      MyDInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DInt;
+      MyWordsinDint { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDInt : Array[0..1] of Word;
+      MyReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Real;
+      MyWordsinReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyReal : Array[0..1] of Word;
+      MyInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;
+      MyWordinInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyInt : Word;
+      MyDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DWord;
+      MyWordsinDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDWord : Array[0..1] of Word;
+      MyTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Time;
+      MyWordsinTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyTime : Array[0..1] of Word;
+      MyString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : String[40];
+      MyWordsinString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyString : Array[0..20] of Word;
+   END_VAR
+   VAR_TEMP
+      HashModbus : DInt;
+      HashIFA : DInt;
+      HashTIAMap : DInt;
+      i : Int;
+   END_VAR
+    //Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+    //This block was generated by PLCFactory, please don't change it MANUALLY!
+    //Input File Name: LabS-ICS_Cryo-PLC-163-template-IFA-20250219140147.ifa
+    //Generated: 20250219140147
+    //According to HASH: -819074987
+    //Device type: CMS_GLOBAL
+    //Description: This function does the variable mapping for a device. All device-variable will be linked to an interface variable defined in this block.
+
+    //********************************************
+    //****************HASH check******************
+    //********************************************
+
+
+    #MyWordsinDint[0] := "EPICSToPLC"."Word"[0];
+    #MyWordsinDint[1] := "EPICSToPLC"."Word"[1];
+    #HashModbus := #MyDInt; //Hash from EPICS/ModbusTCP
+
+    #HashIFA := -819074987; //Hash from Interface Factory as a constant
+
+    #MyWordsinDint[0] := "PLCToEPICS"."Word"[0];
+    #MyWordsinDint[1] := "PLCToEPICS"."Word"[1];
+    #HashTIAMap := #MyDInt; //Hash from PLCFactory TIA Map
+
+
+    IF ((#HashIFA = #HashModbus) AND (#HashModbus = #HashTIAMap)) THEN //Check CRCs
+        #DEVICE_PARAM_OK := TRUE;
+
+    //********************************************
+    //*************STATUS VARIABLES***************
+    //********************************************
+
+
+       #MyInt := #"GIntlockMax";    //EPICSName: GIntlockMax
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 0] := #MyWordinInt;
+
+       #MyInt := #"GIntlockAct";    //EPICSName: GIntlockAct
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 1] := #MyWordinInt;
+
+       #MyInt := #"SIntlockMax";    //EPICSName: SIntlockMax
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 2] := #MyWordinInt;
+
+       #MyInt := #"SIntlockAct";    //EPICSName: SIntlockAct
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 3] := #MyWordinInt;
+
+       #MyInt := #"ForcedMax";    //EPICSName: ForcedMax
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 4] := #MyWordinInt;
+
+       #MyInt := #"ForcedAct";    //EPICSName: ForcedAct
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 5] := #MyWordinInt;
+
+       #MyInt := #"CurrentGasUsed";    //EPICSName: CurrentGasUsed
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 6] := #MyWordinInt;
+
+       #MyReal := #"ColdBoxPCBLevel";    //EPICSName: ColdBoxPCBLevel
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 7] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 8] := #MyWordsinReal[1];
+
+       #MyReal := #"CV62029_Flow";    //EPICSName: CV62029_Flow
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 9] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 10] := #MyWordsinReal[1];
+
+       #MyReal := #"CV62033_Flow";    //EPICSName: CV62033_Flow
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 11] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 12] := #MyWordsinReal[1];
+
+       #MyReal := #"LH2Pump_Flow";    //EPICSName: LH2Pump_Flow
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 13] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 14] := #MyWordsinReal[1];
+
+       #MyReal := #"SpareREAL1";    //EPICSName: SpareREAL1
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 15] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 16] := #MyWordsinReal[1];
+
+       #MyReal := #"SpareREAL2";    //EPICSName: SpareREAL2
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 17] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 18] := #MyWordsinReal[1];
+
+       #MyReal := #"SpareREAL3";    //EPICSName: SpareREAL3
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 19] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 20] := #MyWordsinReal[1];
+
+       #MyReal := #"SpareREAL4";    //EPICSName: SpareREAL4
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 21] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 22] := #MyWordsinReal[1];
+
+       #MyReal := #"SpareREAL5";    //EPICSName: SpareREAL5
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 23] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 24] := #MyWordsinReal[1];
+
+       #MyWord := #"SpareWORD1";    //EPICSName: SpareWORD1
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 25] := #MyWord;
+
+       #MyWord := #"SpareWORD2";    //EPICSName: SpareWORD2
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 26] := #MyWord;
+
+       #MyInt := #"F8_Trigger1";    //EPICSName: F8_Trigger1
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 27] := #MyWordinInt;
+
+       #MyInt := #"F8_Trigger2";    //EPICSName: F8_Trigger2
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 28] := #MyWordinInt;
+
+       #MyInt := #"Toms_comms_HB";    //EPICSName: Toms_comms_HB
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 29] := #MyWordinInt;
+
+       #MyInt := #"FS_comms_HB";    //EPICSName: FS_comms_HB
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 30] := #MyWordinInt;
+
+       #MyReal := #"AO1";    //EPICSName: AO1
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 31] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 32] := #MyWordsinReal[1];
+
+       #MyReal := #"AO2";    //EPICSName: AO2
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 33] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 34] := #MyWordsinReal[1];
+
+       #MyReal := #"AO3";    //EPICSName: AO3
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 35] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 36] := #MyWordsinReal[1];
+
+       #MyReal := #"AO4";    //EPICSName: AO4
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 37] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 38] := #MyWordsinReal[1];
+
+       #MyReal := #"AO5";    //EPICSName: AO5
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 39] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 40] := #MyWordsinReal[1];
+
+       #MyReal := #"AO6";    //EPICSName: AO6
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 41] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 42] := #MyWordsinReal[1];
+
+       #MyReal := #"AO7";    //EPICSName: AO7
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 43] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 44] := #MyWordsinReal[1];
+
+       #MyReal := #"AO8";    //EPICSName: AO8
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 45] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 46] := #MyWordsinReal[1];
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"Ena_NitrogenGas";    //EPICSName: Ena_NitrogenGas
+       #MyBoolsinWord[9] := #"Ena_HeliumGas";    //EPICSName: Ena_HeliumGas
+       #MyBoolsinWord[10] := #"Ena_HydrogenGas";    //EPICSName: Ena_HydrogenGas
+       #MyBoolsinWord[11] := #"PSS_LEL_Below10A";    //EPICSName: PSS_LEL_Below10A
+       #MyBoolsinWord[12] := #"PSS_LEL_Below10B";    //EPICSName: PSS_LEL_Below10B
+       #MyBoolsinWord[13] := #"PSS_LEL_Below25A";    //EPICSName: PSS_LEL_Below25A
+       #MyBoolsinWord[14] := #"PSS_LEL_Below25B";    //EPICSName: PSS_LEL_Below25B
+       #MyBoolsinWord[15] := #"PSS_FillingPermA";    //EPICSName: PSS_FillingPermA
+       #MyBoolsinWord[0] := #"PSS_FillingPermB";    //EPICSName: PSS_FillingPermB
+       #MyBoolsinWord[1] := #"PSS_NoSpecStateA";    //EPICSName: PSS_NoSpecStateA
+       #MyBoolsinWord[2] := #"PSS_NoSpecStateB";    //EPICSName: PSS_NoSpecStateB
+       #MyBoolsinWord[3] := #"PSS_CV62001_Perm";    //EPICSName: PSS_CV62001_Perm
+       #MyBoolsinWord[4] := #"PSS_CV82095_Perm";    //EPICSName: PSS_CV82095_Perm
+       #MyBoolsinWord[5] := #"ParametersFrozen";    //EPICSName: ParametersFrozen
+       #MyBoolsinWord[6] := #"SpareBOOL1";    //EPICSName: SpareBOOL1
+       #MyBoolsinWord[7] := #"SpareBOOL2";    //EPICSName: SpareBOOL2
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 47] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"SpareBOOL3";    //EPICSName: SpareBOOL3
+       #MyBoolsinWord[9] := #"SpareBOOL4";    //EPICSName: SpareBOOL4
+       #MyBoolsinWord[10] := #"SpareBOOL5";    //EPICSName: SpareBOOL5
+       #MyBoolsinWord[11] := #"SpareBOOL6";    //EPICSName: SpareBOOL6
+       #MyBoolsinWord[12] := #"SpareBOOL7";    //EPICSName: SpareBOOL7
+       #MyBoolsinWord[13] := #"SpareBOOL8";    //EPICSName: SpareBOOL8
+       #MyBoolsinWord[14] := #"SpareBOOL9";    //EPICSName: SpareBOOL9
+       #MyBoolsinWord[15] := #"SpareBOOL10";    //EPICSName: SpareBOOL10
+       #MyBoolsinWord[0] := #"SpareBOOL11";    //EPICSName: SpareBOOL11
+       #MyBoolsinWord[1] := #"SpareBOOL12";    //EPICSName: SpareBOOL12
+       #MyBoolsinWord[2] := #"SpareBOOL13";    //EPICSName: SpareBOOL13
+       #MyBoolsinWord[3] := #"SpareBOOL14";    //EPICSName: SpareBOOL14
+       #MyBoolsinWord[4] := #"SpareBOOL15";    //EPICSName: SpareBOOL15
+       #MyBoolsinWord[5] := #"SpareBOOL16";    //EPICSName: SpareBOOL16
+       #MyBoolsinWord[6] := #"FailureA1_Active";    //EPICSName: FailureA1_Active
+       #MyBoolsinWord[7] := #"FailureA2_Active";    //EPICSName: FailureA2_Active
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 48] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"FailureA31_Active";    //EPICSName: FailureA31_Active
+       #MyBoolsinWord[9] := #"FailureA32_Active";    //EPICSName: FailureA32_Active
+       #MyBoolsinWord[10] := #"FailureA4_Active";    //EPICSName: FailureA4_Active
+       #MyBoolsinWord[11] := #"FailureA5_Active";    //EPICSName: FailureA5_Active
+       #MyBoolsinWord[12] := #"FailureA6_Active";    //EPICSName: FailureA6_Active
+       #MyBoolsinWord[13] := #"FailureA71_Active";    //EPICSName: FailureA71_Active
+       #MyBoolsinWord[14] := #"FailureA72_Active";    //EPICSName: FailureA72_Active
+       #MyBoolsinWord[15] := #"FailureA8_Active";    //EPICSName: FailureA8_Active
+       #MyBoolsinWord[0] := #"FailureA9_Active";    //EPICSName: FailureA9_Active
+       #MyBoolsinWord[1] := #"GlobalFAActive";    //EPICSName: GlobalFAActive
+       #MyBoolsinWord[2] := #"WarningM1_Active";    //EPICSName: WarningM1_Active
+       #MyBoolsinWord[3] := #"WarningM2_Active";    //EPICSName: WarningM2_Active
+       #MyBoolsinWord[4] := #"WarningM31_Active";    //EPICSName: WarningM31_Active
+       #MyBoolsinWord[5] := #"WarningM32_Active";    //EPICSName: WarningM32_Active
+       #MyBoolsinWord[6] := #"WarningM4_Active";    //EPICSName: WarningM4_Active
+       #MyBoolsinWord[7] := #"WarningM5_Active";    //EPICSName: WarningM5_Active
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 49] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"WarningM6_Active";    //EPICSName: WarningM6_Active
+       #MyBoolsinWord[9] := #"WarningM7_Active";    //EPICSName: WarningM7_Active
+       #MyBoolsinWord[10] := #"WarningM9_Active";    //EPICSName: WarningM9_Active
+       #MyBoolsinWord[11] := #"GlobalWarnActive";    //EPICSName: GlobalWarnActive
+       #MyBoolsinWord[12] := #"PLC_CPU";    //EPICSName: PLC_CPU
+       #MyBoolsinWord[13] := #"PLC_CM";    //EPICSName: PLC_CM
+       #MyBoolsinWord[14] := #"PLC_KF11";    //EPICSName: PLC_KF11
+       #MyBoolsinWord[15] := #"PLC_KF12";    //EPICSName: PLC_KF12
+       #MyBoolsinWord[0] := #"PLC_KF13";    //EPICSName: PLC_KF13
+       #MyBoolsinWord[1] := #"PLC_KF14";    //EPICSName: PLC_KF14
+       #MyBoolsinWord[2] := #"PLC_KF15";    //EPICSName: PLC_KF15
+       #MyBoolsinWord[3] := #"PLC_KF21";    //EPICSName: PLC_KF21
+       #MyBoolsinWord[4] := #"PLC_KF22";    //EPICSName: PLC_KF22
+       #MyBoolsinWord[5] := #"PLC_KF31";    //EPICSName: PLC_KF31
+       #MyBoolsinWord[6] := #"PLC_KF32";    //EPICSName: PLC_KF32
+       #MyBoolsinWord[7] := #"PLC_KF33";    //EPICSName: PLC_KF33
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 50] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"PLC_KF34";    //EPICSName: PLC_KF34
+       #MyBoolsinWord[9] := #"PLC_KF35";    //EPICSName: PLC_KF35
+       #MyBoolsinWord[10] := #"PLC_KF36";    //EPICSName: PLC_KF36
+       #MyBoolsinWord[11] := #"PLC_KF37";    //EPICSName: PLC_KF37
+       #MyBoolsinWord[12] := #"PLC_KF38";    //EPICSName: PLC_KF38
+       #MyBoolsinWord[13] := #"PLC_KF41";    //EPICSName: PLC_KF41
+       #MyBoolsinWord[14] := #"PLC_KF42";    //EPICSName: PLC_KF42
+       #MyBoolsinWord[15] := #"PLC_KF43";    //EPICSName: PLC_KF43
+       #MyBoolsinWord[0] := #"Lakeshore_KF1";    //EPICSName: Lakeshore_KF1
+       #MyBoolsinWord[1] := #"Lakeshore_KF2";    //EPICSName: Lakeshore_KF2
+       #MyBoolsinWord[2] := #"Lakeshore_KF3";    //EPICSName: Lakeshore_KF3
+       #MyBoolsinWord[3] := #"Lakeshore_KF4";    //EPICSName: Lakeshore_KF4
+       #MyBoolsinWord[4] := #"Lakeshore_KF5";    //EPICSName: Lakeshore_KF5
+       #MyBoolsinWord[5] := #"Lakeshore_KF6";    //EPICSName: Lakeshore_KF6
+       #MyBoolsinWord[6] := #"TP69100";    //EPICSName: TP69100
+       #MyBoolsinWord[7] := #"TP89100";    //EPICSName: TP89100
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 51] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"P62010";    //EPICSName: P62010
+       #MyBoolsinWord[9] := #"P62011";    //EPICSName: P62011
+       #MyBoolsinWord[10] := #"PNPN";    //EPICSName: PNPN
+       #MyBoolsinWord[11] := #"Toms_comms";    //EPICSName: Toms_comms
+       #MyBoolsinWord[12] := #"FS_comms";    //EPICSName: FS_comms
+       #MyBoolsinWord[13] := #"BlkControlStatus";    //EPICSName: BlkControlStatus
+       #MyBoolsinWord[14] := #"DO1";    //EPICSName: DO1
+       #MyBoolsinWord[15] := #"DO2";    //EPICSName: DO2
+       #MyBoolsinWord[0] := #"DO3";    //EPICSName: DO3
+       #MyBoolsinWord[1] := #"DO4";    //EPICSName: DO4
+       #MyBoolsinWord[2] := #"DO5";    //EPICSName: DO5
+       #MyBoolsinWord[3] := #"DO6";    //EPICSName: DO6
+       #MyBoolsinWord[4] := #"DO7";    //EPICSName: DO7
+       #MyBoolsinWord[5] := #"DO8";    //EPICSName: DO8
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 52] := #MyWord;
+
+    //********************************************
+    //*************COMMAND VARIABLES**************
+    //********************************************
+
+
+       #MyWord := "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0];
+       "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0] := 0;
+       #"Cmd_AckAlarm" := #MyBoolsinWord[8];    //EPICSName: Cmd_AckAlarm
+       #"Cmd_BlkControl_ON" := #MyBoolsinWord[9];    //EPICSName: Cmd_BlkControl_ON
+       #"Cmd_BlkControl_OFF" := #MyBoolsinWord[10];    //EPICSName: Cmd_BlkControl_OFF
+       #"Cmd_ParamFreeze_OFF" := #MyBoolsinWord[11];    //EPICSName: Cmd_ParamFreeze_OFF
+       #"Cmd_NitrogenGas" := #MyBoolsinWord[12];    //EPICSName: Cmd_NitrogenGas
+       #"Cmd_HeliumGas" := #MyBoolsinWord[13];    //EPICSName: Cmd_HeliumGas
+       #"Cmd_HydrogenGas" := #MyBoolsinWord[14];    //EPICSName: Cmd_HydrogenGas
+       #"DI1" := #MyBoolsinWord[15];    //EPICSName: DI1
+       #"DI2" := #MyBoolsinWord[0];    //EPICSName: DI2
+       #"DI3" := #MyBoolsinWord[1];    //EPICSName: DI3
+       #"DI4" := #MyBoolsinWord[2];    //EPICSName: DI4
+       #"DI5" := #MyBoolsinWord[3];    //EPICSName: DI5
+       #"DI6" := #MyBoolsinWord[4];    //EPICSName: DI6
+       #"DI7" := #MyBoolsinWord[5];    //EPICSName: DI7
+       #"DI8" := #MyBoolsinWord[6];    //EPICSName: DI8
+
+    //********************************************
+    //************PARAMETER VARIABLES*************
+    //********************************************
+
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 1];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 2];
+       #"AI1" := #MyReal;    //EPICSName: AI1
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 3];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 4];
+       #"AI2" := #MyReal;    //EPICSName: AI2
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 5];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 6];
+       #"AI3" := #MyReal;    //EPICSName: AI3
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 7];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 8];
+       #"AI4" := #MyReal;    //EPICSName: AI4
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 9];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 10];
+       #"AI5" := #MyReal;    //EPICSName: AI5
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 11];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 12];
+       #"AI6" := #MyReal;    //EPICSName: AI6
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 13];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 14];
+       #"AI7" := #MyReal;    //EPICSName: AI7
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 15];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 16];
+       #"AI8" := #MyReal;    //EPICSName: AI8
+    Else
+       #DEVICE_PARAM_OK := FALSE; //Invalid Hash
+    END_IF;
+END_FUNCTION_BLOCK
+FUNCTION_BLOCK "DEVTYPE_ICS_PT"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+   VAR_INPUT
+      "TransmitterColor" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: TransmitterColor
+      "ScaleLOW" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: ScaleLOW
+      "ScaleHIGH" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: ScaleHIGH
+      "MeasValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: MeasValue
+      "RAWValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: RAWValue
+      "Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: Faceplate_LockID
+      "BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: BlockIcon_LockID
+      "FB_ForceValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_ForceValue
+      "FB_Limit_HIHI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_HIHI
+      "FB_Limit_HI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_HI
+      "FB_Limit_LO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_LO
+      "FB_Limit_LOLO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_LOLO
+      "OpMode_FreeRun" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_FreeRun
+      "OpMode_Forced" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_Forced
+      "Inhibit_Manual" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Manual
+      "Inhibit_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Force
+      "Inhibit_Lock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Lock
+      "EnableFreeRunBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableFreeRunBtn
+      "EnableManualBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableManualBtn
+      "EnableForcedBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableForcedBtn
+      "DevLocked" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DevLocked
+      "LatchAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: LatchAlarm
+      "GroupAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: GroupAlarm
+   EPICSToPLCLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device command register array (in words)
+   EPICSToPLCDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in EPICS->PLC comms block where this device data resides (in words)
+   PLCToEPICSLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device status register array (in words)
+   PLCToEPICSDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in PLC->EPICS comms block where this device data resides (in words)
+   END_VAR
+   VAR_OUTPUT
+      "Cmd_FreeRun" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_FreeRun
+      "Cmd_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_Force
+      "Cmd_ForceVal" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceVal
+      "Cmd_AckAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_AckAlarm
+      "Cmd_ForceUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceUnlock
+      "Cmd_DevLock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevLock
+      "Cmd_DevUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevUnlock
+      "P_Limit_HIHI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_HIHI
+      "P_Limit_HI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_HI
+      "P_Limit_LO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_LO
+      "P_Limit_LOLO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_LOLO
+      "P_ForceValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_ForceValue
+      "P_Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_Faceplate_LockID
+      "P_BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_BlockIcon_LockID
+      DEVICE_PARAM_OK { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+   END_VAR
+   VAR_IN_OUT
+   END_VAR
+   Var DB_SPECIFIC
+      MyWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Word;
+      MyBytesinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..1] of Byte;
+      MyBoolsinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..15] of Bool;
+      MyDInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DInt;
+      MyWordsinDint { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDInt : Array[0..1] of Word;
+      MyReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Real;
+      MyWordsinReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyReal : Array[0..1] of Word;
+      MyInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;
+      MyWordinInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyInt : Word;
+      MyDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DWord;
+      MyWordsinDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDWord : Array[0..1] of Word;
+      MyTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Time;
+      MyWordsinTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyTime : Array[0..1] of Word;
+      MyString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : String[40];
+      MyWordsinString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyString : Array[0..20] of Word;
+   END_VAR
+   VAR_TEMP
+      HashModbus : DInt;
+      HashIFA : DInt;
+      HashTIAMap : DInt;
+      i : Int;
+   END_VAR
+    //Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+    //This block was generated by PLCFactory, please don't change it MANUALLY!
+    //Input File Name: LabS-ICS_Cryo-PLC-163-template-IFA-20250219140147.ifa
+    //Generated: 20250219140147
+    //According to HASH: -819074987
+    //Device type: ICS_PT
+    //Description: This function does the variable mapping for a device. All device-variable will be linked to an interface variable defined in this block.
+
+    //********************************************
+    //****************HASH check******************
+    //********************************************
+
+
+    #MyWordsinDint[0] := "EPICSToPLC"."Word"[0];
+    #MyWordsinDint[1] := "EPICSToPLC"."Word"[1];
+    #HashModbus := #MyDInt; //Hash from EPICS/ModbusTCP
+
+    #HashIFA := -819074987; //Hash from Interface Factory as a constant
+
+    #MyWordsinDint[0] := "PLCToEPICS"."Word"[0];
+    #MyWordsinDint[1] := "PLCToEPICS"."Word"[1];
+    #HashTIAMap := #MyDInt; //Hash from PLCFactory TIA Map
+
+
+    IF ((#HashIFA = #HashModbus) AND (#HashModbus = #HashTIAMap)) THEN //Check CRCs
+        #DEVICE_PARAM_OK := TRUE;
+
+    //********************************************
+    //*************STATUS VARIABLES***************
+    //********************************************
+
+
+       #MyInt := #"TransmitterColor";    //EPICSName: TransmitterColor
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 0] := #MyWordinInt;
+
+       #MyReal := #"ScaleLOW";    //EPICSName: ScaleLOW
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 1] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 2] := #MyWordsinReal[1];
+
+       #MyReal := #"ScaleHIGH";    //EPICSName: ScaleHIGH
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 3] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 4] := #MyWordsinReal[1];
+
+       #MyReal := #"MeasValue";    //EPICSName: MeasValue
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 5] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 6] := #MyWordsinReal[1];
+
+       #MyReal := #"RAWValue";    //EPICSName: RAWValue
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 7] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 8] := #MyWordsinReal[1];
+
+       #MyDInt := #"Faceplate_LockID";    //EPICSName: Faceplate_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 9] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 10] := #MyWordsinDint[1];
+
+       #MyDInt := #"BlockIcon_LockID";    //EPICSName: BlockIcon_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 11] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 12] := #MyWordsinDint[1];
+
+       #MyReal := #"FB_ForceValue";    //EPICSName: FB_ForceValue
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 13] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 14] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_HIHI";    //EPICSName: FB_Limit_HIHI
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 15] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 16] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_HI";    //EPICSName: FB_Limit_HI
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 17] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 18] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_LO";    //EPICSName: FB_Limit_LO
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 19] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 20] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_LOLO";    //EPICSName: FB_Limit_LOLO
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 21] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 22] := #MyWordsinReal[1];
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"OpMode_FreeRun";    //EPICSName: OpMode_FreeRun
+       #MyBoolsinWord[9] := #"OpMode_Forced";    //EPICSName: OpMode_Forced
+       #MyBoolsinWord[10] := #"Inhibit_Manual";    //EPICSName: Inhibit_Manual
+       #MyBoolsinWord[11] := #"Inhibit_Force";    //EPICSName: Inhibit_Force
+       #MyBoolsinWord[12] := #"Inhibit_Lock";    //EPICSName: Inhibit_Lock
+       #MyBoolsinWord[13] := #"EnableFreeRunBtn";    //EPICSName: EnableFreeRunBtn
+       #MyBoolsinWord[14] := #"EnableManualBtn";    //EPICSName: EnableManualBtn
+       #MyBoolsinWord[15] := #"EnableForcedBtn";    //EPICSName: EnableForcedBtn
+       #MyBoolsinWord[0] := #"DevLocked";    //EPICSName: DevLocked
+       #MyBoolsinWord[1] := #"LatchAlarm";    //EPICSName: LatchAlarm
+       #MyBoolsinWord[2] := #"GroupAlarm";    //EPICSName: GroupAlarm
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 23] := #MyWord;
+
+    //********************************************
+    //*************COMMAND VARIABLES**************
+    //********************************************
+
+
+       #MyWord := "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0];
+       "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0] := 0;
+       #"Cmd_FreeRun" := #MyBoolsinWord[8];    //EPICSName: Cmd_FreeRun
+       #"Cmd_Force" := #MyBoolsinWord[9];    //EPICSName: Cmd_Force
+       #"Cmd_ForceVal" := #MyBoolsinWord[10];    //EPICSName: Cmd_ForceVal
+       #"Cmd_AckAlarm" := #MyBoolsinWord[11];    //EPICSName: Cmd_AckAlarm
+       #"Cmd_ForceUnlock" := #MyBoolsinWord[12];    //EPICSName: Cmd_ForceUnlock
+       #"Cmd_DevLock" := #MyBoolsinWord[13];    //EPICSName: Cmd_DevLock
+       #"Cmd_DevUnlock" := #MyBoolsinWord[14];    //EPICSName: Cmd_DevUnlock
+
+    //********************************************
+    //************PARAMETER VARIABLES*************
+    //********************************************
+
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 1];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 2];
+       #"P_Limit_HIHI" := #MyReal;    //EPICSName: P_Limit_HIHI
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 3];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 4];
+       #"P_Limit_HI" := #MyReal;    //EPICSName: P_Limit_HI
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 5];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 6];
+       #"P_Limit_LO" := #MyReal;    //EPICSName: P_Limit_LO
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 7];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 8];
+       #"P_Limit_LOLO" := #MyReal;    //EPICSName: P_Limit_LOLO
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 9];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 10];
+       #"P_ForceValue" := #MyReal;    //EPICSName: P_ForceValue
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 11];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 12];
+       #"P_Faceplate_LockID" := #MyDInt;    //EPICSName: P_Faceplate_LockID
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 13];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 14];
+       #"P_BlockIcon_LockID" := #MyDInt;    //EPICSName: P_BlockIcon_LockID
+    Else
+       #DEVICE_PARAM_OK := FALSE; //Invalid Hash
+    END_IF;
+END_FUNCTION_BLOCK
+FUNCTION_BLOCK "DEVTYPE_ICS_PT_MBAR"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+   VAR_INPUT
+      "TransmitterColor" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: TransmitterColor
+      "ScaleLOW" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: ScaleLOW
+      "ScaleHIGH" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: ScaleHIGH
+      "MeasValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: MeasValue
+      "Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: Faceplate_LockID
+      "BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: BlockIcon_LockID
+      "FB_ForceValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_ForceValue
+      "FB_Limit_HIHI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_HIHI
+      "FB_Limit_HI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_HI
+      "FB_Limit_LO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_LO
+      "FB_Limit_LOLO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_Limit_LOLO
+      "OpMode_FreeRun" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_FreeRun
+      "OpMode_Forced" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_Forced
+      "Inhibit_Manual" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Manual
+      "Inhibit_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Force
+      "Inhibit_Lock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Lock
+      "EnableFreeRunBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableFreeRunBtn
+      "EnableManualBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableManualBtn
+      "EnableForcedBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableForcedBtn
+      "DevLocked" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DevLocked
+   EPICSToPLCLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device command register array (in words)
+   EPICSToPLCDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in EPICS->PLC comms block where this device data resides (in words)
+   PLCToEPICSLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device status register array (in words)
+   PLCToEPICSDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in PLC->EPICS comms block where this device data resides (in words)
+   END_VAR
+   VAR_OUTPUT
+      "Cmd_FreeRun" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_FreeRun
+      "Cmd_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_Force
+      "Cmd_ForceVal" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceVal
+      "Cmd_AckAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_AckAlarm
+      "Cmd_ForceUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceUnlock
+      "Cmd_DevLock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevLock
+      "Cmd_DevUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevUnlock
+      "P_Limit_HIHI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_HIHI
+      "P_Limit_HI" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_HI
+      "P_Limit_LO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_LO
+      "P_Limit_LOLO" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_Limit_LOLO
+      "P_ForceValue" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_ForceValue
+      "P_Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_Faceplate_LockID
+      "P_BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_BlockIcon_LockID
+      DEVICE_PARAM_OK { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+   END_VAR
+   VAR_IN_OUT
+   END_VAR
+   Var DB_SPECIFIC
+      MyWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Word;
+      MyBytesinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..1] of Byte;
+      MyBoolsinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..15] of Bool;
+      MyDInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DInt;
+      MyWordsinDint { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDInt : Array[0..1] of Word;
+      MyReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Real;
+      MyWordsinReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyReal : Array[0..1] of Word;
+      MyInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;
+      MyWordinInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyInt : Word;
+      MyDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DWord;
+      MyWordsinDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDWord : Array[0..1] of Word;
+      MyTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Time;
+      MyWordsinTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyTime : Array[0..1] of Word;
+      MyString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : String[40];
+      MyWordsinString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyString : Array[0..20] of Word;
+   END_VAR
+   VAR_TEMP
+      HashModbus : DInt;
+      HashIFA : DInt;
+      HashTIAMap : DInt;
+      i : Int;
+   END_VAR
+    //Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+    //This block was generated by PLCFactory, please don't change it MANUALLY!
+    //Input File Name: LabS-ICS_Cryo-PLC-163-template-IFA-20250219140147.ifa
+    //Generated: 20250219140147
+    //According to HASH: -819074987
+    //Device type: ICS_PT_MBAR
+    //Description: This function does the variable mapping for a device. All device-variable will be linked to an interface variable defined in this block.
+
+    //********************************************
+    //****************HASH check******************
+    //********************************************
+
+
+    #MyWordsinDint[0] := "EPICSToPLC"."Word"[0];
+    #MyWordsinDint[1] := "EPICSToPLC"."Word"[1];
+    #HashModbus := #MyDInt; //Hash from EPICS/ModbusTCP
+
+    #HashIFA := -819074987; //Hash from Interface Factory as a constant
+
+    #MyWordsinDint[0] := "PLCToEPICS"."Word"[0];
+    #MyWordsinDint[1] := "PLCToEPICS"."Word"[1];
+    #HashTIAMap := #MyDInt; //Hash from PLCFactory TIA Map
+
+
+    IF ((#HashIFA = #HashModbus) AND (#HashModbus = #HashTIAMap)) THEN //Check CRCs
+        #DEVICE_PARAM_OK := TRUE;
+
+    //********************************************
+    //*************STATUS VARIABLES***************
+    //********************************************
+
+
+       #MyInt := #"TransmitterColor";    //EPICSName: TransmitterColor
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 0] := #MyWordinInt;
+
+       #MyReal := #"ScaleLOW";    //EPICSName: ScaleLOW
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 1] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 2] := #MyWordsinReal[1];
+
+       #MyReal := #"ScaleHIGH";    //EPICSName: ScaleHIGH
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 3] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 4] := #MyWordsinReal[1];
+
+       #MyReal := #"MeasValue";    //EPICSName: MeasValue
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 5] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 6] := #MyWordsinReal[1];
+
+       #MyDInt := #"Faceplate_LockID";    //EPICSName: Faceplate_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 7] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 8] := #MyWordsinDint[1];
+
+       #MyDInt := #"BlockIcon_LockID";    //EPICSName: BlockIcon_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 9] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 10] := #MyWordsinDint[1];
+
+       #MyReal := #"FB_ForceValue";    //EPICSName: FB_ForceValue
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 11] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 12] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_HIHI";    //EPICSName: FB_Limit_HIHI
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 13] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 14] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_HI";    //EPICSName: FB_Limit_HI
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 15] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 16] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_LO";    //EPICSName: FB_Limit_LO
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 17] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 18] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_Limit_LOLO";    //EPICSName: FB_Limit_LOLO
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 19] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 20] := #MyWordsinReal[1];
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"OpMode_FreeRun";    //EPICSName: OpMode_FreeRun
+       #MyBoolsinWord[9] := #"OpMode_Forced";    //EPICSName: OpMode_Forced
+       #MyBoolsinWord[10] := #"Inhibit_Manual";    //EPICSName: Inhibit_Manual
+       #MyBoolsinWord[11] := #"Inhibit_Force";    //EPICSName: Inhibit_Force
+       #MyBoolsinWord[12] := #"Inhibit_Lock";    //EPICSName: Inhibit_Lock
+       #MyBoolsinWord[13] := #"EnableFreeRunBtn";    //EPICSName: EnableFreeRunBtn
+       #MyBoolsinWord[14] := #"EnableManualBtn";    //EPICSName: EnableManualBtn
+       #MyBoolsinWord[15] := #"EnableForcedBtn";    //EPICSName: EnableForcedBtn
+       #MyBoolsinWord[0] := #"DevLocked";    //EPICSName: DevLocked
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 21] := #MyWord;
+
+    //********************************************
+    //*************COMMAND VARIABLES**************
+    //********************************************
+
+
+       #MyWord := "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0];
+       "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0] := 0;
+       #"Cmd_FreeRun" := #MyBoolsinWord[8];    //EPICSName: Cmd_FreeRun
+       #"Cmd_Force" := #MyBoolsinWord[9];    //EPICSName: Cmd_Force
+       #"Cmd_ForceVal" := #MyBoolsinWord[10];    //EPICSName: Cmd_ForceVal
+       #"Cmd_AckAlarm" := #MyBoolsinWord[11];    //EPICSName: Cmd_AckAlarm
+       #"Cmd_ForceUnlock" := #MyBoolsinWord[12];    //EPICSName: Cmd_ForceUnlock
+       #"Cmd_DevLock" := #MyBoolsinWord[13];    //EPICSName: Cmd_DevLock
+       #"Cmd_DevUnlock" := #MyBoolsinWord[14];    //EPICSName: Cmd_DevUnlock
+
+    //********************************************
+    //************PARAMETER VARIABLES*************
+    //********************************************
+
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 1];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 2];
+       #"P_Limit_HIHI" := #MyReal;    //EPICSName: P_Limit_HIHI
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 3];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 4];
+       #"P_Limit_HI" := #MyReal;    //EPICSName: P_Limit_HI
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 5];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 6];
+       #"P_Limit_LO" := #MyReal;    //EPICSName: P_Limit_LO
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 7];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 8];
+       #"P_Limit_LOLO" := #MyReal;    //EPICSName: P_Limit_LOLO
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 9];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 10];
+       #"P_ForceValue" := #MyReal;    //EPICSName: P_ForceValue
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 11];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 12];
+       #"P_Faceplate_LockID" := #MyDInt;    //EPICSName: P_Faceplate_LockID
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 13];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 14];
+       #"P_BlockIcon_LockID" := #MyDInt;    //EPICSName: P_BlockIcon_LockID
+    Else
+       #DEVICE_PARAM_OK := FALSE; //Invalid Hash
+    END_IF;
+END_FUNCTION_BLOCK
+FUNCTION_BLOCK "DEVTYPE_ICS_SCV"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+   VAR_INPUT
+      "ValveColor" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: ValveColor
+      "SolenoidColor" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : INT;   //EPICS Status variable: SolenoidColor
+      "OpenSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: OpenSP
+      "CloseSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: CloseSP
+      "Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: Faceplate_LockID
+      "BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Status variable: BlockIcon_LockID
+      "FB_OpenSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_OpenSP
+      "FB_CloseSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Status variable: FB_CloseSP
+      "OpMode_Auto" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_Auto
+      "OpMode_Manual" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_Manual
+      "OpMode_Forced" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: OpMode_Forced
+      "Opened" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Opened
+      "Closed" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Closed
+      "Solenoid" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Solenoid
+      "Inhibit_Manual" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Manual
+      "Inhibit_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Force
+      "Inhibit_Lock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: Inhibit_Lock
+      "GroupInterlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: GroupInterlock
+      "StartInterlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: StartInterlock
+      "StopInterlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: StopInterlock
+      "EnableBlkOpen" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableBlkOpen
+      "EnableBlkClose" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableBlkClose
+      "EnableAutoBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableAutoBtn
+      "EnableManualBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableManualBtn
+      "EnableForcedBtn" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: EnableForcedBtn
+      "NormallyOpen" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: NormallyOpen
+      "DevLocked" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: DevLocked
+      "LatchAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: LatchAlarm
+      "GroupAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Status variable: GroupAlarm
+   EPICSToPLCLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device command register array (in words)
+   EPICSToPLCDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in EPICS->PLC comms block where this device data resides (in words)
+   PLCToEPICSLength { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Length of device status register array (in words)
+   PLCToEPICSDataBlockOffset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;   // Offset in PLC->EPICS comms block where this device data resides (in words)
+   END_VAR
+   VAR_OUTPUT
+      "Cmd_Auto" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_Auto
+      "Cmd_Manual" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_Manual
+      "Cmd_Force" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_Force
+      "Cmd_ManuOpen" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ManuOpen
+      "Cmd_ManuClose" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ManuClose
+      "Cmd_ForceOpen" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceOpen
+      "Cmd_ForceClose" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceClose
+      "Cmd_AckAlarm" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_AckAlarm
+      "Cmd_ForceUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_ForceUnlock
+      "Cmd_DevLock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevLock
+      "Cmd_DevUnlock" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : BOOL;   //EPICS Command variable: Cmd_DevUnlock
+      "P_Faceplate_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_Faceplate_LockID
+      "P_BlockIcon_LockID" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DINT;   //EPICS Parameter variable: P_BlockIcon_LockID
+      "P_OpenSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_OpenSP
+      "P_CloseSP" { ExternalAccessible := 'True'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : REAL;   //EPICS Parameter variable: P_CloseSP
+      DEVICE_PARAM_OK { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Bool;
+   END_VAR
+   VAR_IN_OUT
+   END_VAR
+   Var DB_SPECIFIC
+      MyWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Word;
+      MyBytesinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..1] of Byte;
+      MyBoolsinWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyWord : Array[0..15] of Bool;
+      MyDInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DInt;
+      MyWordsinDint { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDInt : Array[0..1] of Word;
+      MyReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Real;
+      MyWordsinReal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyReal : Array[0..1] of Word;
+      MyInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Int;
+      MyWordinInt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyInt : Word;
+      MyDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : DWord;
+      MyWordsinDWord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyDWord : Array[0..1] of Word;
+      MyTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Time;
+      MyWordsinTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyTime : Array[0..1] of Word;
+      MyString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : String[40];
+      MyWordsinString { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } AT MyString : Array[0..20] of Word;
+   END_VAR
+   VAR_TEMP
+      HashModbus : DInt;
+      HashIFA : DInt;
+      HashTIAMap : DInt;
+      i : Int;
+   END_VAR
+    //Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+    //This block was generated by PLCFactory, please don't change it MANUALLY!
+    //Input File Name: LabS-ICS_Cryo-PLC-163-template-IFA-20250219140147.ifa
+    //Generated: 20250219140147
+    //According to HASH: -819074987
+    //Device type: ICS_SCV
+    //Description: This function does the variable mapping for a device. All device-variable will be linked to an interface variable defined in this block.
+
+    //********************************************
+    //****************HASH check******************
+    //********************************************
+
+
+    #MyWordsinDint[0] := "EPICSToPLC"."Word"[0];
+    #MyWordsinDint[1] := "EPICSToPLC"."Word"[1];
+    #HashModbus := #MyDInt; //Hash from EPICS/ModbusTCP
+
+    #HashIFA := -819074987; //Hash from Interface Factory as a constant
+
+    #MyWordsinDint[0] := "PLCToEPICS"."Word"[0];
+    #MyWordsinDint[1] := "PLCToEPICS"."Word"[1];
+    #HashTIAMap := #MyDInt; //Hash from PLCFactory TIA Map
+
+
+    IF ((#HashIFA = #HashModbus) AND (#HashModbus = #HashTIAMap)) THEN //Check CRCs
+        #DEVICE_PARAM_OK := TRUE;
+
+    //********************************************
+    //*************STATUS VARIABLES***************
+    //********************************************
+
+
+       #MyInt := #"ValveColor";    //EPICSName: ValveColor
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 0] := #MyWordinInt;
+
+       #MyInt := #"SolenoidColor";    //EPICSName: SolenoidColor
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 1] := #MyWordinInt;
+
+       #MyReal := #"OpenSP";    //EPICSName: OpenSP
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 2] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 3] := #MyWordsinReal[1];
+
+       #MyReal := #"CloseSP";    //EPICSName: CloseSP
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 4] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 5] := #MyWordsinReal[1];
+
+       #MyDInt := #"Faceplate_LockID";    //EPICSName: Faceplate_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 6] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 7] := #MyWordsinDint[1];
+
+       #MyDInt := #"BlockIcon_LockID";    //EPICSName: BlockIcon_LockID
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 8] := #MyWordsinDint[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 9] := #MyWordsinDint[1];
+
+       #MyReal := #"FB_OpenSP";    //EPICSName: FB_OpenSP
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 10] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 11] := #MyWordsinReal[1];
+
+       #MyReal := #"FB_CloseSP";    //EPICSName: FB_CloseSP
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 12] := #MyWordsinReal[0];
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 13] := #MyWordsinReal[1];
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"OpMode_Auto";    //EPICSName: OpMode_Auto
+       #MyBoolsinWord[9] := #"OpMode_Manual";    //EPICSName: OpMode_Manual
+       #MyBoolsinWord[10] := #"OpMode_Forced";    //EPICSName: OpMode_Forced
+       #MyBoolsinWord[11] := #"Opened";    //EPICSName: Opened
+       #MyBoolsinWord[12] := #"Closed";    //EPICSName: Closed
+       #MyBoolsinWord[13] := #"Solenoid";    //EPICSName: Solenoid
+       #MyBoolsinWord[14] := #"Inhibit_Manual";    //EPICSName: Inhibit_Manual
+       #MyBoolsinWord[15] := #"Inhibit_Force";    //EPICSName: Inhibit_Force
+       #MyBoolsinWord[0] := #"Inhibit_Lock";    //EPICSName: Inhibit_Lock
+       #MyBoolsinWord[1] := #"GroupInterlock";    //EPICSName: GroupInterlock
+       #MyBoolsinWord[2] := #"StartInterlock";    //EPICSName: StartInterlock
+       #MyBoolsinWord[3] := #"StopInterlock";    //EPICSName: StopInterlock
+       #MyBoolsinWord[4] := #"EnableBlkOpen";    //EPICSName: EnableBlkOpen
+       #MyBoolsinWord[5] := #"EnableBlkClose";    //EPICSName: EnableBlkClose
+       #MyBoolsinWord[6] := #"EnableAutoBtn";    //EPICSName: EnableAutoBtn
+       #MyBoolsinWord[7] := #"EnableManualBtn";    //EPICSName: EnableManualBtn
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 14] := #MyWord;
+
+       #MyWord := W#0;
+       #MyBoolsinWord[8] := #"EnableForcedBtn";    //EPICSName: EnableForcedBtn
+       #MyBoolsinWord[9] := #"NormallyOpen";    //EPICSName: NormallyOpen
+       #MyBoolsinWord[10] := #"DevLocked";    //EPICSName: DevLocked
+       #MyBoolsinWord[11] := #"LatchAlarm";    //EPICSName: LatchAlarm
+       #MyBoolsinWord[12] := #"GroupAlarm";    //EPICSName: GroupAlarm
+       "PLCToEPICS"."Word"[#PLCToEPICSDataBlockOffset + 15] := #MyWord;
+
+    //********************************************
+    //*************COMMAND VARIABLES**************
+    //********************************************
+
+
+       #MyWord := "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0];
+       "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 0] := 0;
+       #"Cmd_Auto" := #MyBoolsinWord[8];    //EPICSName: Cmd_Auto
+       #"Cmd_Manual" := #MyBoolsinWord[9];    //EPICSName: Cmd_Manual
+       #"Cmd_Force" := #MyBoolsinWord[10];    //EPICSName: Cmd_Force
+       #"Cmd_ManuOpen" := #MyBoolsinWord[11];    //EPICSName: Cmd_ManuOpen
+       #"Cmd_ManuClose" := #MyBoolsinWord[12];    //EPICSName: Cmd_ManuClose
+       #"Cmd_ForceOpen" := #MyBoolsinWord[13];    //EPICSName: Cmd_ForceOpen
+       #"Cmd_ForceClose" := #MyBoolsinWord[14];    //EPICSName: Cmd_ForceClose
+       #"Cmd_AckAlarm" := #MyBoolsinWord[15];    //EPICSName: Cmd_AckAlarm
+       #"Cmd_ForceUnlock" := #MyBoolsinWord[0];    //EPICSName: Cmd_ForceUnlock
+       #"Cmd_DevLock" := #MyBoolsinWord[1];    //EPICSName: Cmd_DevLock
+       #"Cmd_DevUnlock" := #MyBoolsinWord[2];    //EPICSName: Cmd_DevUnlock
+
+    //********************************************
+    //************PARAMETER VARIABLES*************
+    //********************************************
+
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 1];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 2];
+       #"P_Faceplate_LockID" := #MyDInt;    //EPICSName: P_Faceplate_LockID
+
+       #MyDInt	:= 0;
+       #MyWordsinDint[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 3];
+       #MyWordsinDint[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 4];
+       #"P_BlockIcon_LockID" := #MyDInt;    //EPICSName: P_BlockIcon_LockID
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 5];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 6];
+       #"P_OpenSP" := #MyReal;    //EPICSName: P_OpenSP
+
+       #MyReal	:= 0.0;
+       #MyWordsinReal[0]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 7];
+       #MyWordsinReal[1]	:= "EPICSToPLC"."Word"[#EPICSToPLCDataBlockOffset + 8];
+       #"P_CloseSP" := #MyReal;    //EPICSName: P_CloseSP
+    Else
+       #DEVICE_PARAM_OK := FALSE; //Invalid Hash
+    END_IF;
+END_FUNCTION_BLOCK
+
+DATA_BLOCK "DEV_LabS-ICS:Cryo-PLC-163_iDB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+NON_RETAIN
+"DEVTYPE_CMS_GLOBAL"
+BEGIN
+END_DATA_BLOCK
+
+
+DATA_BLOCK "DEV_LabS-ICS:Cryo-LT-163_iDB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+NON_RETAIN
+"DEVTYPE_ICS_PT"
+BEGIN
+END_DATA_BLOCK
+
+
+DATA_BLOCK "DEV_LabS-ICS:Cryo-PT-163_iDB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+NON_RETAIN
+"DEVTYPE_ICS_PT_MBAR"
+BEGIN
+END_DATA_BLOCK
+
+
+DATA_BLOCK "DEV_LabS-ICS:Cryo-CV-090_iDB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+NON_RETAIN
+"DEVTYPE_ICS_SCV"
+BEGIN
+END_DATA_BLOCK
+
+FUNCTION "EPICS_device_calls" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 1.0
+
+   VAR_TEMP
+      "LabS-ICS:Cryo-PLC-163" : Bool;   // HASH codes are OK
+      "LabS-ICS:Cryo-LT-163" : Bool;   // HASH codes are OK
+      "LabS-ICS:Cryo-PT-163" : Bool;   // HASH codes are OK
+      "LabS-ICS:Cryo-CV-090" : Bool;   // HASH codes are OK
+   END_VAR
+
+BEGIN
+      //Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+      //This block was generated by PLCFactory
+      //According to HASH:-819074987
+      //Description: Description: This function calls the devices according to the corresponding device type
+
+        //DO NOT Modify the following line!!!
+        "Utilities".TestInProgress := FALSE;
+        "Utilities".EPICS_Device_calls_precessed := TRUE;
+
+
+        //********************************************
+        // Device name: LabS-ICS:Cryo-PLC-163
+        // Device type: CMS_GLOBAL
+        //********************************************
+
+      "DEV_LabS-ICS:Cryo-PLC-163_iDB" (EPICSToPLCLength:=17,
+      EPICSToPLCDataBlockOffset:=10,
+      PLCToEPICSLength:=53,
+      PLCToEPICSDataBlockOffset:=10);
+
+        //********************************************
+        // Device name: LabS-ICS:Cryo-LT-163
+        // Device type: ICS_PT
+        //********************************************
+
+      "DEV_LabS-ICS:Cryo-LT-163_iDB" (EPICSToPLCLength:=15,
+      EPICSToPLCDataBlockOffset:=27,
+      PLCToEPICSLength:=24,
+      PLCToEPICSDataBlockOffset:=63);
+
+        //********************************************
+        // Device name: LabS-ICS:Cryo-PT-163
+        // Device type: ICS_PT_MBAR
+        //********************************************
+
+      "DEV_LabS-ICS:Cryo-PT-163_iDB" (EPICSToPLCLength:=15,
+      EPICSToPLCDataBlockOffset:=42,
+      PLCToEPICSLength:=22,
+      PLCToEPICSDataBlockOffset:=87);
+
+        //********************************************
+        // Device name: LabS-ICS:Cryo-CV-090
+        // Device type: ICS_SCV
+        //********************************************
+
+      "DEV_LabS-ICS:Cryo-CV-090_iDB" (EPICSToPLCLength:=9,
+      EPICSToPLCDataBlockOffset:=57,
+      PLCToEPICSLength:=16,
+      PLCToEPICSDataBlockOffset:=109);
+END_FUNCTION
+DATA_BLOCK "EPICS_DebuggerResult"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+   VAR 
+      EPICS_Debugger_UtilitiesCall : String;   // PLCFactory Utilities call status
+      EPICS_Debugger_DeviceCalls : String;   // PLCFactory DeviceCalls status
+      EPICS_Debugger_IOCHash : String;   // EPICS IOC Hash vs. PLCFactory Hash
+      EPICS_Debugger_ModBusHeartBeat : String;   // EPICS IOC Modbus (IOC->PLC) communication status
+      EPICS_Debugger_S7Connection : String;   // EPICS IOC S7 TCP (PLC->IOC) communication status
+      EPICS_Debugger_EPICS_GeneralState : String;   // Main status of the EPICS IOC communication
+      EPICS_S7Port : Int;   // Actual TCP port that has been opened by the PLC
+      EPICS_ModbusPort : Int;   // Actual ModBusTCP port that has been opened by the PLC
+      EPICS_PLC_EthernetInterface : UInt;   // The currently used HW Identifer of the Ethernet Port on the PLC dedicated to EPICS
+      EPICS_PayloadSize_InBytes : UInt;   // The currently configured payload size in bytes
+      EPICS_PLC_Hash : DInt;   // The PLC Hash
+      EPICS_PLCFactory_Version : String;   // The PLCFactory version that was used to generate the PLC code
+      EPICS_CommunicationOK : Bool;   // Overall EPICS communication is OK
+   END_VAR
+
+BEGIN
+
+END_DATA_BLOCK
+FUNCTION_BLOCK "EPICS_DebuggerFB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR 
+      CheckUtilitiesTON {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+      UtilSquareErrorTON { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      CheckUtilitiesTON2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+      UtilSquareErrorTON2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      ModBus_TON {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+      ModBus_wordsave { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+   END_VAR
+   VAR DB_SPECIFIC
+      Helper_String { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : String;
+      Helper_String_Array { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} AT Helper_String : Struct
+         String_Maximal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte;
+         String_Actual { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte;
+         StringValueArray { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0..15] of Byte;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      S7ConnTON {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      AllOK { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      i : Int;
+      ModBusOK : Bool;
+      S7OK : Bool;
+   END_VAR
+
+
+BEGIN
+	//Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+	//This block was generated by PLCFactory
+	//Description: This FB checks the EPICS configuration and outputs the result into EPICS_DebuggerResult.
+
+	//DO NOT Modify this block!!!
+
+	//AllOK will be evaluated in this code and passed to the EPICS_CommunicationOK signal that can be used by the PLC logic
+	#AllOK := TRUE;
+
+	#CheckUtilitiesTON(IN:="Utilities".Square_100ms,
+	                   PT:=T#200ms,
+	                   Q=>#UtilSquareErrorTON);
+
+	#CheckUtilitiesTON2(IN := NOT "Utilities".Square_100ms,
+	                   PT := T#200ms,
+	                   Q => #UtilSquareErrorTON2);
+
+
+	#ModBus_TON(IN := #ModBus_wordsave = "EPICSToPLC"."Word"[2],
+	            PT := T#5s);
+
+
+     "EPICS_DebuggerResult".#EPICS_PayloadSize_InBytes := 250;
+     "EPICS_DebuggerResult".#EPICS_PLC_Hash := -819074987;
+     "EPICS_DebuggerResult".#EPICS_PLCFactory_Version := 'commitID';
+
+	IF ("Utilities".AlwaysOn = FALSE) THEN
+	    "EPICS_DebuggerResult".#EPICS_Debugger_UtilitiesCall := 'ERROR: FunctionBlock: "_UilitiesFB" is called with a wrong InstanceDB. Call it with the existing iDB named: "Utilities" AND check if the System Memory bits and the System Clock byte is enabled!';
+         #AllOK := FALSE;
+	ELSE
+	    IF (#UtilSquareErrorTON OR #UtilSquareErrorTON2) THEN
+	        "EPICS_DebuggerResult".#EPICS_Debugger_UtilitiesCall := 'ERROR: FunctionBlock: "_UilitiesFB" is called with a wrong InstanceDB. Call it with the existing iDB named: "Utilities" AND check if the System Memory bits and the System Clock byte is enabled!';
+             #AllOK := FALSE;
+	    ELSE
+	        "EPICS_DebuggerResult".#EPICS_Debugger_UtilitiesCall := 'OK: EPICS Utilities works as expected.';
+	        
+	    END_IF;
+	END_IF;
+	    
+	IF ("Utilities".EPICS_Device_calls_precessed) THEN
+	    "EPICS_DebuggerResult".#EPICS_Debugger_DeviceCalls := 'OK: "EPICS_device_calls" is called as expected.';
+	ELSE
+	    "EPICS_DebuggerResult".#EPICS_Debugger_DeviceCalls := 'ERROR: "EPICS_device_calls" is not called in OB1!';
+         #AllOK := FALSE;
+	END_IF;
+	    
+	IF (("EPICSToPLC"."Word"[0] = "PLCToEPICS"."Word"[0]) AND ("EPICSToPLC"."Word"[1] = "PLCToEPICS"."Word"[1])) THEN
+	    "EPICS_DebuggerResult".#EPICS_Debugger_IOCHash := 'OK: IOC and PLC hash are equal.';
+	ELSE    
+	    "EPICS_DebuggerResult".#EPICS_Debugger_IOCHash := 'ERROR: IOC and PLC hash are NOT equal!';
+         #AllOK := FALSE;
+	END_IF;
+
+	IF (#ModBus_TON.Q) THEN
+	    "EPICS_DebuggerResult".#EPICS_Debugger_ModBusHeartBeat := 'ERROR: The IOC is not sending any HeartBeat via ModBus!';
+         #AllOK := FALSE;
+	    #ModBusOK := FALSE;
+	ELSE
+	    "EPICS_DebuggerResult".#EPICS_Debugger_ModBusHeartBeat := 'OK: ModBus HeartBeat is received as expected.';
+	    #ModBusOK := TRUE;
+	END_IF;
+
+	#S7ConnTON(IN := NOT "_CommsPLC_EPICS_DB".SendDone, PT := T#3s);
+
+	IF ("_CommsPLC_EPICS_DB".BytesToSend > 0) THEN
+	    
+	    IF (#S7ConnTON.Q) THEN
+	        "EPICS_DebuggerResult".EPICS_Debugger_S7Connection := 'ERROR: EPICS S7 connection can not send Status variables!';
+	        #S7OK := FALSE;
+             #AllOK := FALSE;
+	    ELSE
+	        "EPICS_DebuggerResult".EPICS_Debugger_S7Connection := 'OK: EPICS S7 works as expected.';
+	        #S7OK := TRUE;
+	        
+	    END_IF;
+	ELSE
+	    "EPICS_DebuggerResult".EPICS_Debugger_S7Connection := 'OK: EPICS S7 disabled, there is no Status variable to send.';
+	    #S7OK := TRUE;
+	END_IF;
+
+	IF (#ModBusOK AND #S7OK) THEN
+	    "EPICS_DebuggerResult".EPICS_Debugger_EPICS_GeneralState := 'OK. EPICS IOC communication is ONLINE.';
+	END_IF;
+
+	IF (#ModBusOK AND NOT #S7OK) THEN
+	    "EPICS_DebuggerResult".EPICS_Debugger_EPICS_GeneralState := 'ERROR. ModBus seems to be working but S7 TCP is blocked. Try to check your PLC router IP.';
+         #AllOK := FALSE;
+	END_IF;
+
+	IF (NOT #ModBusOK AND #S7OK) THEN
+	    "EPICS_DebuggerResult".EPICS_Debugger_EPICS_GeneralState := 'ERROR. ModBus seems to be offline. Waiting for IOC to finish connecting to the PLC.';
+         #AllOK := FALSE;
+	END_IF;
+
+	IF ( NOT #ModBusOK AND NOT #S7OK) THEN
+	    "EPICS_DebuggerResult".EPICS_Debugger_EPICS_GeneralState := 'ERROR. Both ModBus and S7 TCP seems to be offline. Check if your IOC is running and if it is connected to the right PLC interface. Your HardwareID comes from CCDB!';
+         #AllOK := FALSE;
+	END_IF;
+
+	"EPICS_DebuggerResult".EPICS_ModbusPort := "_CommsPLC_EPICS_DB".MBPort;
+	"EPICS_DebuggerResult".EPICS_S7Port := "_CommsPLC_EPICS_DB".S7Port;
+	"EPICS_DebuggerResult".EPICS_PLC_EthernetInterface :=  "_CommsPLC_EPICS_DB".InterfaceID;
+
+	#ModBus_wordsave := "EPICSToPLC"."Word"[2];
+
+	//Put the Overall result to the Globl DB
+	"EPICS_DebuggerResult".EPICS_CommunicationOK := #AllOK;
+
+
+END_FUNCTION_BLOCK
+DATA_BLOCK "EPICS_DebuggerFB_iDB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+"EPICS_DebuggerFB"
+
+BEGIN
+
+END_DATA_BLOCK
+ORGANIZATION_BLOCK "EPICS_DebuggerOB"
+TITLE = "Main Program Sweep (Cycle)"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+
+BEGIN
+	//Author: Miklos Boros (miklos.boros@esss.se), Copyrigth 2017-2020 by European Spallation Source, Lund
+	//This block was generated by PLCFactory
+	//Description: This OB is a cyclic OB called in every PLC cycle and EPICS_DebuggerFB checks the EPICS configuration.
+
+	//DO NOT Modify this block!!!
+	"EPICS_DebuggerFB_iDB"();
+
+
+END_ORGANIZATION_BLOCK
+DATA_BLOCK "EPICSToPLC"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+//########## EPICS->PLC datablock ##########
+   STRUCT
+      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..65] of Word;
+   END_STRUCT;
+
+BEGIN
+
+END_DATA_BLOCK
+
+DATA_BLOCK "PLCToEPICS"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+//########## PLC->EPICS datablock ##########
+   STRUCT
+      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..124] of Word;
+   END_STRUCT;
+
+BEGIN
+
+END_DATA_BLOCK
+
+FUNCTION "_CommsEPICS" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP
+      PLC_Hash : DInt;
+   END_VAR
+
+BEGIN
+	//Heartbeat PLC->EPICS
+	IF "Utilities".Pulse_1s THEN
+	    "PLCToEPICS"."Word"[2] := "PLCToEPICS"."Word"[2] + 1;
+	    IF "PLCToEPICS"."Word"[2] >= 32000 THEN
+	        "PLCToEPICS"."Word"[2] := 0;
+	    END_IF;
+	END_IF;
+
+	// PLC Factory commit ID: commitID
+	// PLC Hash (Generated by PLC Factory)
+	#PLC_Hash := DINT#-819074987;
+
+	// Send the PLC Hash to the EPICS IOC
+	"PLCToEPICS"."Word"[1] := DINT_TO_WORD(#PLC_Hash);
+	"PLCToEPICS"."Word"[0] := DINT_TO_WORD(SHR(IN := #PLC_Hash, N := 16));
+
+	// Send the PLC parameter upload status to the EPICS IOC
+	"PLCToEPICS"."Word"[3] := "EPICSToPLC"."Word"[5];
+     "Utilities".EPICSParametersStatus := "EPICSToPLC"."Word"[5];
+
+	// Put the PLC Hash into the Modbus map
+	"EPICSToPLC"."Word"[4] := DINT_TO_WORD(#PLC_Hash);
+	"EPICSToPLC"."Word"[3] := DINT_TO_WORD(SHR(IN := #PLC_Hash, N := 16));
+
+
+	// Put the payload size (in bytes) into the Modbus map
+	"EPICSToPLC"."Word"[6] := 250;
+
+	// Call the comms block to provide PLC<->EPICS comms
+	"_CommsPLC_EPICS_DB"(Enable         := "Utilities".AlwaysOn,
+	                     SendTrigger    := "Utilities".Pulse_200ms,
+	                     BytesToSend    := 250,
+	                     InterfaceID    := 0,
+	                     S7ConnectionID := 256,
+	                     MBConnectionID := 255,
+	                     S7Port         := 2000,
+	                     MBPort         := 502,
+	                     PLCToEPICSData := "PLCToEPICS"."Word",
+	                     EPICSToPLCData := "EPICSToPLC"."Word");
+
+END_FUNCTION

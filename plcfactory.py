@@ -1121,6 +1121,7 @@ PLC-EPICS-COMMS: GatewayDatablock: {}""".format(hash_base, gw_db)
             self._hashobj.update(device.name())
             print("depois do update")
             ifdef = getIfDef(device, cplcf)
+            print(ifdef)
             print("depois do ifdef")
             if ifdef is not None:
                 ifdef.calculate_hash(self._hashobj)
@@ -1184,6 +1185,8 @@ PLC-EPICS-COMMS: GatewayDatablock: {}""".format(hash_base, gw_db)
         print("Device at root: " + str(self._plc) + "\n")
 
         header = []
+        print("ifdef_params:\n")
+        print(ifdef_params)
         printer.header(None, header, ROOT_DEVICE = self._plc, PLCF = self._plc_plcf, OUTPUT_DIR = OUTPUT_DIR, HELPERS = helpers, **ifdef_params)
         # has to acquire filename _before_ processing the header
         # there are some special tags that are only valid in the header
@@ -1212,7 +1215,7 @@ PLC-EPICS-COMMS: GatewayDatablock: {}""".format(hash_base, gw_db)
                 print(template_from_def_file)
 
                 try:
-                    printer.body(ifdef, output, DEVICE = device, PLCF = cplcf)
+                    printer.body(ifdef, output, DEVICE = device, PLCF = cplcf) #printer_iff.py line139
                 except (tf.TemplatePrinterException, plcf.PLCFException, PLCFExtException) as e:
                     raise ProcessTemplateException(device.name(), template, e)
 

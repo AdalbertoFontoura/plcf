@@ -11,7 +11,8 @@ __license__    = "GPLv3"
 
 #TODO:
 # DOCUMENT, DOCUMENT, DOCUMENT
-
+# Modified if_def._artifact.is_perdevtype() to self._device.deviceType() != 'PLC'
+# Alfio Rizzo - Fri Feb 14 12:06:26 PM CET 2025
 
 from . import PRINTER, TemplatePrinterException
 from tf_ifdef import IfDefSyntaxError, SOURCE, BLOCK, BASE_TYPE, BIT, TIME
@@ -152,7 +153,7 @@ EPICSTOPLCDATABLOCKOFFSET
 PLCTOEPICSDATABLOCKOFFSET
 {plctoepicsdatablockoffset}
 """.format(inst_slot                 = self.raw_inst_slot(),
-           type                      = self._device.deviceType() if if_def._artifact.is_perdevtype() else "{}_as_{}".format(self._device.deviceType(), self._device.name()),
+           type                      = self._device.deviceType() if self._device.deviceType() != 'PLC' else "{}_as_{}".format(self._device.deviceType(), self._device.name()),
            datablock                 = if_def.datablock_name(),
            epicstoplcdatablockoffset = self._epics_to_plc_offset,
            plctoepicsdatablockoffset = self._plc_to_epics_offset,

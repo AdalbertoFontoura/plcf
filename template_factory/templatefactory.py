@@ -7,7 +7,6 @@ __author__    = "Krisztian Loki"
 __copyright__ = "Copyright 2017, European Spallation Source, Lund"
 __license__   = "GPLv3"
 
-
 import argparse
 import hashlib
 import tf as tf
@@ -15,25 +14,25 @@ from tf_ifdef import IfDefException
 
 
 def createTemplate(definition, if_def, printername):
+                       
     printer = tf.get_printer(printername)
     header = []
-    printer.header(header)
+    printer.header(None,header)
     printer.write("PLC_HEADER", header)
 
-    body = []
-    printer.body(if_def, body)
-    printer.write(definition, body)
+    #body = []
+    #printer.body(if_def, body)
+    #printer.write(definition, body)
 
-    footer = []
-    printer.footer(footer)
-    printer.write("PLC_FOOTER", footer)
+    #footer = []
+    #printer.footer(footer)
+    #printer.write("PLC_FOOTER", footer)
 
 
 
 def processDefinitionFile(definition, printers, **kwargs):
     assert isinstance(definition, str)
     assert isinstance(printers,   list)
-
     print("Processing {definition}...".format(definition = definition))
 
     if printers == []:
@@ -43,6 +42,7 @@ def processDefinitionFile(definition, printers, **kwargs):
 
     if_def = tf.parseDef(definition, **kwargs)
 
+    
     if if_def is None:
         exit(1)
 
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 *Using datablock optimization*
 ******************************
 """)
-
+    
     if args.printers is None:
         # Do a syntax check only
         args.printers = []
@@ -123,7 +123,8 @@ if __name__ == "__main__":
         args.printers = available_printers
 
     try:
-        map(lambda t: processDefinitionFile(t, args.printers, EXPERIMENTAL = args.enable_experimental, OPTIMIZE = args.optimize), args.definitions)
+        #map(lambda t: processDefinitionFile(t, args.printers, EXPERIMENTAL = args.enable_experimental, OPTIMIZE = args.optimize), args.definitions)
+        processDefinitionFile(args.definitions[0], args.printers, EXPERIMENTAL = args.enable_experimental, OPTIMIZE = args.optimize)
     except IfDefException as e:
         from sys import stderr
         print(e, file = stderr)

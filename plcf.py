@@ -294,6 +294,7 @@ class PLCF(object):
         """
         Returns the value of property 'prop' or raises PLCFNoPropertyException if not found
         """
+        
         if prop.startswith(self.plcf_up):
             if prop.find(')') != len(prop) - 1:
                 raise PLCFSyntaxError("Invalid backtrack expression")

@@ -4,52 +4,44 @@ from __future__ import absolute_import
 """ Template Factory: EPICS printer """
 
 
-__author__ = "Krisztian Loki"
-__copyright__ = "Copyright 2017, European Spallation Source, Lund"
-__license__ = "GPLv3"
+__author__     = "Krisztian Loki"
+__copyright__  = "Copyright 2017, European Spallation Source, Lund"
+__license__    = "GPLv3"
 
 
 import re
 
 from . import PRINTER, TemplatePrinterException
-from tf_ifdef import (
-    IfDefInternalError,
-    SOURCE,
-    VERBATIM,
-    BLOCK,
-    CMD_BLOCK,
-    STATUS_BLOCK,
-    PV,
-    BASE_TYPE,
-)
+from tf_ifdef import IfDefInternalError, SOURCE, VERBATIM, BLOCK, CMD_BLOCK, STATUS_BLOCK, PV, BASE_TYPE
+
 
 
 def printer():
-    return [
-        (EPICS.name(), EPICS),
-        (EPICS_TEST.name(), EPICS_TEST),
-        (EPICS_OPC.name(), EPICS_OPC),
-    ]
+    return [ (EPICS.name(), EPICS),
+             (EPICS_TEST.name(), EPICS_TEST),
+             (EPICS_OPC.name(), EPICS_OPC) ]
+
+
 
 
 class EPICS_BASE(PRINTER):
     ## These are copied from interface_factory.__init__.py
 
     # Length: 2 words
-    EPICSTOPLC_HASH = 0
+    EPICSTOPLC_HASH       = 0
     # Length: 1 word
-    EPICSTOPLC_HEARTBEAT = 2
+    EPICSTOPLC_HEARTBEAT  = 2
     # Length: 2 words
-    EPICSTOPLC_READ_HASH = 3
+    EPICSTOPLC_READ_HASH  = 3
     # Length: 1 word
     EPICSTOPLC_UPLOADSTAT = 5
     # Length: 1 word
     EPICSTOPLC_READ_PAYLOAD_SIZE = 6
 
     # Length: 2 words
-    PLCTOEPICS_HASH = 0 * 2
+    PLCTOEPICS_HASH       = 0 * 2
     # Length: 1 word
-    PLCTOEPICS_HEARTBEAT = 2 * 2
+    PLCTOEPICS_HEARTBEAT  = 2 * 2
     # Length: 1 word
     PLCTOEPICS_UPLOADSTAT = 3 * 2
 
@@ -60,7 +52,7 @@ class EPICS_BASE(PRINTER):
 	field(DISV, "0")
 	field(SDIS, "{DISABLE_PV}")"""
 
-    INPV_TEMPLATE = """record({recordtype}, "{pv_name}")
+    INPV_TEMPLATE  = """record({recordtype}, "{pv_name}")
 {{{alias}
 	field(SCAN, "I/O Intr")
 	field(DTYP, "{dtyp}")
@@ -95,17 +87,17 @@ class EPICS_BASE(PRINTER):
 	info("plc_datablock", "{plc_datablock}")
 	info("plc_variable", "{plc_variable}")"""
 
-    def __init__(self, test=False):
-        super(EPICS_BASE, self).__init__(
-            comments=True, show_origin=True, preserve_empty_lines=True
-        )
 
-        self._nonprop_re = re.compile("^([^:]*:[^:]*:)(.*)")
+    def __init__(self, test = False):
+        super(EPICS_BASE, self).__init__(comments = True, show_origin = True, preserve_empty_lines = True)
+
+        self._nonprop_re = re.compile('^([^:]*:[^:]*:)(.*)')
         self._validity_pvs = dict()
         self._validity_calc_names = dict()
         self._gen_validity_pvs = set()
 
         self._endianness = None
+
 
     #
     # HEADER
@@ -116,13 +108,9 @@ class EPICS_BASE(PRINTER):
         # Expand the disable PV
         self.DISABLE_PV = self.expand(self.DISABLE_PV)
 
-        self.DEFAULT_INDISABLE_TEMPLATE = self.DISABLE_TEMPLATE.format(
-            DISABLE_PV=self.DISABLE_PV
-        )
+        self.DEFAULT_INDISABLE_TEMPLATE = self.DISABLE_TEMPLATE.format(DISABLE_PV = self.DISABLE_PV)
         self.INDISABLE_TEMPLATE = self.DISABLE_TEMPLATE
-        self.OUTDISABLE_TEMPLATE = self.DISABLE_TEMPLATE.format(
-            DISABLE_PV=self.DISABLE_PV
-        )
+        self.OUTDISABLE_TEMPLATE = self.DISABLE_TEMPLATE.format(DISABLE_PV = self.DISABLE_PV)
 
         epics_db_header = """
 ################################################################################
@@ -144,14 +132,12 @@ class EPICS_BASE(PRINTER):
 
 #
 # This shows the module version that was 'required'
-# The SIZV of 200 is somewhat overkill, but we want to make sure that it won't cause it to fail.
 #
-record(lsi, "{root_inst_slot}:ModVersionR")
+record(stringin, "{root_inst_slot}:ModVersionR")
 {{
 	field(DESC,	"Module version")
 	field(DISP,	"1")
-	field(SIZV, "200")
-	field(INP,	{{const:"$(MODVERSION={modversion})"}})
+	field(VAL,	"$(MODVERSION={modversion})")
 	field(PINI,	"YES")
 }}
 
@@ -224,43 +210,42 @@ record(longin, "{root_inst_slot}:#plcfC2")
 	field(PINI,	"YES")
 	field(VAL,	"2")
 }}
-""".format(
-            root_inst_slot=self.root_inst_slot(),
-            plcf_commit=keyword_params.get("COMMIT_ID", "N/A"),
-            plcf_commit_39=keyword_params.get("COMMIT_ID", "N/A")[:39],
-            plcf_status=int(keyword_params.get("PLCF_STATUS", 0)),
-            plcf_status_string=(
-                "Clean" if keyword_params.get("PLCF_STATUS", False) else "Dirty"
-            ),
-            plcf_branch=self.plcf("ext.plcfactory_branch()"),
-            plcf_branch_39=self.plcf("ext.plcfactory_branch()")[:39],
-            timestamp=self.plcf("ext.plcfactory_timestamp_as('{:%Y%m%d%H%M%S}')"),
-            cmdline=self.plcf("ext.plcfactory_cmdline()"),
-            modversion=self.plcf("ext.default_modversion()"),
-        )
+""".format(root_inst_slot  = self.root_inst_slot(),
+           plcf_commit     = keyword_params.get("COMMIT_ID", "N/A"),
+           plcf_commit_39  = keyword_params.get("COMMIT_ID", "N/A")[:39],
+           plcf_status     = int(keyword_params.get("PLCF_STATUS", 0)),
+           plcf_status_string = "Clean" if keyword_params.get("PLCF_STATUS", False) else "Dirty",
+           plcf_branch     = self.plcf("ext.plcfactory_branch()"),
+           plcf_branch_39  = self.plcf("ext.plcfactory_branch()")[:39],
+           timestamp       = self.plcf("ext.plcfactory_timestamp_as('{:%Y%m%d%H%M%S}')"),
+           cmdline         = self.plcf("ext.plcfactory_cmdline()"),
+           modversion      = self.plcf("ext.default_modversion()"))
 
         self._append(epics_db_header, output)
 
         return self
 
+
     def comment(self):
         return "#"
 
-    def inpv_template(self, test=False, sdis=False, VALIDITY_PV=None):
+
+    def inpv_template(self, test = False, sdis = False, VALIDITY_PV = None):
         """
-        Called by STATUS_BLOCK.pv_template()
+            Called by STATUS_BLOCK.pv_template()
         """
         if sdis:
             if VALIDITY_PV is None:
                 return self.DEFAULT_INDISABLE_TEMPLATE
-            return self.INDISABLE_TEMPLATE.format(DISABLE_PV=VALIDITY_PV)
+            return self.INDISABLE_TEMPLATE.format(DISABLE_PV = VALIDITY_PV)
         if test:
             return self.TEST_INPV_TEMPLATE
         return self.INPV_TEMPLATE
 
-    def outpv_template(self, test=False, sdis=False, VALIDITY_PV=None):
+
+    def outpv_template(self, test = False, sdis = False, VALIDITY_PV = None):
         """
-        Called by CMD_BLOCK.pv_template() or PARAM_BLOCK.pv_template()
+            Called by CMD_BLOCK.pv_template() or PARAM_BLOCK.pv_template()
         """
         if sdis:
             return self.OUTDISABLE_TEMPLATE
@@ -268,11 +253,13 @@ record(longin, "{root_inst_slot}:#plcfC2")
             return self.TEST_OUTPV_TEMPLATE
         return self.OUTPV_TEMPLATE
 
+
     def _body_register_block_printer(self, block):
         if block is None:
             return
 
         block.register_printer(self)
+
 
     def _body_block(self, block, output):
         if block.is_status_block():
@@ -288,41 +275,26 @@ record(longin, "{root_inst_slot}:#plcfC2")
 
         block.set_endianness(self._endianness)
 
-        self._append(
-            (
-                block.source(),
-                """
+        self._append((block.source(), """
 ##########
 ########## {inst_slot} {dir} ##########
 ##########
-""".format(
-                    inst_slot=self.raw_inst_slot(), dir=comment
-                ),
-            )
-        )
+""".format(inst_slot = self.raw_inst_slot(),
+           dir = comment)))
+
 
     def _body_var(self, var, output):
         if not isinstance(var, BASE_TYPE):
             # It must be a PV
-            self._append(
-                (
-                    var.source(),
-                    var.to_epics_record(
-                        sdis_fields=self.inpv_template(
-                            test=self._test,
-                            sdis=True,
-                            VALIDITY_PV=self._get_validity_pv(var),
-                        )
-                    ),
-                ),
-                output,
-            )
+            self._append((var.source(), var.to_epics_record(sdis_fields = self.inpv_template(test = self._test, sdis = True, VALIDITY_PV = self._get_validity_pv(var)))), output)
             return
 
         self._append(self._toEPICS(var))
 
+
     def _body_source(self, var, output):
         self._append(var)
+
 
     def _body_end(self, if_def, output):
         """
@@ -331,7 +303,8 @@ record(longin, "{root_inst_slot}:#plcfC2")
         for pv_cond in if_def.external_validity_pvs().items():
             self._gen_validity_calc(pv_cond, output)
 
-    def _get_validity_pv(self, var, output=None):
+
+    def _get_validity_pv(self, var, output = None):
         """
         Return the name of the validity PV assigned to this PV or None if the default should be used
         As a side effect it generates the necessary helper PVs
@@ -355,7 +328,7 @@ record(longin, "{root_inst_slot}:#plcfC2")
                 return None
 
         if validity_pv == "":
-            raise TemplatePrinterException("VALIDITY_PV is empty", IFDEF_SOURCE=var)
+            raise TemplatePrinterException("VALIDITY_PV is empty", IFDEF_SOURCE = var)
 
         if validity_pv is None:
             return None
@@ -365,9 +338,7 @@ record(longin, "{root_inst_slot}:#plcfC2")
             return self._validity_pvs[validity_pv]
 
         # Check if validity PV is defined in this interface definition file
-        val_pv_var = self._if_def.has_pv(
-            validity_pv, prefix=self.inst_slot(self._if_def) + ":"
-        )
+        val_pv_var = self._if_def.has_pv(validity_pv, prefix = self.inst_slot(self._if_def) + ':')
         if val_pv_var is not None:
             # We have to expand the PV name
             validity_pv = self.create_pv_name(val_pv_var)
@@ -377,7 +348,8 @@ record(longin, "{root_inst_slot}:#plcfC2")
 
         return validity_name
 
-    def _gen_validity_calc(self, var, output=None):
+
+    def _gen_validity_calc(self, var, output = None):
         """
         Generate the helper PVs for validity calculation
         """
@@ -390,9 +362,7 @@ record(longin, "{root_inst_slot}:#plcfC2")
             vpv = var.fqpn()
             vcond = var.get_parameter("VALIDITY_CONDITION", None)
             if vcond is None:
-                raise TemplatePrinterException(
-                    "VALIDITY_CONDITION is not specified", IFDEF_SOURCE=var
-                )
+                raise TemplatePrinterException("VALIDITY_CONDITION is not specified", IFDEF_SOURCE = var)
         else:
             # This is an external validity PV
             vpv = self.expand(var[0])
@@ -418,8 +388,7 @@ record(longin, "{root_inst_slot}:#plcfC2")
             vcond = "!A"
 
         # Generate PV ("vclc") that calculates validity using the supplied condition expression
-        self._append(
-            """
+        self._append("""
 record(calcout, "{vclc}")
 {{
 	field(DESC, "Calculate validity")
@@ -428,15 +397,13 @@ record(calcout, "{vclc}")
 	field(CALC, "{vcond}")
 	field(OUT,  "{vinv} PP")
 }}
-""".format(
-                vclc=helpernames[1], vpv=vpv, vcond=vcond, vinv=helpernames[2]
-            ),
-            output,
-        )
+""".format(vclc  = helpernames[1],
+           vpv   = vpv,
+           vcond = vcond,
+           vinv  = helpernames[2]), output)
 
         # Generate PV ("vinv") that becomes INVALID when "vclc" is False
-        self._append(
-            """
+        self._append("""
 record(bi, "{vinv}")
 {{
 	field(DESC, "Becomes INVALID if zero")
@@ -445,30 +412,23 @@ record(bi, "{vinv}")
 	field(VAL,  "0")
 	field(FLNK, "{vbi}.PROC CA")
 }}
-""".format(
-                vinv=helpernames[2], vbi=helpernames[0]
-            ),
-            output,
-        )
+""".format(vinv = helpernames[2],
+           vbi  = helpernames[0]), output)
 
         # Generate PV ("vhsh") that ensures that 'vbi' will be processed every time PLCHashCorrectR changes
-        self._append(
-            """
+        self._append("""
 record(bi, "{vhsh}")
 {{
 	field(DESC, "Forward PLCHashCorrectR change to vbi")
 	field(INP,  "{sdis} CP")
 	field(FLNK, "{vbi}.PROC CA")
 }}
-""".format(
-                vhsh=helpernames[3], sdis=self.DISABLE_PV, vbi=helpernames[0]
-            ),
-            output,
-        )
+""".format(vhsh = helpernames[3],
+           sdis = self.DISABLE_PV,
+           vbi  = helpernames[0]), output)
 
         # Generate PV ("vbi") that aggregates DISABLE_PV and "vinv"
-        self._append(
-            """
+        self._append("""
 record(calc, "{vbi}")
 {{
 	field(DESC, "Aggregate PLCHashCorrectR and vinv")
@@ -477,11 +437,10 @@ record(calc, "{vbi}")
 	field(INPB, "{vinv} MSS")
 	field(CALC, "A")
 }}
-""".format(
-                vbi=helpernames[0], sdis=self.DISABLE_PV, vinv=helpernames[2]
-            ),
-            output,
-        )
+""".format(vbi  = helpernames[0],
+           sdis = self.DISABLE_PV,
+           vinv = helpernames[2]), output)
+
 
     def _gen_validity_name(self, var, name, *suffixes):
         """
@@ -498,12 +457,7 @@ record(calc, "{vbi}")
         try:
             ess_name = rematch.group(1)
         except AttributeError:
-            raise TemplatePrinterException(
-                "Cannot generate validity helper PV; non ESS conformant device name: '{}'".format(
-                    name
-                ),
-                IFDEF_SOURCE=var,
-            )
+            raise TemplatePrinterException("Cannot generate validity helper PV; non ESS conformant device name: '{}'".format(name), IFDEF_SOURCE = var)
         prop = rematch.group(2)
 
         vbi = "{}#{}vbi".format(ess_name, prop)
@@ -511,10 +465,11 @@ record(calc, "{vbi}")
         if len(suffixes) == 0:
             return vbi
 
-        pvs = [vbi]
+        pvs = [ vbi ]
         pvs.extend(map(lambda s: "{}#{}{}".format(ess_name, prop, s), suffixes))
 
         return pvs
+
 
     #
     # FOOTER
@@ -523,100 +478,68 @@ record(calc, "{vbi}")
         super(EPICS_BASE, self).footer(footer_if_def, output, **keyword_params)
 
         if not self._gen_validity_pvs == set(self._validity_pvs.keys()):
-            raise TemplatePrinterException(
-                "The following validity PVs were not found or are missing VALIDITY_CONDITION:{}".format(
-                    set(self._validity_pvs.keys()) - self._gen_validity_pvs
-                )
-            )
+            raise TemplatePrinterException("The following validity PVs were not found or are missing VALIDITY_CONDITION:{}".format(set(self._validity_pvs.keys()) - self._gen_validity_pvs))
 
         if footer_if_def:
             for var in footer_if_def.interfaces():
                 if isinstance(var, PV):
                     # It must be a PV
-                    self._append(
-                        (
-                            var.source(),
-                            var.to_epics_record(
-                                sdis_fields=self.inpv_template(
-                                    test=self._test,
-                                    sdis=True,
-                                    VALIDITY_PV=self._get_validity_pv(var),
-                                )
-                            ),
-                        ),
-                        output,
-                    )
+                    self._append((var.source(), var.to_epics_record(sdis_fields = self.inpv_template(test = self._test, sdis = True, VALIDITY_PV = self._get_validity_pv(var)))), output)
+
 
 
 #
 # EPICS output
 #
 class EPICS(EPICS_BASE):
-    def __init__(self, test=False):
+    def __init__(self, test = False):
         super(EPICS, self).__init__(test)
-        self._test = test
+        self._test   = test
+
 
     @staticmethod
     def name():
         return "EPICS-DB"
 
+
     def field_inp(self, inst_io, offset, dtyp_var_type, link_extra):
         """
-        Called by STATUS_BLOCK.inp_out()
+            Called by STATUS_BLOCK.inp_out()
         """
-        return "@{inst_io}/{offset} T={dtyp_var_type}{link_extra}".format(
-            inst_io=inst_io,
-            offset=offset,
-            dtyp_var_type=dtyp_var_type,
-            link_extra=link_extra,
-        )
+        return '@{inst_io}/{offset} T={dtyp_var_type}{link_extra}'.format(inst_io       = inst_io,
+                                                                          offset        = offset,
+                                                                          dtyp_var_type = dtyp_var_type,
+                                                                          link_extra    = link_extra)
+
 
     def field_out(self, inst_io, offset, dtyp_var_type, link_extra):
         """
-        Called by COMMAND_BLOCK.inp_out() or PARAM_BLOCK.inp_out()
+            Called by COMMAND_BLOCK.inp_out() or PARAM_BLOCK.inp_out()
         """
-        return (
-            "@{inst_io}($(PLCNAME)write, {offset}, {link_extra}){dtyp_var_type}".format(
-                inst_io=inst_io,
-                offset=offset,
-                dtyp_var_type=dtyp_var_type,
-                link_extra=link_extra,
-            )
-        )
+        return '@{inst_io}($(PLCNAME)write, {offset}, {link_extra}){dtyp_var_type}'.format(inst_io       = inst_io,
+                                                                                           offset        = offset,
+                                                                                           dtyp_var_type = dtyp_var_type,
+                                                                                           link_extra    = link_extra)
+
 
     def _toEPICS(self, var):
-        pv_extra = (
-            var.pv_template(sdis=True, VALIDITY_PV=self._get_validity_pv(var))
-            + var.build_pv_extra()
-            + EPICS_BASE.PLC_INFO_FIELDS.format(
-                plc_datablock=self._if_def.datablock_name(), plc_variable=var.name()
-            )
-        )
+        pv_extra = var.pv_template(sdis = True, VALIDITY_PV = self._get_validity_pv(var)) + var.build_pv_extra() + EPICS_BASE.PLC_INFO_FIELDS.format(plc_datablock = self._if_def.datablock_name(),
+                                                                                                           plc_variable  = var.name())
         if var.is_parameter() or self._test:
-            pv_extra = (
-                pv_extra
-                + """
+            pv_extra = pv_extra + """
 	info(autosaveFields_pass0, "VAL")"""
-            )
 
-        return (
-            var.source(),
-            var.pv_template(test=self._test).format(
-                recordtype=var.pv_type(),
-                pv_name=var.fqpn(),
-                alias=var.build_pv_alias(),
-                dtyp=var.dtyp(),
-                inp_out=var.inp_out(
-                    inst_io=var.inst_io(),
-                    offset=var.link_offset(
-                        self._plc_to_epics_offset, self._epics_to_plc_offset
-                    ),
-                    dtyp_var_type=var.endian_correct_dtyp_var_type(),
-                    link_extra=var.link_extra() + var._get_user_link_extra(),
-                ),
-                pv_extra=pv_extra,
-            ),
-        )
+        return (var.source(),
+                var.pv_template(test = self._test).format(recordtype = var.pv_type(),
+                                                          pv_name    = var.fqpn(),
+                                                          alias      = var.build_pv_alias(),
+                                                          dtyp       = var.dtyp(),
+                                                          inp_out    = var.inp_out(inst_io       = var.inst_io(),
+                                                                                   offset        = var.link_offset(self._plc_to_epics_offset, self._epics_to_plc_offset),
+                                                                                   dtyp_var_type = var.endian_correct_dtyp_var_type(),
+                                                                                   link_extra    = var.link_extra() + var._get_user_link_extra()),
+                                                          pv_extra   = pv_extra))
+
 
     def _db_header(self, **keyword_params):
         return """
@@ -918,32 +841,23 @@ record(longin, "{root_inst_slot}:PayloadSizeFromPLCR")
 	field(FLNK,	"{root_inst_slot}:#plcfCheckPayloadSize")
 }}
 
-""".format(
-            root_inst_slot=self.root_inst_slot(),
-            endianness=self._endianness,
-            epics_to_plc_hash=self.EPICSToPLCDataBlockStartOffset
-            + self.EPICSTOPLC_HASH,
-            epics_to_plc_heartbeat=self.EPICSToPLCDataBlockStartOffset
-            + self.EPICSTOPLC_HEARTBEAT,
-            epics_to_plc_read_hash=self.EPICSTOPLC_READ_HASH,
-            epics_to_plc_upload_stat=self.EPICSToPLCDataBlockStartOffset
-            + self.EPICSTOPLC_UPLOADSTAT,
-            plc_to_epics_hash=self.PLCToEPICSDataBlockStartOffset
-            + self.PLCTOEPICS_HASH,
-            plc_to_epics_heartbeat=self.PLCToEPICSDataBlockStartOffset
-            + self.PLCTOEPICS_HEARTBEAT,
-            plc_to_epics_upload_stat=self.PLCToEPICSDataBlockStartOffset
-            + self.PLCTOEPICS_UPLOADSTAT,
-            epics_to_plc_read_payload_size=self.EPICSTOPLC_READ_PAYLOAD_SIZE,
-        )
+""".format(root_inst_slot  = self.root_inst_slot(),
+           endianness      = self._endianness,
+           epics_to_plc_hash              = self.EPICSToPLCDataBlockStartOffset + self.EPICSTOPLC_HASH,
+           epics_to_plc_heartbeat         = self.EPICSToPLCDataBlockStartOffset + self.EPICSTOPLC_HEARTBEAT,
+           epics_to_plc_read_hash         = self.EPICSTOPLC_READ_HASH,
+           epics_to_plc_upload_stat       = self.EPICSToPLCDataBlockStartOffset + self.EPICSTOPLC_UPLOADSTAT,
+           plc_to_epics_hash              = self.PLCToEPICSDataBlockStartOffset + self.PLCTOEPICS_HASH,
+           plc_to_epics_heartbeat         = self.PLCToEPICSDataBlockStartOffset + self.PLCTOEPICS_HEARTBEAT,
+           plc_to_epics_upload_stat       = self.PLCToEPICSDataBlockStartOffset + self.PLCTOEPICS_UPLOADSTAT,
+           epics_to_plc_read_payload_size = self.EPICSTOPLC_READ_PAYLOAD_SIZE)
+
 
     #
     # HEADER
     #
     def header(self, header_if_def, output, **keyword_params):
-        super(EPICS, self).header(
-            header_if_def, output, **keyword_params
-        ).add_filename_header(output, extension="db")
+        super(EPICS, self).header(header_if_def, output, **keyword_params).add_filename_header(output, extension = "db")
 
         self.get_endianness()
 
@@ -954,6 +868,7 @@ record(longin, "{root_inst_slot}:PayloadSizeFromPLCR")
         self.advance_offsets_after_header()
 
         return self
+
 
     #
     # BODY
@@ -966,25 +881,19 @@ record(longin, "{root_inst_slot}:PayloadSizeFromPLCR")
         self._body_register_block_printer(if_def._gen_input_block())
         self._body_register_block_printer(if_def._status_block())
 
-        self._append(
-            """
+        self._append("""
 ##########
 ########## {inst_slot} ##########
 ##########
-""".format(
-                inst_slot=self.raw_inst_slot()
-            )
-        )
+""".format(inst_slot = self.raw_inst_slot()))
         self._body_verboseheader(if_def._cmd_block(), output)
         self._body_verboseheader(if_def._param_block(), output)
         self._body_verboseheader(if_def._gen_input_block(), output)
         self._body_verboseheader(if_def._status_block(), output)
 
-        self._append(
-            """##########
+        self._append("""##########
 
-"""
-        )
+""")
 
         for src in if_def.interfaces():
             if isinstance(src, BLOCK):
@@ -1004,31 +913,34 @@ record(longin, "{root_inst_slot}:PayloadSizeFromPLCR")
 
         self._body_end(if_def, output)
 
+
     def _body_end_epics_to_plc(self, if_def, output):
         self._epics_to_plc_offset += int(if_def.to_plc_words_length())
+
 
     def _body_end_plc_to_epics(self, if_def, output):
         # S7 offsets are in bytes
         self._plc_to_epics_offset += 2 * int(if_def.from_plc_words_length())
 
+
     def _body_verboseheader(self, block, output):
         if block is None or self._test:
             return
 
-        self._append(
-            "########## {keyword}: {length}\n".format(
-                keyword=block.length_keyword(), length=block.length() // 2
-            )
-        )
+        self._append("########## {keyword}: {length}\n".format(keyword = block.length_keyword(), length = block.length() // 2))
+
+
 
 
 class EPICS_TEST(EPICS):
     def __init__(self):
-        super(EPICS_TEST, self).__init__(test=True)
+        super(EPICS_TEST, self).__init__(test = True)
+
 
     @staticmethod
     def name():
         return "EPICS-TEST-DB"
+
 
     def _db_header(self, **keyword_params):
         return """
@@ -1211,9 +1123,8 @@ record(calcout, "{root_inst_slot}:#plcfRuinHash")
 	field(CALC,	"A * -1")
 	field(OUT,	"{root_inst_slot}:CommsHashFromPLCR PP")
 }}
-""".format(
-            root_inst_slot=self.root_inst_slot()
-        )
+""".format(root_inst_slot = self.root_inst_slot())
+
 
 
 #
@@ -1223,58 +1134,49 @@ class EPICS_OPC(EPICS_BASE):
     def __init__(self):
         super(EPICS_OPC, self).__init__()
 
+
     @staticmethod
     def name():
         return "EPICS-OPC-DB"
 
-    def field_inp(self, inst_io, datablock, var_name, **keyword_params):
-        return '@{inst_io} ns=3;s=\\"{datablock}\\".\\"{var_name}\\"'.format(
-            inst_io=inst_io, datablock=datablock, var_name=var_name
-        )
 
-    def field_out(self, inst_io, datablock, var_name, monitor=" monitor=n"):
-        return '@{inst_io} ns=3;s=\\"{datablock}\\".\\"{var_name}\\"{monitor}'.format(
-            inst_io=inst_io, datablock=datablock, var_name=var_name, monitor=monitor
-        )
+    def field_inp(self, inst_io, datablock, var_name, **keyword_params):
+        return '@{inst_io} ns=3;s=\\"{datablock}\\".\\"{var_name}\\"'.format(inst_io    = inst_io,
+                                                                             datablock  = datablock,
+                                                                             var_name   = var_name)
+
+
+    def field_out(self, inst_io, datablock, var_name, monitor = " monitor=n"):
+        return '@{inst_io} ns=3;s=\\"{datablock}\\".\\"{var_name}\\"{monitor}'.format(inst_io    = inst_io,
+                                                                                      datablock  = datablock,
+                                                                                      var_name   = var_name,
+                                                                                      monitor    = monitor)
+
 
     def _toEPICS(self, var):
-        pv_extra = (
-            self.DISABLE_TEMPLATE
-            + var.build_pv_extra()
-            + EPICS_BASE.PLC_INFO_FIELDS.format(
-                plc_datablock=var.datablock_name(), plc_variable=var.name()
-            )
-        )
-        return (
-            var.source(),
-            var.pv_template().format(
-                recordtype=var.pv_type(),
-                pv_name=var.fqpn(),
-                alias=var.build_pv_alias(),
-                dtyp="OPCUA",
-                inp_out=var.inp_out(
-                    inst_io="$(SUBSCRIPTION)",
-                    datablock=var.datablock_name(),
-                    var_name=var.name(),
-                ),
-                pv_extra=pv_extra,
-            ),
-        )
+        pv_extra = self.DISABLE_TEMPLATE + var.build_pv_extra() + EPICS_BASE.PLC_INFO_FIELDS.format(plc_datablock = var.datablock_name(),
+                                                                                                    plc_variable  = var.name())
+        return (var.source(),
+                var.pv_template().format(recordtype = var.pv_type(),
+                                         pv_name    = var.fqpn(),
+                                         alias      = var.build_pv_alias(),
+                                         dtyp       = "OPCUA",
+                                         inp_out    = var.inp_out(inst_io   = '$(SUBSCRIPTION)',
+                                                                  datablock = var.datablock_name(),
+                                                                  var_name  = var.name()),
+                                         pv_extra   = pv_extra))
+
 
     #
     # HEADER
     #
     def header(self, header_if_def, output, **keyword_params):
         # This is intentional but check if it is possible to call super(EPICS_OPC, self).header
-        PRINTER.header(
-            self, header_if_def, output, **keyword_params
-        ).add_filename_header(output, extension="db")
+        PRINTER.header(self, header_if_def, output, **keyword_params).add_filename_header(output, extension = "db")
 
         # Expand the disable PV
         self.DISABLE_PV = self.expand(self.DISABLE_PV)
-        self.DISABLE_TEMPLATE = EPICS_OPC.DISABLE_TEMPLATE.format(
-            DISABLE_PV=self.DISABLE_PV
-        )
+        self.DISABLE_TEMPLATE = EPICS_OPC.DISABLE_TEMPLATE.format(DISABLE_PV = self.DISABLE_PV)
 
         epics_db_header = """
 record(stringin, "{root_inst_slot}:ModVersionR")
@@ -1322,14 +1224,13 @@ record(ao, "{root_inst_slot}:CommsHashToPLCS")
 	field(OMSL,	"closed_loop")
 	field(DOL,	"{root_inst_slot}:CommsHashToPLC")
 }}
-""".format(
-            root_inst_slot=self.root_inst_slot(),
-            plcf_commit=keyword_params.get("COMMIT_ID", "N/A"),
-            plcf_commit_39=keyword_params.get("COMMIT_ID", "N/A")[:39],
-        )
+""".format(root_inst_slot  = self.root_inst_slot(),
+           plcf_commit     = keyword_params.get("COMMIT_ID", "N/A"),
+           plcf_commit_39  = keyword_params.get("COMMIT_ID", "N/A")[:39])
 
         self._append(epics_db_header, output)
         return self
+
 
     #
     # BODY
@@ -1342,16 +1243,12 @@ record(ao, "{root_inst_slot}:CommsHashToPLCS")
         self._body_register_block_printer(if_def._gen_input_block())
         self._body_register_block_printer(if_def._status_block())
 
-        self._append(
-            """
+        self._append("""
 ##########
 ########## {inst_slot} ##########
 ##########
 
-""".format(
-                inst_slot=self.raw_inst_slot()
-            )
-        )
+""".format(inst_slot = self.raw_inst_slot()))
 
         for src in if_def.interfaces():
             if isinstance(src, BLOCK):

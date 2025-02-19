@@ -1,5 +1,5 @@
 {
-      "_comment": "ICS_PT",
+      "_comment": "",
       "DEV": {
             "Status": {
                   "analog": [
@@ -357,7 +357,7 @@
                   "string": []
             },
             "PLCF": {
-                  "[PLCF#EGU]": "Bar"
+                  "[PLCF#EGU]": "?"
             }
       }
 }

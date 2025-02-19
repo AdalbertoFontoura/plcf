@@ -1,6 +1,9 @@
 from __future__ import print_function
 from __future__ import absolute_import
 
+# Copied func_param_msg from tf_idef.py
+# Alfio Rizzo - Fri Feb 14 12:06:26 PM CET 2025
+
 import glob
 import importlib
 import os.path
@@ -49,6 +52,12 @@ class TemplatePrinterException(Exception):
     def __str__(self):
         return repr(self)
 
+
+# copied from tf_ifdef.py
+def func_param_msg(param, ptype, atype = None):
+    if atype is None:
+        return "'{param}' must be of type {type}!".format(param = param, type = ptype)
+    return "'{param}' must be of type {type} (not it is {atype})!".format(param = param, type = ptype, atype = atype)
 
 
 def get_printer(printer):
@@ -260,10 +269,10 @@ class PRINTER(object):
     def filename(self, inst_slot = None, template = True, extension = 'txt', custom = None):
         if custom:
             return custom
-
+        
         if inst_slot is None:
             inst_slot = self.raw_root_inst_slot()
-
+        
         if template is True:
             template = "-{}".format(self.template())
         elif template:

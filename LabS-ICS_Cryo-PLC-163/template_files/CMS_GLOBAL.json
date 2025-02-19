@@ -1,0 +1,1104 @@
+{
+      "_comment": "",
+      "DEV": {
+            "Status": {
+                  "analog": [
+                        {
+                              "property": "GIntlockMax",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Total number of Global Interlocks",
+                              "archiver": "tn",
+                              "aa_policy": "1Hz",
+                              "EGU": "V",
+                              "HIHI": "100",
+                              "HHSV": "MAJOR",
+                              "HIGH": "90",
+                              "HSV": "MINOR",
+                              "LOW": "20",
+                              "LSV": "MINOR",
+                              "LOLO": "10",
+                              "LLSV": "MAJOR"
+                        },
+                        {
+                              "property": "GIntlockAct",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Number of active Global Interlocks"
+                        },
+                        {
+                              "property": "SIntlockMax",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Total number of State Interlocks"
+                        },
+                        {
+                              "property": "SIntlockAct",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Number of active State Interlocks"
+                        },
+                        {
+                              "property": "ForcedMax",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Total number of measurements"
+                        },
+                        {
+                              "property": "ForcedAct",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Number of active forced values"
+                        },
+                        {
+                              "property": "CurrentGasUsed",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "1-N, 2-He, 3-H"
+                        },
+                        {
+                              "property": "ColdBoxPCBLevel",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox PCB liquid Level",
+                              "EGU": "m"
+                        },
+                        {
+                              "property": "CV62029_Flow",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Flow Rate through valve",
+                              "EGU": "g/s"
+                        },
+                        {
+                              "property": "CV62033_Flow",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Flow Rate through valve",
+                              "EGU": "g/s"
+                        },
+                        {
+                              "property": "LH2Pump_Flow",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Flow Rate through pumps",
+                              "EGU": "g/s"
+                        },
+                        {
+                              "property": "SpareREAL1",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Spare Real1"
+                        },
+                        {
+                              "property": "SpareREAL2",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Spare Real2"
+                        },
+                        {
+                              "property": "SpareREAL3",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Spare Real3"
+                        },
+                        {
+                              "property": "SpareREAL4",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Spare Real4"
+                        },
+                        {
+                              "property": "SpareREAL5",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "Spare Real5"
+                        },
+                        {
+                              "property": "SpareWORD1",
+                              "plcvartype": "WORD",
+                              "set_as_field": "None",
+                              "DESC": "Spare WORD1"
+                        },
+                        {
+                              "property": "SpareWORD2",
+                              "plcvartype": "WORD",
+                              "set_as_field": "None",
+                              "DESC": "Spare WORD2"
+                        },
+                        {
+                              "property": "F8_Trigger1",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "First FA that triggered F8"
+                        },
+                        {
+                              "property": "F8_Trigger2",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Second FA that triggered F8"
+                        },
+                        {
+                              "property": "Toms_comms_HB",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Heartbeat signal"
+                        },
+                        {
+                              "property": "FS_comms_HB",
+                              "plcvartype": "INT",
+                              "set_as_field": "None",
+                              "DESC": "Heartbeat signal"
+                        },
+                        {
+                              "property": "AO1",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput1"
+                        },
+                        {
+                              "property": "AO2",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput2"
+                        },
+                        {
+                              "property": "AO3",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput3"
+                        },
+                        {
+                              "property": "AO4",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput4"
+                        },
+                        {
+                              "property": "AO5",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput5"
+                        },
+                        {
+                              "property": "AO6",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput6"
+                        },
+                        {
+                              "property": "AO7",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput7"
+                        },
+                        {
+                              "property": "AO8",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogOutput8"
+                        }
+                  ],
+                  "digital": [
+                        {
+                              "property": "Ena_NitrogenGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Enable Gas Selector"
+                        },
+                        {
+                              "property": "Ena_HeliumGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Enable Gas Selector"
+                        },
+                        {
+                              "property": "Ena_HydrogenGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Enable Gas Selector"
+                        },
+                        {
+                              "property": "PSS_LEL_Below10A",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_LEL_Below10B",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_LEL_Below25A",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_LEL_Below25B",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_FillingPermA",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_FillingPermB",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_NoSpecStateA",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_NoSpecStateB",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_CV62001_Perm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "PSS_CV82095_Perm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PSS Signal",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "ParametersFrozen",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "All parameters Zero",
+                              "ONAM": "Zero",
+                              "ZNAM": "OK"
+                        },
+                        {
+                              "property": "SpareBOOL1",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL1"
+                        },
+                        {
+                              "property": "SpareBOOL2",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL2"
+                        },
+                        {
+                              "property": "SpareBOOL3",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL3"
+                        },
+                        {
+                              "property": "SpareBOOL4",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL4"
+                        },
+                        {
+                              "property": "SpareBOOL5",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL5"
+                        },
+                        {
+                              "property": "SpareBOOL6",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL6"
+                        },
+                        {
+                              "property": "SpareBOOL7",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL7"
+                        },
+                        {
+                              "property": "SpareBOOL8",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL8"
+                        },
+                        {
+                              "property": "SpareBOOL9",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL9"
+                        },
+                        {
+                              "property": "SpareBOOL10",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL10"
+                        },
+                        {
+                              "property": "SpareBOOL11",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL11"
+                        },
+                        {
+                              "property": "SpareBOOL12",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL12"
+                        },
+                        {
+                              "property": "SpareBOOL13",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL13"
+                        },
+                        {
+                              "property": "SpareBOOL14",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL14"
+                        },
+                        {
+                              "property": "SpareBOOL15",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL15"
+                        },
+                        {
+                              "property": "SpareBOOL16",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "SpareBOOL16"
+                        },
+                        {
+                              "property": "FailureA1_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "OP concentration",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA2_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox Vacuum Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA31_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox Low Pressure Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA32_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox High Pressure Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA4_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "H2 Leak  Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA5_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "TMCP Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA6_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HX-61100 dT Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA71_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "One HPump Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA72_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Two HPump Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA8_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Multiple Failure",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FailureA9_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PCB Heater Temp",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "GlobalFAActive",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "At least one FA active",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM1_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "OP concentration Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM2_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox Vacuum Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM31_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox Low Pressure Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM32_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "ColdBox High Pressure Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM4_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "H2 Leak Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM5_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "TMCP Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM6_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HX-61100 dT Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM7_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "One HPump Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "WarningM9_Active",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "PCB Heater Warning",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "GlobalWarnActive",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "At least one Warning active",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_CPU",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_CM",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF11",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF12",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF13",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF14",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF15",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF21",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF22",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF31",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF32",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF33",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF34",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF35",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF36",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF37",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF38",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF41",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF42",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PLC_KF43",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF1",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF2",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF3",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF4",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF5",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Lakeshore_KF6",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "TP69100",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "TP89100",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "P62010",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "P62011",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "PNPN",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "Toms_comms",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "FS_comms",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "HardwareDiag",
+                              "ONAM": "Connected",
+                              "ZNAM": "Disconnected"
+                        },
+                        {
+                              "property": "BlkControlStatus",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "Status of the Block Icon Control"
+                        },
+                        {
+                              "property": "DO1",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput1",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO2",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput2",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO3",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput3",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO4",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput4",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO5",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput5",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO6",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput6",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO7",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput7",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DO8",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalOutput8",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": [
+                        {
+                              "property": "CurrentGas",
+                              "plcvartype": null,
+                              "set_as_field": "None",
+                              "DESC": "CurrentGas"
+                        }
+                  ],
+                  "major_alarm": [],
+                  "minor_alarm": []
+            },
+            "Command": {
+                  "analog": [],
+                  "digital": [
+                        {
+                              "property": "Cmd_AckAlarm",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Acknowledge Alarm"
+                        },
+                        {
+                              "property": "Cmd_BlkControl_ON",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Allow control through Block Icons"
+                        },
+                        {
+                              "property": "Cmd_BlkControl_OFF",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Disable control through Block Icons"
+                        },
+                        {
+                              "property": "Cmd_ParamFreeze_OFF",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Unlock Parameter Freeze"
+                        },
+                        {
+                              "property": "Cmd_NitrogenGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Gas Selector"
+                        },
+                        {
+                              "property": "Cmd_HeliumGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Gas Selector"
+                        },
+                        {
+                              "property": "Cmd_HydrogenGas",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Gas Selector"
+                        },
+                        {
+                              "property": "DI1",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput1",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI2",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput2",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI3",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput3",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI4",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput4",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI5",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput5",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI6",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput6",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI7",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput7",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "DI8",
+                              "plcvartype": "BOOL",
+                              "set_as_field": "None",
+                              "DESC": "DigitalInput8",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "Parameter": {
+                  "analog": [
+                        {
+                              "property": "AI1",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput1"
+                        },
+                        {
+                              "property": "AI2",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput2"
+                        },
+                        {
+                              "property": "AI3",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput3"
+                        },
+                        {
+                              "property": "AI4",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput4"
+                        },
+                        {
+                              "property": "AI5",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput5"
+                        },
+                        {
+                              "property": "AI6",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput6"
+                        },
+                        {
+                              "property": "AI7",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput7"
+                        },
+                        {
+                              "property": "AI8",
+                              "plcvartype": "REAL",
+                              "set_as_field": "None",
+                              "DESC": "AnalogInput8"
+                        }
+                  ],
+                  "digital": [],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "PLCF": {}
+      }
+}
