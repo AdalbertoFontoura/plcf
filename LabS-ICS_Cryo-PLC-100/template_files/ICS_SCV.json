@@ -6,52 +6,64 @@
                         {
                               "property": "ValveColor",
                               "plcvartype": "INT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "BlockIcon valve color"
                         },
                         {
                               "property": "SolenoidColor",
                               "plcvartype": "INT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "BlockIcon solenoid color"
                         },
                         {
                               "property": "OpenSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "Safety open setpoint",
                               "EGU": "mbar"
                         },
                         {
                               "property": "CloseSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "Setpoint Hysteresis",
                               "EGU": "mbar"
                         },
                         {
                               "property": "Faceplate_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Owner Lock ID"
                         },
                         {
                               "property": "BlockIcon_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Guest Lock ID"
                         },
                         {
                               "property": "FB_OpenSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "FB Safety open setpoint from HMI",
                               "EGU": "mbar"
                         },
                         {
                               "property": "FB_CloseSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "FB Safety close setpoint from HMI",
                               "EGU": "mbar"
                         }
@@ -60,6 +72,7 @@
                         {
                               "property": "OpMode_Auto",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Operation Mode Auto",
                               "ONAM": "True",
@@ -68,6 +81,7 @@
                         {
                               "property": "OpMode_Manual",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Operation Mode Manual",
                               "ONAM": "True",
@@ -76,6 +90,7 @@
                         {
                               "property": "OpMode_Forced",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Operation Mode Forced",
                               "ONAM": "True",
@@ -84,6 +99,7 @@
                         {
                               "property": "Opened",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Valve Opened",
                               "ONAM": "True",
@@ -92,6 +108,7 @@
                         {
                               "property": "Closed",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Valve Closed",
                               "ONAM": "True",
@@ -100,6 +117,7 @@
                         {
                               "property": "Solenoid",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Solenoid energized",
                               "ONAM": "True",
@@ -108,6 +126,7 @@
                         {
                               "property": "Inhibit_Manual",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Manual Mode",
                               "ONAM": "InhibitManual",
@@ -116,6 +135,7 @@
                         {
                               "property": "Inhibit_Force",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Force Mode",
                               "ONAM": "InhibitForce",
@@ -124,6 +144,7 @@
                         {
                               "property": "Inhibit_Lock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Locking",
                               "ONAM": "InhibitLocking",
@@ -132,6 +153,7 @@
                         {
                               "property": "GroupInterlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Group Interlock",
                               "ONAM": "True",
@@ -140,6 +162,7 @@
                         {
                               "property": "StartInterlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Start Interlock",
                               "ONAM": "True",
@@ -148,6 +171,7 @@
                         {
                               "property": "StopInterlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
                               "DESC": "Stop Interlock",
                               "ONAM": "True",
@@ -156,6 +180,7 @@
                         {
                               "property": "EnableBlkOpen",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Block Open Button",
                               "ONAM": "True",
@@ -164,6 +189,7 @@
                         {
                               "property": "EnableBlkClose",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Block Close Button",
                               "ONAM": "True",
@@ -172,6 +198,7 @@
                         {
                               "property": "EnableAutoBtn",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Auto Button",
                               "ONAM": "True",
@@ -180,6 +207,7 @@
                         {
                               "property": "EnableManualBtn",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Manual Button",
                               "ONAM": "True",
@@ -188,6 +216,7 @@
                         {
                               "property": "EnableForcedBtn",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Force Button",
                               "ONAM": "True",
@@ -196,12 +225,14 @@
                         {
                               "property": "NormallyOpen",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "PV is Normally opened"
                         },
                         {
                               "property": "DevLocked",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device Locked",
                               "ONAM": "True",
@@ -210,26 +241,98 @@
                         {
                               "property": "LatchAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Latching of the alarms"
                         },
                         {
                               "property": "GroupAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Group Alarm for OPI"
+                        },
+                        {
+                              "property": "Opening_TimeOut",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Opening Time Out",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Closing_TimeOut",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Closing Time Out",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "IO_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "IO Error",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Input_Module_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Output_Module_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "SSTriggered",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "StaPnR",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Status power and ready",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Open",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Param_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "Open or Close SP not configured",
+                              "ZNAM": "NominalState"
                         }
                   ],
                   "time": [
                         {
                               "property": "OpeningTime",
                               "plcvartype": null,
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Opening Time"
                         },
                         {
                               "property": "ClosingTime",
                               "plcvartype": null,
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Closing Time"
                         }
@@ -240,72 +343,11 @@
                         {
                               "property": "InterlockMsg",
                               "plcvartype": null,
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Interlock Message"
                         }
-                  ],
-                  "major_alarm": [
-                        {
-                              "property": "Opening_TimeOut",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "Opening Time Out",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Closing_TimeOut",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "Closing Time Out",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "IO_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "IO Error",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Input_Module_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Output_Module_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "SSTriggered",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "StaPnR",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "Status power and ready",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Open",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Param_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "Open or Close SP not configured",
-                              "ZNAM": "NominalState"
-                        }
-                  ],
-                  "minor_alarm": []
+                  ]
             },
             "Command": {
                   "analog": [],
@@ -313,66 +355,77 @@
                         {
                               "property": "Cmd_Auto",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Auto Mode"
                         },
                         {
                               "property": "Cmd_Manual",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Manual Mode"
                         },
                         {
                               "property": "Cmd_Force",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Mode"
                         },
                         {
                               "property": "Cmd_ManuOpen",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Manual Open"
                         },
                         {
                               "property": "Cmd_ManuClose",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Manual Close"
                         },
                         {
                               "property": "Cmd_ForceOpen",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Open"
                         },
                         {
                               "property": "Cmd_ForceClose",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Close"
                         },
                         {
                               "property": "Cmd_AckAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Acknowledge Alarm"
                         },
                         {
                               "property": "Cmd_ForceUnlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Unlock Device"
                         },
                         {
                               "property": "Cmd_DevLock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Lock Device"
                         },
                         {
                               "property": "Cmd_DevUnlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Unlock Device"
                         }
@@ -387,26 +440,32 @@
                         {
                               "property": "P_Faceplate_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device ID after Lock"
                         },
                         {
                               "property": "P_BlockIcon_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device ID after Blockicon Open"
                         },
                         {
                               "property": "P_OpenSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "Safety open setpoint from OPI",
                               "EGU": "mbar"
                         },
                         {
                               "property": "P_CloseSP",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
+                              "PREC": "2",
                               "DESC": "Safety close setpoint from OPI",
                               "EGU": "mbar"
                         }

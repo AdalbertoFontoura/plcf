@@ -237,8 +237,20 @@ class PRINTER(object):
         if slot.startswith('[PLCF#'):
             slot = slot[6:-1]
 
+
+        class PVLengthException(Exception):
+            pass
+        
+        def check_pv_length(pv_name):
+            assert isinstance(pv_name, str)
+
+            if ('$' in pv_name or len(pv_name) <= 60):
+                return pv_name
+
+            raise PVLengthException("The PV name '{pv_name}' is longer than permitted ({act_len} / 60)".format(pv_name = pv_name, act_len = len(pv_name)))
+
         try:
-            return self.plcf('ext.check_pv_length("{slot}"+":{property}")'.format(slot = slot, property = property_part))
+            return check_pv_length("{slot}"+":{property}").format(slot = slot, property = property_part)
         except PLCFExtException as e:
             raise TemplatePrinterException(e)
 
@@ -283,7 +295,7 @@ class PRINTER(object):
 
         return "{inst_slot}{template}-{timestamp}.{ext}".format(inst_slot = inst_slot,
                                                                 template  = template,
-                                                                timestamp = self.timestamp(),
+                                                                timestamp = self._timestamp,
                                                                 ext       = extension)
 
 
@@ -341,6 +353,7 @@ class PRINTER(object):
         self._helpers        = keyword_params.get("HELPERS", None)
         self._root_inst_slot = keyword_params.get("ROOT_INSTALLATION_SLOT", None)
         self._root_device    = keyword_params.get("ROOT_DEVICE", None)
+        self._timestamp      = keyword_params.get("TIMESTAMP")
 
         self._parse_keyword_args(keyword_params)
         self._device = self._root_device

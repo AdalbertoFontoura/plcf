@@ -28,7 +28,7 @@ from . import IFA
 
 # PLC Factory modules
 import helpers
-import plcf_glob as glob
+
 
 #Global variables
 ifa     = None
@@ -1432,7 +1432,7 @@ def produce(OutputDir, _ifa, **kwargs):
 	start_time      = time.time()
 	OutputDirectory = OutputDir
 	verify     = kwargs.get('verify', False)
-
+	timestamp  = kwargs.get('timestamp', None)
 	generated_files = dict()
 
 	ifa = _ifa
@@ -1441,7 +1441,7 @@ def produce(OutputDir, _ifa, **kwargs):
 		raise IFA.FatalException("'gateway-mode' is not supported")
 
 	if verify:
-		basedir = "BECKHOFF_{}".format(glob.timestamp)
+		basedir = "BECKHOFF_{}".format(timestamp)
 	else:
 		basedir = "BECKHOFF"
 	helpers.makedirs(os.path.join(OutputDirectory, basedir, "EPICS", "EPICS types"))

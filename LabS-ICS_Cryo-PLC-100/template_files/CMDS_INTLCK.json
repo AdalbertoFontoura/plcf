@@ -1,0 +1,227 @@
+{
+      "_comment": "",
+      "DEV": {
+            "Status": {
+                  "analog": [],
+                  "digital": [
+                        {
+                              "property": "OpMode_Auto",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Auto",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "OpMode_Forced",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Operation Mode Manual",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "OFF",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Signal OFF",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "ON",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Signal ON",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "SignalForced",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Signal forced indicator",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Interlock_Status",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Interlock indicator",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "ST_Reserve_01",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Bool reserve 01",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "ST_Reserve_02",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Bool reserve 01",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Alarm",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Warning",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "Command": {
+                  "analog": [],
+                  "digital": [
+                        {
+                              "property": "Cmd_Auto",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Auto Mode"
+                        },
+                        {
+                              "property": "Cmd_Forced",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "CMD: Forced Mode"
+                        },
+                        {
+                              "property": "Cmd_ForceOFF",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "CMD: force OFF"
+                        },
+                        {
+                              "property": "Cmd_ForceON",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "CMD: force ON"
+                        },
+                        {
+                              "property": "Cmd_Ack",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "CMD:Acknowledge"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
+            },
+            "Parameter": {
+                  "analog": [
+                        {
+                              "property": "P_Reserve_01",
+                              "plcvartype": "REAL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "PREC": "2",
+                              "DESC": "Parameter Reserve 1"
+                        },
+                        {
+                              "property": "P_Reserve_02",
+                              "plcvartype": "REAL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "PREC": "2",
+                              "DESC": "Parameter Reserve 2"
+                        },
+                        {
+                              "property": "PresR",
+                              "plcvartype": "REAL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "PREC": "2",
+                              "DESC": "pressure input"
+                        },
+                        {
+                              "property": "TempR",
+                              "plcvartype": "REAL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "PREC": "2",
+                              "DESC": "temperature input"
+                        }
+                  ],
+                  "digital": [
+                        {
+                              "property": "Ext_Reserve_01",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "external reserve signal 1",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Ext_Reserve_02",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "external reserve signal 2",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "Ext_Reserve_03",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "external reserve signal 3",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        }
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": [
+                        {
+                              "property": "SignalName",
+                              "plcvartype": null,
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "SignalDesc",
+                              "plcvartype": null,
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        }
+                  ]
+            },
+            "PLCF": {}
+      }
+}

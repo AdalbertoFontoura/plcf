@@ -20,10 +20,12 @@ will not lead to an error. Instead, such input is simply returned unchanged.
 
 # Python libraries
 
-# PLC Factory modules
-import plcf_glob       as glob
-import plcf_ext
-
+# dummy class
+class plcf_ext():
+    def __init__(self):
+        pass
+    class PLCFExtException(Exception):
+        pass
 
 
 class PLCFException(Exception):
@@ -72,17 +74,25 @@ class PLCF(object):
     plcf_up_len      = len(plcf_up)
     plcf_counter_tag = "#COUNTER"
     plcf_counter     = "Counter"
-    num_of_counters  = 9
+    num_of_counters  = 9    
 
     @staticmethod
     def __specialProperties(device):
-        sp = { 'TIMESTAMP'                 :  glob.timestamp,
-               'ROOT_INSTALLATION_SLOT'    :  plcf_ext.extra_colon(glob.root_installation_slot),
-               'RAW_ROOT_INSTALLATION_SLOT' : glob.root_installation_slot
+        if device.controlledBy():
+            root_installation_slot = device.controlledBy().name()
+        else:
+            root_installation_slot = device.name()
+
+        def extra_colon(slot):
+            return slot if ':' in slot or slot[0] == '$' else "{}:".format(slot)
+
+        sp = { 'TIMESTAMP'                 :  '',
+               'ROOT_INSTALLATION_SLOT'    :  extra_colon(root_installation_slot),
+               'RAW_ROOT_INSTALLATION_SLOT' : root_installation_slot
              }
 
         if device is not None:
-            sp.update({ 'INSTALLATION_SLOT'       : plcf_ext.extra_colon(device.name()),
+            sp.update({ 'INSTALLATION_SLOT'       : extra_colon(device.name()),
                         'RAW_INSTALLATION_SLOT'   : device.name(),
                         'INSTALLATION_SLOT_DESC'  : device.description(),
                         'DEVICE_TYPE'             : device.deviceType(),
@@ -159,6 +169,8 @@ class PLCF(object):
 
         self._properties.update(sp)
 
+    def getDevice(self):
+        return self._device
 
     def register_template(self, templateId):
         self._properties['TEMPLATE'] = 'template-' + templateId

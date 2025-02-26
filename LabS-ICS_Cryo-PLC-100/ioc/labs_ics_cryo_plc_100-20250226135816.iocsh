@@ -15,7 +15,7 @@
 #- @runtime YES
 #- The version of the PLC-IOC integration
 
-#- @field tbd_ctrl_plc_001_VERSION
+#- @field labs_ics_cryo_plc_100_VERSION
 #- @runtime YES
 
 #- @field S7_PORT
@@ -30,7 +30,7 @@
 #- Check if MODVERSION is set
 #-
 #- First set PLCIOCVERSION to a safe default; the module version if it is a module else the creation date
-epicsEnvSet("PLCIOCVERSION", "$(tbd_ctrl_plc_001_VERSION=None)")
+epicsEnvSet("PLCIOCVERSION", "$(labs_ics_cryo_plc_100_VERSION=20250226135816)")
 #- Now, the tricky part;
 #- 1. try to set PLCIOCVERSION from a macro named PLCIOCVERSION + MODVERSION (where MODVERSION defaults to the empty string if not set)
 #-    this will basically set PLCIOCVERSION to the value of PLCIOCVERSION if MODVERSION is not set or empty
@@ -39,32 +39,32 @@ epicsEnvSet("PLCIOCVERSION", "$(tbd_ctrl_plc_001_VERSION=None)")
 epicsEnvSet("PLCIOCVERSION", "$(PLCIOCVERSION$(MODVERSION=)=$(MODVERSION))")
 
 #- S7 port           : 2000
-#- Input block size  : 250 bytes
+#- Input block size  : 222 bytes
 #- Output block size : 0 bytes
 #- Endianness        : BigEndian
-s7plcConfigure("LabS-ICS:Cryo-PLC-163", $(IPADDR=labs-ics:cryo-plc-163.tn.esss.lu.se), $(S7_PORT=2000), 250, 0, 1, $(RECVTIMEOUT=300), 0)
+s7plcConfigure("LabS-ICS:Cryo-PLC-100", $(IPADDR=omtest-cryo-plc.cslab.esss.lu.se), $(S7_PORT=2000), 222, 0, 1, $(RECVTIMEOUT=1000), 0)
 
 #- Modbus port       : 502
-drvAsynIPPortConfigure("LabS-ICS:Cryo-PLC-163", $(IPADDR=labs-ics:cryo-plc-163.tn.esss.lu.se):$(MB_PORT=502), 0, 0, 1)
+drvAsynIPPortConfigure("LabS-ICS:Cryo-PLC-100", $(IPADDR=omtest-cryo-plc.cslab.esss.lu.se):$(MB_PORT=502), 0, 0, 1)
 
 #- Link type         : TCP/IP (0)
 #- The timeout is initialized to the (modbus) default if not specified
-modbusInterposeConfig("LabS-ICS:Cryo-PLC-163", 0, $(RECVTIMEOUT=0), 0)
+modbusInterposeConfig("LabS-ICS:Cryo-PLC-100", 0, $(RECVTIMEOUT=0), 0)
 
 #- Slave address     : 0
 #- Function code     : 16 - Write Multiple Registers
 #- Addressing        : Absolute (-1)
 #- Data segment      : 20 words
-drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-163write", "LabS-ICS:Cryo-PLC-163", 0, 16, -1, 20, 0, 0, "S7-1500")
+drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-100write", "LabS-ICS:Cryo-PLC-100", 0, 16, -1, 20, 0, 0, "S7-1500")
 
 #- Slave address     : 0
 #- Function code     : 3 - Read Multiple Registers
 #- Addressing        : Relative (0)
 #- Data segment      : 10 words
 #- Polling           : 1000 msec
-drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-163read", "LabS-ICS:Cryo-PLC-163", 0, 3, 0, 10, 0, 1000, "S7-1500")
+drvModbusAsynConfigure("LabS-ICS:Cryo-PLC-100read", "LabS-ICS:Cryo-PLC-100", 0, 3, 0, 10, 0, 1000, "S7-1500")
 
 #- Load plc interface database
-dbLoadRecords("$(DBDIR=)tbd_ctrl_plc_001.db", "PLCNAME=LabS-ICS:Cryo-PLC-163, MODVERSION=None, S7_PORT=$(S7_PORT=2000), MODBUS_PORT=$(MB_PORT=502), PAYLOAD_SIZE=250")
+dbLoadRecords("$(DBDIR=)labs_ics_cryo_plc_100.db", "PLCNAME=LabS-ICS:Cryo-PLC-100, MODVERSION=$(PLCIOCVERSION), S7_PORT=$(S7_PORT=2000), MODBUS_PORT=$(MB_PORT=502), PAYLOAD_SIZE=222")
 #- Remove PLCIOCVERSION to not pollute the environment
 epicsEnvUnset("PLCIOCVERSION")

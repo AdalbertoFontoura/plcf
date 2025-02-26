@@ -6,82 +6,130 @@
                         {
                               "property": "TransmitterColor",
                               "plcvartype": "INT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Transmitter color"
                         },
                         {
                               "property": "ScaleLOW",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Scale LOW",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "ScaleHIGH",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Scale HIGH",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "MeasValue",
                               "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
                               "set_as_field": "None",
-                              "DESC": "Pressure Value",
-                              "EGU": "mBar"
+                              "PREC": "1",
+                              "DESC": "Level Value",
+                              "EGU": "%"
+                        },
+                        {
+                              "property": "RAWValue",
+                              "plcvartype": "REAL",
+                              "aa_policy": "1Hz",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "RAW integer scaled"
+                        },
+                        {
+                              "property": "OffsetValue",
+                              "plcvartype": "REAL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Offset Value",
+                              "EGU": "%"
                         },
                         {
                               "property": "Faceplate_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Owner Lock ID"
                         },
                         {
                               "property": "BlockIcon_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Guest Lock ID"
                         },
                         {
                               "property": "FB_ForceValue",
                               "plcvartype": "REAL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
-                              "DESC": "Feedback Force Pressure",
-                              "EGU": "mBar"
+                              "PREC": "1",
+                              "DESC": "Feedback Force Level",
+                              "EGU": "%"
                         },
                         {
                               "property": "FB_Limit_HIHI",
                               "plcvartype": "REAL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Feedback Limit HIHI",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "FB_Limit_HI",
                               "plcvartype": "REAL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Feedback Limit HI",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "FB_Limit_LO",
                               "plcvartype": "REAL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Feedback Limit LO",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "FB_Limit_LOLO",
                               "plcvartype": "REAL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Feedback Limit LOLO",
-                              "EGU": "mBar"
+                              "EGU": "%"
+                        },
+                        {
+                              "property": "T_running",
+                              "plcvartype": "INT",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "FiltedValue",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None"
                         }
                   ],
                   "digital": [
                         {
                               "property": "OpMode_FreeRun",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Operation Mode FreeRun",
                               "ONAM": "True",
@@ -90,6 +138,7 @@
                         {
                               "property": "OpMode_Forced",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Operation Mode Forced",
                               "ONAM": "True",
@@ -98,6 +147,7 @@
                         {
                               "property": "Inhibit_Manual",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Manual Mode",
                               "ONAM": "InhibitManual",
@@ -106,6 +156,7 @@
                         {
                               "property": "Inhibit_Force",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Force Mode",
                               "ONAM": "InhibitForce",
@@ -114,6 +165,7 @@
                         {
                               "property": "Inhibit_Lock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Inhibit Locking",
                               "ONAM": "InhibitLocking",
@@ -122,104 +174,171 @@
                         {
                               "property": "EnableFreeRunBtn",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Free Run Button",
                               "ONAM": "True",
                               "ZNAM": "False"
                         },
                         {
-                              "property": "EnableManualBtn",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "DESC": "Enable Manual Button",
-                              "ONAM": "True",
-                              "ZNAM": "False"
-                        },
-                        {
                               "property": "EnableForcedBtn",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Enable Force Button",
                               "ONAM": "True",
                               "ZNAM": "False"
                         },
                         {
+                              "property": "EnableManualBtn",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "Enable Manual Button",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "AlarmRelay",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Alarm Status Relay",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
+                              "property": "LCMeasS",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Start LC Measurement",
+                              "ONAM": "True",
+                              "ZNAM": "False"
+                        },
+                        {
                               "property": "DevLocked",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device Locked",
                               "ONAM": "True",
                               "ZNAM": "False"
-                        }
-                  ],
-                  "time": [],
-                  "enum": [],
-                  "bitmask": [],
-                  "string": [],
-                  "major_alarm": [
+                        },
                         {
                               "property": "LatchAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "ZNAM": "True"
                         },
                         {
                               "property": "GroupAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "ZNAM": "NominalState"
                         },
                         {
                               "property": "Underrange",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "DESC": "Level Underrange",
                               "ZNAM": "NominalState"
                         },
                         {
                               "property": "Overrange",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "DESC": "Level Overrange",
                               "ZNAM": "NominalState"
                         },
                         {
                               "property": "HIHI",
                               "plcvartype": "BOOL",
+                              "aa_policy": "default",
                               "set_as_field": "None",
+                              "DESC": "Level HIHI",
                               "ZNAM": "NominalState"
                         },
-                        {
-                              "property": "LOLO",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "IO_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        },
-                        {
-                              "property": "Module_Error",
-                              "plcvartype": "BOOL",
-                              "set_as_field": "None",
-                              "ZNAM": "NominalState"
-                        }
-                  ],
-                  "minor_alarm": [
                         {
                               "property": "HI",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "ZNAM": "NominalState"
                         },
                         {
                               "property": "LO",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "LOLO",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Level LOLO",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "IO_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Module_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Module_Error",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Param_Error",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Parameter_Error",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Warm_Sensor",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "default",
+                              "set_as_field": "None",
+                              "DESC": "Warm_Sensor",
+                              "ZNAM": "NominalState"
+                        },
+                        {
+                              "property": "Timer_enabled",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "T_triggered",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "F_enabled",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None"
                         }
-                  ]
+                  ],
+                  "time": [],
+                  "enum": [],
+                  "bitmask": [],
+                  "string": []
             },
             "Command": {
                   "analog": [],
@@ -227,44 +346,58 @@
                         {
                               "property": "Cmd_FreeRun",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: FreeRun Mode"
                         },
                         {
                               "property": "Cmd_Force",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Mode"
                         },
                         {
                               "property": "Cmd_ForceVal",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Value"
                         },
                         {
                               "property": "Cmd_AckAlarm",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Acknowledge Alarm"
                         },
                         {
                               "property": "Cmd_ForceUnlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Force Unlock Device"
                         },
                         {
                               "property": "Cmd_DevLock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Lock Device"
                         },
                         {
                               "property": "Cmd_DevUnlock",
                               "plcvartype": "BOOL",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "CMD: Unlock Device"
+                        },
+                        {
+                              "property": "StatRLHe",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "Status LHe Sensor"
                         }
                   ],
                   "time": [],
@@ -277,52 +410,142 @@
                         {
                               "property": "P_Limit_HIHI",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Limit HIHI",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "P_Limit_HI",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Limit HI",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "P_Limit_LO",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Limit LO",
-                              "EGU": "mBar"
+                              "EGU": "%"
                         },
                         {
                               "property": "P_Limit_LOLO",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
+                              "PREC": "1",
                               "DESC": "Limit LOLO",
-                              "EGU": "mBar"
+                              "EGU": "%"
+                        },
+                        {
+                              "property": "P_ScaleHIGH",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "Scaling HIGH",
+                              "EGU": "%"
+                        },
+                        {
+                              "property": "P_ScaleLOW",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "Scaling LOW",
+                              "EGU": "%"
                         },
                         {
                               "property": "P_ForceValue",
                               "plcvartype": "REAL",
+                              "aa_policy": "",
                               "set_as_field": "None",
-                              "DESC": "Force pressure",
-                              "EGU": "mBar"
+                              "PREC": "1",
+                              "DESC": "Force Level",
+                              "EGU": "%"
                         },
                         {
                               "property": "P_Faceplate_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device ID after Lock"
                         },
                         {
                               "property": "P_BlockIcon_LockID",
                               "plcvartype": "DINT",
+                              "aa_policy": "",
                               "set_as_field": "None",
                               "DESC": "Device ID after Blockicon Open"
+                        },
+                        {
+                              "property": "T_period",
+                              "plcvartype": "INT",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "F_interval",
+                              "plcvartype": "INT",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "F_buffer",
+                              "plcvartype": "INT",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        },
+                        {
+                              "property": "P_RampUPSpeed",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "Ramping UP Speed",
+                              "EGU": "%/s"
+                        },
+                        {
+                              "property": "P_RampDNSpeed",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "Ramping DOWN Speed",
+                              "EGU": "%/s"
+                        },
+                        {
+                              "property": "P_OffsetValue",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "PREC": "1",
+                              "DESC": "Offset Value",
+                              "EGU": "%"
+                        },
+                        {
+                              "property": "LC_LvlR",
+                              "plcvartype": "REAL",
+                              "aa_policy": "",
+                              "set_as_field": "None",
+                              "DESC": "Read IOC Cont Level",
+                              "EGU": "%"
                         }
                   ],
-                  "digital": [],
+                  "digital": [
+                        {
+                              "property": "F_Enable",
+                              "plcvartype": "BOOL",
+                              "aa_policy": "",
+                              "set_as_field": "None"
+                        }
+                  ],
                   "time": [],
                   "enum": [],
                   "bitmask": [],

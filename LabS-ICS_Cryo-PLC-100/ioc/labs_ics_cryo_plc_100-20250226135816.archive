@@ -1,0 +1,26 @@
+############################################################
+## LabS-ICS:Cryo-PLC-100
+# The module version
+LabS-ICS:Cryo-PLC-100:ModVersionR
+# Modbus connection state
+LabS-ICS:Cryo-PLC-100:ModbusConnectedR
+# S7 connection state
+LabS-ICS:Cryo-PLC-100:S7ConnectedR
+# Address of the PLC
+LabS-ICS:Cryo-PLC-100:PLCAddr-RB
+# Global connection state
+LabS-ICS:Cryo-PLC-100:ConnectedR
+# Hash correctness state
+LabS-ICS:Cryo-PLC-100:PLCHashCorrectR
+# PLC liveliness
+LabS-ICS:Cryo-PLC-100:AliveR
+# IOC Hash
+LabS-ICS:Cryo-PLC-100:CommsHashToPLC
+# PLC Hash
+LabS-ICS:Cryo-PLC-100:CommsHashFromPLCR
+# Configured payload size
+LabS-ICS:Cryo-PLC-100:PayloadSizeR
+# Payload size configured on the PLC
+LabS-ICS:Cryo-PLC-100:PayloadSizeFromPLCR
+# Payload size configuration correctness state
+LabS-ICS:Cryo-PLC-100:PayloadSizeCorrectR

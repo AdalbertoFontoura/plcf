@@ -22,36 +22,36 @@ def printer():
 
 
 
-class e3(object):
-    @staticmethod
-    def _extension():
-        return "iocsh"
+# class e3(object):
+#     @staticmethod
+#     def _extension():
+#         return "iocsh"
 
 
-    def modulename(self):
-        return self.plcf("ext.e3_modulename()")
+#     def modulename(self):
+#         return self.plcf("ext.e3_modulename()")
 
 
-    def snippet(self):
-        return self.plcf("ext.e3_snippet()")
+#     def snippet(self):
+#         return self.plcf("ext.e3_snippet()")
 
 
-    def modversion(self):
-        # If there is a requested version we have to use that as MODVERSION
-        plciocversion = self.plcf("ext.modversion()")
-        if plciocversion:
-            return plciocversion
+#     def modversion(self):
+#         # If there is a requested version we have to use that as MODVERSION
+#         plciocversion = self.plcf("ext.modversion()")
+#         if plciocversion:
+#             return plciocversion
 
-        # This is set using a tricky epicsEnvSet
-        return "$(PLCIOCVERSION)"
-
-
-    def _modversion_macro(self):
-        return "{modulename}_VERSION".format(modulename = self.modulename())
+#         # This is set using a tricky epicsEnvSet
+#         return "$(PLCIOCVERSION)"
 
 
-    def _modversion(self):
-        return "{modversion}={default}".format(modversion = self._modversion_macro(), default = self.plcf("ext.default_modversion()"))
+#     def _modversion_macro(self):
+#         return "{modulename}_VERSION".format(modulename = self.modulename())
+
+
+#     def _modversion(self):
+#         return "{modversion}={default}".format(modversion = self._modversion_macro(), default = self.plcf("ext.default_modversion()"))
 
 
 
@@ -101,7 +101,7 @@ class MACROS(object):
 
 
 
-class IOCSH(e3, MACROS, PRINTER):
+class IOCSH(MACROS, PRINTER):
     SIEMENS_PLC_PULSE = dict({"Pulse_100ms" : 100,
                               "Pulse_200ms" : 200,
                               "Pulse_400ms" : 400,
@@ -131,7 +131,13 @@ class IOCSH(e3, MACROS, PRINTER):
     # HEADER
     #
     def header(self, header_if_def, output, **keyword_parameters):
-        super(IOCSH, self).header(header_if_def, output, **keyword_parameters).add_filename_header(output, inst_slot = self.snippet(), template = False if not self._autosave else "autosave", extension = self._extension())
+        snippet = keyword_parameters.get('SNIPPET', 'N/A')
+        self.modulename = keyword_parameters.get('MODULE_NAME')
+        self.modversion = keyword_parameters.get('MODVERSION', '$(PLCIOCVERSION)')
+        default_modversion = keyword_parameters.get('DEF_MODVERSION')
+        self._modversion_macro = "{modulename}_VERSION".format(modulename = self.modulename)
+        self._modversion = "{modversion}={default}".format(modversion = self._modversion_macro, default = default_modversion)
+        super(IOCSH, self).header(header_if_def, output, **keyword_parameters).add_filename_header(output, inst_slot = snippet, template = False if not self._autosave else "autosave", extension = 'iocsh')
         self._opc = True if "OPC" in keyword_parameters.get("PLC_TYPE", "") else False
 
         if not self._opc:
@@ -148,7 +154,7 @@ class IOCSH(e3, MACROS, PRINTER):
         plc_pulse = self.get_property("PLC-EPICS-COMMS: PLCPulse", "Pulse_200ms")
         try:
             plc_pulse = self.SIEMENS_PLC_PULSE[plc_pulse]
-            self._recvtimeout = int(plc_pulse * 1.5)
+            self._recvtimeout = int(plc_pulse * 5)
         except KeyError:
             raise TemplatePrinterException("Cannot interpret PLCPulse property: '{}'".format(plc_pulse))
 
@@ -177,7 +183,7 @@ class IOCSH(e3, MACROS, PRINTER):
 #- Can override Modbus port with this
 
 """.format(ipaddr     = "type STRING" if self._ipaddr is None else "runtime YES",
-           modversion = self._modversion_macro(),
+           modversion = self._modversion_macro,
            s7_vs_opc  = """
 #- @field RECVTIMEOUT
 #- @type INTEGER
@@ -205,7 +211,7 @@ epicsEnvSet("PLCIOCVERSION", "$({default})")
 #- 2. if MODVERSION _is_ set to a non empty string then PLCIOCVERSION will be set to the value of MODVERSION because
 #-    the constructed macro name (from the macros PLCIOCVERSION + MODVERSION) will not exist and the value of MODVERSION will be used as a default
 epicsEnvSet("PLCIOCVERSION", "$(PLCIOCVERSION$(MODVERSION=)=$(MODVERSION))")
-""".format(default = self._modversion()), output)
+""".format(default = self._modversion), output)
 
         if not self._opc:
             self.advance_offsets_after_header()
@@ -227,8 +233,8 @@ epicsEnvSet("PLCIOCVERSION", "$(PLCIOCVERSION$(MODVERSION=)=$(MODVERSION))")
 dbLoadRecords("$(DBDIR=){modulename}.db", "{PLC_MACRO}={plcname}, MODVERSION={modversion}, S7_PORT=$(S7_PORT={s7_port}), MODBUS_PORT=$(MB_PORT={modbus_port}), PAYLOAD_SIZE={insize}{macros}")""".format(
             PLC_MACRO   = plc_macro,
             plcname     = self.raw_root_inst_slot(),
-            modulename  = self.modulename(),
-            modversion  = self.modversion(),
+            modulename  = self.modulename,
+            modversion  = self.modversion,
             s7_port     = self.plcf("PLC-EPICS-COMMS: S7Port"),
             modbus_port = self.plcf("PLC-EPICS-COMMS: MBPort"),
             insize      = insize,
@@ -322,7 +328,7 @@ opcuaCreateSubscription("{plcname}", "{plcname}-session", $(PUBLISHING_INTERVAL)
 
 
 
-class TEST_IOCSH(e3, MACROS, PRINTER):
+class TEST_IOCSH(MACROS, PRINTER):
     def __init__(self):
         super(TEST_IOCSH, self).__init__()
 
@@ -341,7 +347,10 @@ class TEST_IOCSH(e3, MACROS, PRINTER):
     # HEADER
     #
     def header(self, header_if_def, output, **keyword_parameters):
-        super(TEST_IOCSH, self).header(header_if_def, output, **keyword_parameters).add_filename_header(output, inst_slot = self.snippet(), template = "test", extension = self._extension())
+        snippet = keyword_parameters.get('SNIPPET', 'N/A')
+        modulename = keyword_parameters.get('MODULE_NAME')
+        _modversion_macro = "{modulename}_VERSION".format(modulename = modulename)
+        super(TEST_IOCSH, self).header(header_if_def, output, **keyword_parameters).add_filename_header(output, inst_slot = snippet, template = "test", extension = 'iocsh')
 
         st_cmd_header = """
 #- @field MODVERSION
@@ -351,7 +360,7 @@ class TEST_IOCSH(e3, MACROS, PRINTER):
 #- @field {modversion}
 #- @runtime YES
 
-""".format(modversion = self._modversion_macro())
+""".format(modversion = _modversion_macro)
 
         self._append(st_cmd_header, output)
 
@@ -369,12 +378,13 @@ class TEST_IOCSH(e3, MACROS, PRINTER):
     #
     def footer(self, footer_if_def, output, **keyword_parameters):
         super(TEST_IOCSH, self).footer(footer_if_def, output, **keyword_parameters)
-
+        modulename = keyword_parameters.get('MODULE_NAME')
+        modversion = keyword_parameters.get('MODVERSION', '$(PLCIOCVERSION)')
         st_cmd_footer = """
 #- Load plc interface database
 dbLoadRecords("$(DBDIR=){modulename}-test.db", "MODVERSION={modversion}{macros}")
-""".format(modulename = self.modulename(),
-           modversion = self.modversion(),
+""".format(modulename = modulename,
+           modversion = modversion,
            macros     = self._define_macros())
 
         self._append(st_cmd_footer, output)

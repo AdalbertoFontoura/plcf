@@ -1,0 +1,75 @@
+{
+    "_comment": "PLC to test some logic and functions to Cryogenic work group",
+    "PROJ": {
+        "STATUS": "Ready",
+        "ALARMNAME": "ToBeConfig",
+        "ARCHIVE": "tn",
+        "IOC": {
+            "ioc_type": "nfs",
+            "epics_version": "7.0.8",
+            "require_version": "5.1.0",
+            "realtime": "false",
+            "packages": [],
+            "address_list": [],
+            "essname": "LabS-ICS:SC-IOC-100",
+            "repository": "https://gitlab.esss.lu.se/iocs/manual/lab/om-test.git"
+        },
+        "HW": {
+            "type": "Siemens",
+            "comm_protocol": "TCP/IP-Modbus",
+            "ipaddr": "omtest-cryo-plc.cslab.esss.lu.se",
+            "essname": "LabS-ICS:Cryo-PLC-100",
+            "tia_portal_version": "v17",
+            "diagnostic": "False",
+            "template_path": "C:/Users/adalbertofontoura/ESS/GIT/ics_dev_templates",
+            "template_name": "CMS_GLOBAL.json",
+            "EPICSToPLCDataBlockStartOffset": "0",
+            "PLCToEPICSDataBlockStartOffset": "0",
+            "PLC-EPICS-COMMS: MBPort": "502",
+            "PLC-EPICS-COMMS: MBConnectionID": "255",
+            "PLC-EPICS-COMMS: S7ConnectionID": "256",
+            "PLC-EPICS-COMMS: S7Port": "2000",
+            "PLC-EPICS-COMMS:Endianness": "BigEndian",
+            "PLC-EPICS-COMMS: InterfaceID": "0",
+            "PLC-DIAG:Max-IO-Devices": "20",
+            "PLC-DIAG:Max-Local-Modules": "60",
+            "PLC-DIAG:Max-Modules-In-IO-Device": "60",
+            "PLC-EPICS-COMMS: PLCPulse": "Pulse_200ms",
+            "PLC-EPICS-COMMS: DiagConnectionID": "254",
+            "PLC-EPICS-COMMS: DiagPort": "2001"
+        },
+        "CTRL": {
+            "TEMPLATEPLACE": "Local",
+            "DEVICE": [
+                {
+                    "essname": "LabS-ICS:SC-FSM-145",
+                    "description": "dummy Master",
+                    "deviceType": "CMDS_INTLCK",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/ics_dev_templates",
+                    "template_name": "CMDS_INTLCK.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-LT-100",
+                    "description": "Fake Level transmitter",
+                    "deviceType": "ICS_LT",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/ics_dev_templates",
+                    "template_name": "ICS_LT.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-LT-101",
+                    "description": "Level Transmitter for Test CH2",
+                    "deviceType": "ICS_LT",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/ics_dev_templates",
+                    "template_name": "ICS_LT.json"
+                },
+                {
+                    "essname": "LabS-ICS:Cryo-CV-090",
+                    "description": "Test Safety Valve",
+                    "deviceType": "ICS_SCV",
+                    "template_path": "C:/Users/adalbertofontoura/ESS/GIT/ics_dev_templates",
+                    "template_name": "ICS_SCV.json"
+                }
+            ]
+        }
+    }
+}

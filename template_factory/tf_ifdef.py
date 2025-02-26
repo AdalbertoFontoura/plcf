@@ -29,7 +29,6 @@ except NameError:
     basestring = str
 
 
-
 # Data types for S7 PLCs
 PLC_types = { 'BOOL', 'BYTE', 'CHAR', 'WORD', 'DWORD', 'INT', 'DINT', 'REAL', 'SSTIME', 'TIME', 'LTIME', 'DATE', 'TIME_OF_DAY', 'STRING' }
 
@@ -3250,7 +3249,7 @@ class PARAMETER_UPLOAD_FO(FANOUT):
     @staticmethod
     def create_helper_to_doneupload(last_param):
         intermediate_fo = PV("", PARAMETER_UPLOAD_FO.INTERMEDIATE_FO_PV, "fanout", PV.DONT_DISABLE_WITH_PLC)
-        intermediate_fo.set_pv_field(PV.PV_DESC, "Helper PV to inject processing of #DoneUploadStat")
+        intermediate_fo.set_pv_field(PV.PV_DESC, "Inject processing of #DoneUploadStat")
         intermediate_fo.set_pv_field("LNK1", last_param.get_pv_field(PV.PV_FLNK))
         intermediate_fo.set_pv_field(PV.PV_FLNK, PARAMETER_UPLOAD_FO.__doneuploadstat.fqpn())
 

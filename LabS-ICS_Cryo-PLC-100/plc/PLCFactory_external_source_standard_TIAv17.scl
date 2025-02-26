@@ -170,7 +170,7 @@ DATA_BLOCK "EPICSToPLC"
 VERSION : 0.1
 //########## EPICS->PLC datablock ##########
    STRUCT
-      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..65] of Word;
+      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..130] of Word;
    END_STRUCT;
 
 BEGIN
@@ -182,7 +182,7 @@ VERSION : 0.1
 NON_RETAIN
 //########## PLC->EPICS datablock ##########
    STRUCT
-      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..124] of Word;
+      "Word" { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; } : Array[0..110] of Word;
    END_STRUCT;
 
 BEGIN
